@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  name      String
+  role      Role     @default(STUDENT)
+  grade     Int?
+  createdAt DateTime @default(now())
+
+  quizAttempts  QuizAttempt[]
+  chatMessages  ChatMessage[]
+  readDocuments ReadDocument[]
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  grade     Int
+  chapter   String
+  title     String
+  content   String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  readBy ReadDocument[]
+}
+
+model ReadDocument {
+  id         String   @id @default(cuid())
+  userId     String
+  documentId String
+  readAt     DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, documentId])
+}
+
+model Quiz {
+  id          String   @id @default(cuid())
+  title       String
+  grade       Int
+  durationSec Int
+  createdAt   DateTime @default(now())
+
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id           String @id @default(cuid())
+  quizId       String
+  content      String
+  choices      String
+  correctIndex Int
+  explanation  String?
+  order        Int    @default(0)
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id          String    @id @default(cuid())
+  userId      String
+  quizId      String
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+  answers     String    @default("{}")
+  score       Float?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model FlashcardSet {
+  id    String @id @default(cuid())
+  grade Int
+  topic String
+
+  cards Flashcard[]
+}
+
+model Flashcard {
+  id      String @id @default(cuid())
+  setId   String
+  term    String
+  meaning String
+  order   Int    @default(0)
+
+  set FlashcardSet @relation(fields: [setId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
