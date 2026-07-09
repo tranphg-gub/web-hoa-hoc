@@ -26,16 +26,30 @@ model User {
   readDocuments ReadDocument[]
 }
 
+model Chapter {
+  id    String @id @default(cuid())
+  grade Int
+  title String
+  order Int
+
+  documents     Document[]
+  quizzes       Quiz[]
+  flashcardSets FlashcardSet[]
+
+  @@unique([grade, order])
+}
+
 model Document {
   id        String   @id @default(cuid())
   grade     Int
-  chapter   String
+  chapterId String
   title     String
   content   String
   order     Int      @default(0)
   createdAt DateTime @default(now())
 
-  readBy ReadDocument[]
+  chapter Chapter        @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  readBy  ReadDocument[]
 }
 
 model ReadDocument {
@@ -54,9 +68,11 @@ model Quiz {
   id          String   @id @default(cuid())
   title       String
   grade       Int
+  chapterId   String
   durationSec Int
   createdAt   DateTime @default(now())
 
+  chapter   Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   questions Question[]
   attempts  QuizAttempt[]
 }
@@ -88,11 +104,13 @@ model QuizAttempt {
 }
 
 model FlashcardSet {
-  id    String @id @default(cuid())
-  grade Int
-  topic String
+  id        String @id @default(cuid())
+  grade     Int
+  chapterId String
+  topic     String
 
-  cards Flashcard[]
+  chapter Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  cards   Flashcard[]
 }
 
 model Flashcard {

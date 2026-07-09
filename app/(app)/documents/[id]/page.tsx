@@ -16,7 +16,7 @@ export default async function DocumentDetailPage({
 }) {
   const { id } = await params;
   const session = await requireUser();
-  const doc = await prisma.document.findUnique({ where: { id } });
+  const doc = await prisma.document.findUnique({ where: { id }, include: { chapter: true } });
   if (!doc) notFound();
 
   const readRecord = await prisma.readDocument.findUnique({
@@ -35,7 +35,7 @@ export default async function DocumentDetailPage({
       </Link>
 
       <div>
-        <Badge tone="neutral">{doc.chapter}</Badge>
+        <Badge tone="neutral">{doc.chapter.title}</Badge>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight">
           {doc.title}
         </h1>

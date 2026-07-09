@@ -22,6 +22,7 @@ export default async function DashboardPage() {
       }),
       prisma.document.findMany({
         where: { grade: user.grade ?? undefined },
+        include: { chapter: true },
         orderBy: { order: "asc" },
         take: 3,
       }),
@@ -78,7 +79,7 @@ export default async function DashboardPage() {
                 className="flex items-center justify-between rounded-xl border border-border-subtle px-4 py-3 text-sm transition-colors hover:bg-background-subtle"
               >
                 <span>{doc.title}</span>
-                <Badge tone="neutral">{doc.chapter}</Badge>
+                <Badge tone="neutral">{doc.chapter.title}</Badge>
               </Link>
             ))}
             {recentDocs.length === 0 && (

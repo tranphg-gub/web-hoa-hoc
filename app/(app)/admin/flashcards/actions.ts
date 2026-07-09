@@ -17,6 +17,7 @@ export async function createFlashcardSet(formData: FormData) {
   await prisma.flashcardSet.create({
     data: {
       grade: Number(formData.get("grade")),
+      chapterId: String(formData.get("chapterId") ?? ""),
       topic: String(formData.get("topic") ?? "").trim(),
     },
   });

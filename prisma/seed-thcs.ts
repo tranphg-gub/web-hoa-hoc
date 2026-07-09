@@ -17,13 +17,33 @@ async function main() {
   await prisma.flashcard.deleteMany({ where: { set: { grade: { in: [8, 9] } } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: { in: [8, 9] } } });
   await prisma.document.deleteMany({ where: { grade: { in: [8, 9] } } });
+  await prisma.chapter.deleteMany({ where: { grade: { in: [8, 9] } } });
+
+  const ch8_1 = await prisma.chapter.create({
+    data: { grade: 8, order: 1, title: "Chương I. Phản ứng hóa học" },
+  });
+  const ch8_2 = await prisma.chapter.create({
+    data: { grade: 8, order: 2, title: "Chương II. Một số hợp chất thông dụng" },
+  });
+  const ch9_6 = await prisma.chapter.create({
+    data: { grade: 9, order: 1, title: "Chương 6. Kim loại" },
+  });
+  const ch9_7 = await prisma.chapter.create({
+    data: { grade: 9, order: 2, title: "Chương 7. Hydrocarbon và nguồn nhiên liệu" },
+  });
+  const ch9_8 = await prisma.chapter.create({
+    data: { grade: 9, order: 3, title: "Chương 8. Ethylic alcohol và Acetic acid" },
+  });
+  const ch9_9 = await prisma.chapter.create({
+    data: { grade: 9, order: 4, title: "Chương 9. Lipid - Carbohydrate - Protein - Polymer" },
+  });
 
   // ================= LỚP 8 - CHƯƠNG I: PHẢN ỨNG HÓA HỌC =================
   await prisma.document.createMany({
     data: [
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 1,
         title: "Bài 2. Phản ứng hóa học",
         content:
@@ -44,7 +64,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 2,
         title: "Bài 3. Mol và tỉ khối chất khí",
         content:
@@ -66,7 +86,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 3,
         title: "Bài 4. Dung dịch và nồng độ",
         content:
@@ -85,7 +105,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 4,
         title: "Bài 5. Định luật bảo toàn khối lượng và phương trình hóa học",
         content:
@@ -104,7 +124,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 5,
         title: "Bài 6. Tính theo phương trình hóa học",
         content:
@@ -124,7 +144,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương I. Phản ứng hóa học",
+        chapterId: ch8_1.id,
         order: 6,
         title: "Bài 7. Tốc độ phản ứng và chất xúc tác",
         content:
@@ -144,7 +164,7 @@ async function main() {
       // ================= LỚP 8 - CHƯƠNG II =================
       {
         grade: 8,
-        chapter: "Chương II. Một số hợp chất thông dụng",
+        chapterId: ch8_2.id,
         order: 7,
         title: "Bài 8. Acid",
         content:
@@ -161,7 +181,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương II. Một số hợp chất thông dụng",
+        chapterId: ch8_2.id,
         order: 8,
         title: "Bài 9. Base - Thang pH",
         content:
@@ -182,7 +202,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương II. Một số hợp chất thông dụng",
+        chapterId: ch8_2.id,
         order: 9,
         title: "Bài 10. Oxide",
         content:
@@ -200,7 +220,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương II. Một số hợp chất thông dụng",
+        chapterId: ch8_2.id,
         order: 10,
         title: "Bài 11. Muối",
         content:
@@ -214,7 +234,7 @@ async function main() {
       },
       {
         grade: 8,
-        chapter: "Chương II. Một số hợp chất thông dụng",
+        chapterId: ch8_2.id,
         order: 11,
         title: "Bài 12. Phân bón hóa học",
         content:
@@ -234,7 +254,7 @@ async function main() {
     data: [
       {
         grade: 9,
-        chapter: "Chương 6. Kim loại",
+        chapterId: ch9_6.id,
         order: 1,
         title: "Bài 18. Tính chất chung của kim loại",
         content:
@@ -247,7 +267,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 6. Kim loại",
+        chapterId: ch9_6.id,
         order: 2,
         title: "Bài 19. Dãy hoạt động hóa học",
         content:
@@ -262,7 +282,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 6. Kim loại",
+        chapterId: ch9_6.id,
         order: 3,
         title: "Bài 20. Tách kim loại và việc sử dụng hợp kim",
         content:
@@ -277,7 +297,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 6. Kim loại",
+        chapterId: ch9_6.id,
         order: 4,
         title: "Bài 21. Sự khác nhau cơ bản giữa phi kim và kim loại",
         content:
@@ -297,7 +317,7 @@ async function main() {
     data: [
       {
         grade: 9,
-        chapter: "Chương 7. Hydrocarbon và nguồn nhiên liệu",
+        chapterId: ch9_7.id,
         order: 5,
         title: "Bài 22. Giới thiệu về hợp chất hữu cơ",
         content:
@@ -314,7 +334,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 7. Hydrocarbon và nguồn nhiên liệu",
+        chapterId: ch9_7.id,
         order: 6,
         title: "Bài 23. Alkane",
         content:
@@ -330,7 +350,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 7. Hydrocarbon và nguồn nhiên liệu",
+        chapterId: ch9_7.id,
         order: 7,
         title: "Bài 24. Alkene",
         content:
@@ -348,7 +368,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 7. Hydrocarbon và nguồn nhiên liệu",
+        chapterId: ch9_7.id,
         order: 8,
         title: "Bài 25. Nguồn nhiên liệu",
         content:
@@ -368,7 +388,7 @@ async function main() {
     data: [
       {
         grade: 9,
-        chapter: "Chương 8. Ethylic alcohol và Acetic acid",
+        chapterId: ch9_8.id,
         order: 9,
         title: "Bài 26. Ethylic alcohol",
         content:
@@ -384,7 +404,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 8. Ethylic alcohol và Acetic acid",
+        chapterId: ch9_8.id,
         order: 10,
         title: "Bài 27. Acetic acid",
         content:
@@ -407,7 +427,7 @@ async function main() {
     data: [
       {
         grade: 9,
-        chapter: "Chương 9. Lipid - Carbohydrate - Protein - Polymer",
+        chapterId: ch9_9.id,
         order: 11,
         title: "Bài 28. Lipid",
         content:
@@ -421,7 +441,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 9. Lipid - Carbohydrate - Protein - Polymer",
+        chapterId: ch9_9.id,
         order: 12,
         title: "Bài 29. Carbohydrate, Glucose và saccharose",
         content:
@@ -437,7 +457,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 9. Lipid - Carbohydrate - Protein - Polymer",
+        chapterId: ch9_9.id,
         order: 13,
         title: "Bài 30. Tinh bột và cellulose",
         content:
@@ -452,7 +472,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 9. Lipid - Carbohydrate - Protein - Polymer",
+        chapterId: ch9_9.id,
         order: 14,
         title: "Bài 31. Protein",
         content:
@@ -467,7 +487,7 @@ async function main() {
       },
       {
         grade: 9,
-        chapter: "Chương 9. Lipid - Carbohydrate - Protein - Polymer",
+        chapterId: ch9_9.id,
         order: 15,
         title: "Bài 32. Polymer",
         content:
@@ -488,6 +508,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Phản ứng hóa học (Chương I - Lớp 8)",
       grade: 8,
+      chapterId: ch8_1.id,
       durationSec: 900,
       questions: {
         create: [
@@ -560,6 +581,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Một số hợp chất thông dụng (Chương II - Lớp 8)",
       grade: 8,
+      chapterId: ch8_2.id,
       durationSec: 900,
       questions: {
         create: [
@@ -620,6 +642,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Kim loại (Chương 6 - Lớp 9)",
       grade: 9,
+      chapterId: ch9_6.id,
       durationSec: 900,
       questions: {
         create: [
@@ -683,6 +706,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Hydrocarbon và nguồn nhiên liệu (Chương 7 - Lớp 9)",
       grade: 9,
+      chapterId: ch9_7.id,
       durationSec: 900,
       questions: {
         create: [
@@ -736,6 +760,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Ethylic alcohol và Acetic acid (Chương 8 - Lớp 9)",
       grade: 9,
+      chapterId: ch9_8.id,
       durationSec: 600,
       questions: {
         create: [
@@ -777,6 +802,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Lipid - Carbohydrate - Protein - Polymer (Chương 9 - Lớp 9)",
       grade: 9,
+      chapterId: ch9_9.id,
       durationSec: 900,
       questions: {
         create: [
@@ -836,7 +862,8 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 8,
-      topic: "Phản ứng hóa học - Mol - Nồng độ (Chương I)",
+      chapterId: ch8_1.id,
+      topic: "Phản ứng hóa học - Mol - Nồng độ",
       cards: {
         create: [
           { order: 1, term: "Phản ứng hóa học", meaning: "Quá trình biến đổi chất này thành chất khác" },
@@ -855,7 +882,8 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 8,
-      topic: "Acid - Base - Oxide - Muối (Chương II)",
+      chapterId: ch8_2.id,
+      topic: "Acid - Base - Oxide - Muối",
       cards: {
         create: [
           { order: 1, term: "Acid", meaning: "Hợp chất phân li ra ion H+ khi tan trong nước, làm quỳ tím hóa đỏ" },
@@ -873,7 +901,8 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 9,
-      topic: "Kim loại - Dãy hoạt động hóa học (Chương 6)",
+      chapterId: ch9_6.id,
+      topic: "Kim loại - Dãy hoạt động hóa học",
       cards: {
         create: [
           {
@@ -893,15 +922,13 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 9,
-      topic: "Hợp chất hữu cơ - Hydrocarbon - Alcohol - Acid (Chương 7-8)",
+      chapterId: ch9_7.id,
+      topic: "Hydrocarbon và nguồn nhiên liệu",
       cards: {
         create: [
           { order: 1, term: "CnH2n+2", meaning: "Công thức chung của alkane (hydrocarbon no)" },
           { order: 2, term: "CnH2n", meaning: "Công thức chung của alkene (có 1 liên kết đôi C=C)" },
-          { order: 3, term: "C2H5OH", meaning: "Ethylic alcohol (ethanol)" },
-          { order: 4, term: "CH3COOH", meaning: "Acetic acid - thành phần chính của giấm ăn" },
-          { order: 5, term: "Phản ứng ester hóa", meaning: "CH3COOH + C2H5OH -> CH3COOC2H5 + H2O" },
-          { order: 6, term: "Methane (CH4)", meaning: "Thành phần chính của khí thiên nhiên và khí biogas" },
+          { order: 3, term: "Methane (CH4)", meaning: "Thành phần chính của khí thiên nhiên và khí biogas" },
         ],
       },
     },
@@ -910,7 +937,23 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 9,
-      topic: "Lipid - Carbohydrate - Protein - Polymer (Chương 9)",
+      chapterId: ch9_8.id,
+      topic: "Ethylic alcohol - Acetic acid",
+      cards: {
+        create: [
+          { order: 1, term: "C2H5OH", meaning: "Ethylic alcohol (ethanol)" },
+          { order: 2, term: "CH3COOH", meaning: "Acetic acid - thành phần chính của giấm ăn" },
+          { order: 3, term: "Phản ứng ester hóa", meaning: "CH3COOH + C2H5OH -> CH3COOC2H5 + H2O" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 9,
+      chapterId: ch9_9.id,
+      topic: "Lipid - Carbohydrate - Protein - Polymer",
       cards: {
         create: [
           { order: 1, term: "Xà phòng hóa", meaning: "Phản ứng thủy phân chất béo trong môi trường kiềm, tạo glycerol và xà phòng" },
@@ -925,8 +968,8 @@ async function main() {
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 8-9 theo SGK KHTN (Kết nối tri thức):");
-  console.log("- Lớp 8: 11 tài liệu (Chương I + II), 2 đề kiểm tra, 2 bộ flashcard");
-  console.log("- Lớp 9: 15 tài liệu (Chương 6-9), 4 đề kiểm tra, 3 bộ flashcard");
+  console.log("- Lớp 8: 2 chương, 11 tài liệu, 2 đề kiểm tra, 2 bộ flashcard");
+  console.log("- Lớp 9: 4 chương, 15 tài liệu, 4 đề kiểm tra, 4 bộ flashcard");
 }
 
 main()

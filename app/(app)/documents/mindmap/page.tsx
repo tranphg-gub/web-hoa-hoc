@@ -9,19 +9,23 @@ import { ArrowLeft } from "lucide-react";
 export default async function MindmapPage({
   searchParams,
 }: {
-  searchParams: Promise<{ grade?: string; chapter?: string }>;
+  searchParams: Promise<{ chapterId?: string }>;
 }) {
-  const { grade, chapter } = await searchParams;
-  const gradeNum = grade ? Number(grade) : undefined;
+  const { chapterId } = await searchParams;
 
-  if (!gradeNum || !chapter) notFound();
+  if (!chapterId) notFound();
+
+  const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
+  if (!chapter) notFound();
 
   const documents = await prisma.document.findMany({
-    where: { grade: gradeNum, chapter },
+    where: { chapterId },
     orderBy: { order: "asc" },
   });
 
   if (documents.length === 0) notFound();
+
+  const gradeNum = chapter.grade;
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8 pb-16">
@@ -34,7 +38,7 @@ export default async function MindmapPage({
 
       <div className="flex flex-col items-center gap-2 text-center">
         <Badge tone="neutral">Lớp {gradeNum} · Sơ đồ tư duy</Badge>
-        <h1 className="text-2xl font-semibold tracking-tight">{chapter}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{chapter.title}</h1>
         <p className="text-sm text-foreground-muted">
           Tổng quan các bài học và ý chính trong chương
         </p>

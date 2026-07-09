@@ -18,7 +18,7 @@ export async function createDocument(formData: FormData) {
   await prisma.document.create({
     data: {
       grade: Number(formData.get("grade")),
-      chapter: String(formData.get("chapter") ?? "").trim(),
+      chapterId: String(formData.get("chapterId") ?? ""),
       title: String(formData.get("title") ?? "").trim(),
       content: String(formData.get("content") ?? ""),
       order: Number(formData.get("order") ?? 0),
@@ -36,7 +36,7 @@ export async function updateDocument(documentId: string, formData: FormData) {
     where: { id: documentId },
     data: {
       grade: Number(formData.get("grade")),
-      chapter: String(formData.get("chapter") ?? "").trim(),
+      chapterId: String(formData.get("chapterId") ?? ""),
       title: String(formData.get("title") ?? "").trim(),
       content: String(formData.get("content") ?? ""),
       order: Number(formData.get("order") ?? 0),

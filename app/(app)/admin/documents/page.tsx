@@ -18,7 +18,7 @@ export default async function AdminDocumentsPage({
   const { grade, q } = await searchParams;
   const gradeNum = grade ? Number(grade) : undefined;
 
-  const [documents, totalCount] = await Promise.all([
+  const [documents, totalCount, chapters] = await Promise.all([
     prisma.document.findMany({
       where: {
         ...(gradeNum ? { grade: gradeNum } : {}),
@@ -26,15 +26,17 @@ export default async function AdminDocumentsPage({
           ? {
               OR: [
                 { title: { contains: q } },
-                { chapter: { contains: q } },
+                { chapter: { title: { contains: q } } },
                 { content: { contains: q } },
               ],
             }
           : {}),
       },
-      orderBy: [{ grade: "asc" }, { chapter: "asc" }, { order: "asc" }],
+      include: { chapter: true },
+      orderBy: [{ grade: "asc" }, { chapter: { order: "asc" } }, { order: "asc" }],
     }),
     prisma.document.count(),
+    prisma.chapter.findMany({ orderBy: [{ grade: "asc" }, { order: "asc" }] }),
   ]);
 
   const hasFilter = Boolean(gradeNum || q);
@@ -42,10 +44,10 @@ export default async function AdminDocumentsPage({
   const groups: { chapter: string; grade: number; docs: typeof documents }[] = [];
   for (const doc of documents) {
     const last = groups[groups.length - 1];
-    if (last && last.chapter === doc.chapter && last.grade === doc.grade) {
+    if (last && last.chapter === doc.chapter.title && last.grade === doc.grade) {
       last.docs.push(doc);
     } else {
-      groups.push({ chapter: doc.chapter, grade: doc.grade, docs: [doc] });
+      groups.push({ chapter: doc.chapter.title, grade: doc.grade, docs: [doc] });
     }
   }
 
@@ -87,8 +89,29 @@ export default async function AdminDocumentsPage({
               </select>
             </div>
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <Label htmlFor="chapter">Chương</Label>
-              <Input id="chapter" name="chapter" required />
+              <Label htmlFor="chapterId">Chương</Label>
+              <select
+                id="chapterId"
+                name="chapterId"
+                required
+                defaultValue=""
+                className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
+              >
+                <option value="" disabled>
+                  Chọn chương
+                </option>
+                {[8, 9, 10, 11, 12].map((g) => (
+                  <optgroup key={g} label={`Lớp ${g}`}>
+                    {chapters
+                      .filter((c) => c.grade === g)
+                      .map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.title}
+                        </option>
+                      ))}
+                  </optgroup>
+                ))}
+              </select>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
@@ -174,7 +197,7 @@ export default async function AdminDocumentsPage({
                 </h2>
               </div>
               <Link
-                href={`/documents/mindmap?grade=${group.grade}&chapter=${encodeURIComponent(group.chapter)}`}
+                href={`/documents/mindmap?chapterId=${group.docs[0].chapterId}`}
                 className="flex items-center gap-1.5 text-sm font-medium text-foreground-muted hover:text-foreground"
               >
                 <Network className="h-4 w-4" /> Sơ đồ tư duy

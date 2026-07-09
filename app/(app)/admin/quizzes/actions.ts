@@ -18,6 +18,7 @@ export async function createQuiz(formData: FormData) {
     data: {
       title: String(formData.get("title") ?? "").trim(),
       grade: Number(formData.get("grade")),
+      chapterId: String(formData.get("chapterId") ?? ""),
       durationSec: Number(formData.get("durationMin")) * 60,
     },
   });

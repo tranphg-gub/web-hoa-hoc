@@ -13,6 +13,7 @@ import {
   FileText,
   ListChecks,
   Layers,
+  BookMarked,
 } from "lucide-react";
 
 const studentLinks = [
@@ -25,6 +26,7 @@ const studentLinks = [
 
 const adminLinks = [
   { href: "/admin/students", label: "Học sinh", icon: Users },
+  { href: "/admin/chapters", label: "Chương", icon: BookMarked },
   { href: "/admin/documents", label: "Tài liệu", icon: FileText },
   { href: "/admin/quizzes", label: "Đề kiểm tra", icon: ListChecks },
   { href: "/admin/flashcards", label: "Bộ flashcard", icon: Layers },

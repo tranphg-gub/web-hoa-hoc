@@ -19,13 +19,30 @@ async function main() {
   await prisma.flashcard.deleteMany({ where: { set: { grade: { in: [11, 12] } } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: { in: [11, 12] } } });
   await prisma.document.deleteMany({ where: { grade: { in: [11, 12] } } });
+  await prisma.chapter.deleteMany({ where: { grade: { in: [11, 12] } } });
+
+  const l11c1 = await prisma.chapter.create({ data: { grade: 11, order: 1, title: "Chương 1. Cân bằng hóa học" } });
+  const l11c2 = await prisma.chapter.create({ data: { grade: 11, order: 2, title: "Chương 2. Nitrogen - Sulfur" } });
+  const l11c3 = await prisma.chapter.create({ data: { grade: 11, order: 3, title: "Chương 3. Đại cương về hóa học hữu cơ" } });
+  const l11c4 = await prisma.chapter.create({ data: { grade: 11, order: 4, title: "Chương 4. Hydrocarbon" } });
+  const l11c5 = await prisma.chapter.create({ data: { grade: 11, order: 5, title: "Chương 5. Dẫn xuất halogen - Alcohol - Phenol" } });
+  const l11c6 = await prisma.chapter.create({ data: { grade: 11, order: 6, title: "Chương 6. Hợp chất carbonyl - Carboxylic acid" } });
+
+  const l12c1 = await prisma.chapter.create({ data: { grade: 12, order: 1, title: "Chương 1. Ester - Lipid" } });
+  const l12c2 = await prisma.chapter.create({ data: { grade: 12, order: 2, title: "Chương 2. Carbohydrate" } });
+  const l12c3 = await prisma.chapter.create({ data: { grade: 12, order: 3, title: "Chương 3. Hợp chất chứa nitrogen" } });
+  const l12c4 = await prisma.chapter.create({ data: { grade: 12, order: 4, title: "Chương 4. Polymer" } });
+  const l12c5 = await prisma.chapter.create({ data: { grade: 12, order: 5, title: "Chương 5. Pin điện và điện phân" } });
+  const l12c6 = await prisma.chapter.create({ data: { grade: 12, order: 6, title: "Chương 6. Đại cương về kim loại" } });
+  const l12c7 = await prisma.chapter.create({ data: { grade: 12, order: 7, title: "Chương 7. Nguyên tố nhóm IA và nhóm IIA" } });
+  const l12c8 = await prisma.chapter.create({ data: { grade: 12, order: 8, title: "Chương 8. Kim loại chuyển tiếp và phức chất" } });
 
   // ================= LỚP 11 - CHƯƠNG 1: CÂN BẰNG HÓA HỌC =================
   await prisma.document.createMany({
     data: [
       {
         grade: 11,
-        chapter: "Chương 1. Cân bằng hóa học",
+        chapterId: l11c1.id,
         order: 1,
         title: "Bài 1. Khái niệm về cân bằng hóa học",
         content:
@@ -43,7 +60,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 1. Cân bằng hóa học",
+        chapterId: l11c1.id,
         order: 2,
         title: "Bài 2. Cân bằng trong dung dịch nước",
         content:
@@ -69,7 +86,7 @@ async function main() {
     data: [
       {
         grade: 11,
-        chapter: "Chương 2. Nitrogen - Sulfur",
+        chapterId: l11c2.id,
         order: 3,
         title: "Bài 4. Nitrogen",
         content:
@@ -86,7 +103,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 2. Nitrogen - Sulfur",
+        chapterId: l11c2.id,
         order: 4,
         title: "Bài 5. Ammonia - Muối ammonium",
         content:
@@ -101,7 +118,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 2. Nitrogen - Sulfur",
+        chapterId: l11c2.id,
         order: 5,
         title: "Bài 6. Một số hợp chất của nitrogen với oxygen",
         content:
@@ -116,7 +133,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 2. Nitrogen - Sulfur",
+        chapterId: l11c2.id,
         order: 6,
         title: "Bài 7. Sulfur và sulfur dioxide",
         content:
@@ -131,7 +148,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 2. Nitrogen - Sulfur",
+        chapterId: l11c2.id,
         order: 7,
         title: "Bài 8. Sulfuric acid và muối sulfate",
         content:
@@ -155,7 +172,7 @@ async function main() {
     data: [
       {
         grade: 11,
-        chapter: "Chương 3. Đại cương về hóa học hữu cơ",
+        chapterId: l11c3.id,
         order: 8,
         title: "Bài 10. Hợp chất hữu cơ và hóa học hữu cơ",
         content:
@@ -172,7 +189,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 3. Đại cương về hóa học hữu cơ",
+        chapterId: l11c3.id,
         order: 9,
         title: "Bài 11. Phương pháp tách biệt và tinh chế hợp chất hữu cơ",
         content:
@@ -187,7 +204,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 3. Đại cương về hóa học hữu cơ",
+        chapterId: l11c3.id,
         order: 10,
         title: "Bài 12. Công thức phân tử hợp chất hữu cơ",
         content:
@@ -200,7 +217,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 3. Đại cương về hóa học hữu cơ",
+        chapterId: l11c3.id,
         order: 11,
         title: "Bài 13. Cấu tạo hóa học hợp chất hữu cơ",
         content:
@@ -221,7 +238,7 @@ async function main() {
     data: [
       {
         grade: 11,
-        chapter: "Chương 4. Hydrocarbon",
+        chapterId: l11c4.id,
         order: 12,
         title: "Bài 15. Alkane",
         content:
@@ -236,7 +253,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 4. Hydrocarbon",
+        chapterId: l11c4.id,
         order: 13,
         title: "Bài 16. Hydrocarbon không no",
         content:
@@ -252,7 +269,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 4. Hydrocarbon",
+        chapterId: l11c4.id,
         order: 14,
         title: "Bài 17. Arene (Hydrocarbon thơm)",
         content:
@@ -273,7 +290,7 @@ async function main() {
     data: [
       {
         grade: 11,
-        chapter: "Chương 5. Dẫn xuất halogen - Alcohol - Phenol",
+        chapterId: l11c5.id,
         order: 15,
         title: "Bài 19. Dẫn xuất halogen",
         content:
@@ -287,7 +304,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 5. Dẫn xuất halogen - Alcohol - Phenol",
+        chapterId: l11c5.id,
         order: 16,
         title: "Bài 20. Alcohol",
         content:
@@ -305,7 +322,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 5. Dẫn xuất halogen - Alcohol - Phenol",
+        chapterId: l11c5.id,
         order: 17,
         title: "Bài 21. Phenol",
         content:
@@ -327,7 +344,7 @@ async function main() {
     data: [
       {
         grade: 11,
-        chapter: "Chương 6. Hợp chất carbonyl - Carboxylic acid",
+        chapterId: l11c6.id,
         order: 18,
         title: "Bài 23. Hợp chất carbonyl",
         content:
@@ -341,7 +358,7 @@ async function main() {
       },
       {
         grade: 11,
-        chapter: "Chương 6. Hợp chất carbonyl - Carboxylic acid",
+        chapterId: l11c6.id,
         order: 19,
         title: "Bài 24. Carboxylic acid",
         content:
@@ -363,7 +380,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 1. Ester - Lipid",
+        chapterId: l12c1.id,
         order: 1,
         title: "Bài 1. Ester - Lipid",
         content:
@@ -379,7 +396,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 1. Ester - Lipid",
+        chapterId: l12c1.id,
         order: 2,
         title: "Bài 2. Xà phòng và chất giặt rửa",
         content:
@@ -398,7 +415,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 2. Carbohydrate",
+        chapterId: l12c2.id,
         order: 3,
         title: "Bài 4. Giới thiệu về carbohydrate. Glucose và fructose",
         content:
@@ -414,7 +431,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 2. Carbohydrate",
+        chapterId: l12c2.id,
         order: 4,
         title: "Bài 5. Saccharose và maltose",
         content:
@@ -430,7 +447,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 2. Carbohydrate",
+        chapterId: l12c2.id,
         order: 5,
         title: "Bài 6. Tinh bột và cellulose",
         content:
@@ -451,7 +468,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 3. Hợp chất chứa nitrogen",
+        chapterId: l12c3.id,
         order: 6,
         title: "Bài 8. Amine",
         content:
@@ -466,7 +483,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 3. Hợp chất chứa nitrogen",
+        chapterId: l12c3.id,
         order: 7,
         title: "Bài 9. Amino acid và peptide",
         content:
@@ -480,7 +497,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 3. Hợp chất chứa nitrogen",
+        chapterId: l12c3.id,
         order: 8,
         title: "Bài 10. Protein và enzyme",
         content:
@@ -502,7 +519,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 4. Polymer",
+        chapterId: l12c4.id,
         order: 9,
         title: "Bài 12. Đại cương về polymer",
         content:
@@ -517,7 +534,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 4. Polymer",
+        chapterId: l12c4.id,
         order: 10,
         title: "Bài 13. Vật liệu polymer",
         content:
@@ -538,7 +555,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 5. Pin điện và điện phân",
+        chapterId: l12c5.id,
         order: 11,
         title: "Bài 15. Thế điện cực và nguồn điện hóa học",
         content:
@@ -554,7 +571,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 5. Pin điện và điện phân",
+        chapterId: l12c5.id,
         order: 12,
         title: "Bài 16. Điện phân",
         content:
@@ -575,7 +592,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 6. Đại cương về kim loại",
+        chapterId: l12c6.id,
         order: 13,
         title: "Bài 18. Cấu tạo và liên kết trong tinh thể kim loại",
         content:
@@ -588,7 +605,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 6. Đại cương về kim loại",
+        chapterId: l12c6.id,
         order: 14,
         title: "Bài 19. Tính chất vật lí và tính chất hóa học của kim loại",
         content:
@@ -600,7 +617,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 6. Đại cương về kim loại",
+        chapterId: l12c6.id,
         order: 15,
         title: "Bài 20. Kim loại trong tự nhiên và phương pháp tách kim loại",
         content:
@@ -615,7 +632,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 6. Đại cương về kim loại",
+        chapterId: l12c6.id,
         order: 16,
         title: "Bài 21. Hợp kim",
         content:
@@ -630,7 +647,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 6. Đại cương về kim loại",
+        chapterId: l12c6.id,
         order: 17,
         title: "Bài 22. Sự ăn mòn kim loại",
         content:
@@ -653,7 +670,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 7. Nguyên tố nhóm IA và nhóm IIA",
+        chapterId: l12c7.id,
         order: 18,
         title: "Bài 24. Nguyên tố nhóm IA",
         content:
@@ -671,7 +688,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 7. Nguyên tố nhóm IA và nhóm IIA",
+        chapterId: l12c7.id,
         order: 19,
         title: "Bài 25. Nguyên tố nhóm IIA",
         content:
@@ -696,7 +713,7 @@ async function main() {
     data: [
       {
         grade: 12,
-        chapter: "Chương 8. Kim loại chuyển tiếp và phức chất",
+        chapterId: l12c8.id,
         order: 20,
         title: "Bài 27. Đại cương về kim loại chuyển tiếp dãy thứ nhất",
         content:
@@ -711,7 +728,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 8. Kim loại chuyển tiếp và phức chất",
+        chapterId: l12c8.id,
         order: 21,
         title: "Bài 28. Sơ lược về phức chất",
         content:
@@ -724,7 +741,7 @@ async function main() {
       },
       {
         grade: 12,
-        chapter: "Chương 8. Kim loại chuyển tiếp và phức chất",
+        chapterId: l12c8.id,
         order: 22,
         title: "Bài 29. Một số tính chất và ứng dụng của phức chất",
         content:
@@ -744,6 +761,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Cân bằng hóa học (Chương 1 - Lớp 11)",
       grade: 11,
+      chapterId: l11c1.id,
       durationSec: 900,
       questions: {
         create: [
@@ -801,6 +819,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Nitrogen - Sulfur (Chương 2 - Lớp 11)",
       grade: 11,
+      chapterId: l11c2.id,
       durationSec: 900,
       questions: {
         create: [
@@ -848,6 +867,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Đại cương hóa học hữu cơ (Chương 3 - Lớp 11)",
       grade: 11,
+      chapterId: l11c3.id,
       durationSec: 600,
       questions: {
         create: [
@@ -898,6 +918,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Hydrocarbon (Chương 4 - Lớp 11)",
       grade: 11,
+      chapterId: l11c4.id,
       durationSec: 900,
       questions: {
         create: [
@@ -945,6 +966,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Dẫn xuất halogen - Alcohol - Phenol (Chương 5 - Lớp 11)",
       grade: 11,
+      chapterId: l11c5.id,
       durationSec: 600,
       questions: {
         create: [
@@ -995,6 +1017,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Hợp chất carbonyl - Carboxylic acid (Chương 6 - Lớp 11)",
       grade: 11,
+      chapterId: l11c6.id,
       durationSec: 600,
       questions: {
         create: [
@@ -1041,6 +1064,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Ester - Lipid (Chương 1 - Lớp 12)",
       grade: 12,
+      chapterId: l12c1.id,
       durationSec: 600,
       questions: {
         create: [
@@ -1086,6 +1110,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Carbohydrate (Chương 2 - Lớp 12)",
       grade: 12,
+      chapterId: l12c2.id,
       durationSec: 900,
       questions: {
         create: [
@@ -1143,6 +1168,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Hợp chất chứa Nitrogen (Chương 3 - Lớp 12)",
       grade: 12,
+      chapterId: l12c3.id,
       durationSec: 900,
       questions: {
         create: [
@@ -1195,6 +1221,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Polymer (Chương 4 - Lớp 12)",
       grade: 12,
+      chapterId: l12c4.id,
       durationSec: 600,
       questions: {
         create: [
@@ -1240,6 +1267,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Pin điện và điện phân (Chương 5 - Lớp 12)",
       grade: 12,
+      chapterId: l12c5.id,
       durationSec: 900,
       questions: {
         create: [
@@ -1285,6 +1313,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Đại cương về kim loại (Chương 6 - Lớp 12)",
       grade: 12,
+      chapterId: l12c6.id,
       durationSec: 900,
       questions: {
         create: [
@@ -1332,6 +1361,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Nhóm IA - IIA (Chương 7 - Lớp 12)",
       grade: 12,
+      chapterId: l12c7.id,
       durationSec: 600,
       questions: {
         create: [
@@ -1372,6 +1402,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Kim loại chuyển tiếp - Phức chất (Chương 8 - Lớp 12)",
       grade: 12,
+      chapterId: l12c8.id,
       durationSec: 600,
       questions: {
         create: [
@@ -1405,16 +1436,14 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 11,
-      topic: "Cân bằng hóa học - Nitrogen - Sulfur (Chương 1-2)",
+      chapterId: l11c1.id,
+      topic: "Cân bằng hóa học",
       cards: {
         create: [
           { order: 1, term: "⇌", meaning: "Kí hiệu biểu diễn phản ứng thuận nghịch" },
           { order: 2, term: "Kc", meaning: "Hằng số cân bằng, chỉ phụ thuộc vào nhiệt độ" },
           { order: 3, term: "Nguyên lí Le Chatelier", meaning: "Cân bằng chuyển dịch theo chiều làm giảm tác động bên ngoài" },
           { order: 4, term: "N2 + 3H2 ⇌ 2NH3", meaning: "Phản ứng tổng hợp ammonia (quá trình Haber, xúc tác Fe)" },
-          { order: 5, term: "NH4Cl + NaOH -> NaCl + NH3 + H2O", meaning: "Phản ứng nhận biết muối ammonium (có mùi khai)" },
-          { order: 6, term: "H2SO4 đặc, nóng + Cu -> SO2", meaning: "Sulfuric acid đặc có tính oxi hóa mạnh, không giải phóng H2" },
-          { order: 7, term: "BaCl2 + SO4^2-", meaning: "Tạo kết tủa trắng BaSO4, dùng nhận biết gốc sulfate" },
         ],
       },
     },
@@ -1423,15 +1452,27 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 11,
-      topic: "Đại cương hữu cơ - Hydrocarbon (Chương 3-4)",
+      chapterId: l11c2.id,
+      topic: "Nitrogen - Sulfur",
+      cards: {
+        create: [
+          { order: 1, term: "NH4Cl + NaOH -> NaCl + NH3 + H2O", meaning: "Phản ứng nhận biết muối ammonium (có mùi khai)" },
+          { order: 2, term: "H2SO4 đặc, nóng + Cu -> SO2", meaning: "Sulfuric acid đặc có tính oxi hóa mạnh, không giải phóng H2" },
+          { order: 3, term: "BaCl2 + SO4^2-", meaning: "Tạo kết tủa trắng BaSO4, dùng nhận biết gốc sulfate" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 11,
+      chapterId: l11c3.id,
+      topic: "Đại cương hóa học hữu cơ",
       cards: {
         create: [
           { order: 1, term: "Đồng đẳng", meaning: "Các chất tính chất tương tự, hơn kém nhau 1 hay nhiều nhóm CH2" },
           { order: 2, term: "Đồng phân", meaning: "Các chất có cùng công thức phân tử nhưng cấu tạo khác nhau" },
-          { order: 3, term: "CnH2n+2", meaning: "Công thức chung của alkane" },
-          { order: 4, term: "CnH2n-2", meaning: "Công thức chung của alkyne" },
-          { order: 5, term: "C6H6", meaning: "Benzene - arene đơn giản nhất" },
-          { order: 6, term: "AgNO3/NH3", meaning: "Thuốc thử nhận biết alk-1-yne, tạo kết tủa vàng" },
         ],
       },
     },
@@ -1440,14 +1481,43 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 11,
-      topic: "Alcohol - Phenol - Carbonyl - Carboxylic acid (Chương 5-6)",
+      chapterId: l11c4.id,
+      topic: "Hydrocarbon",
+      cards: {
+        create: [
+          { order: 1, term: "CnH2n+2", meaning: "Công thức chung của alkane" },
+          { order: 2, term: "CnH2n-2", meaning: "Công thức chung của alkyne" },
+          { order: 3, term: "C6H6", meaning: "Benzene - arene đơn giản nhất" },
+          { order: 4, term: "AgNO3/NH3", meaning: "Thuốc thử nhận biết alk-1-yne, tạo kết tủa vàng" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 11,
+      chapterId: l11c5.id,
+      topic: "Dẫn xuất halogen - Alcohol - Phenol",
       cards: {
         create: [
           { order: 1, term: "C6H5OH", meaning: "Phenol" },
           { order: 2, term: "Cu(OH)2", meaning: "Thuốc thử nhận biết polyalcohol (tạo dung dịch xanh lam)" },
-          { order: 3, term: "Phản ứng tráng bạc", meaning: "Phản ứng đặc trưng của nhóm chức -CHO (aldehyde)" },
-          { order: 4, term: "-COOH", meaning: "Nhóm chức carboxyl của carboxylic acid" },
-          { order: 5, term: "HCOOH", meaning: "Formic acid - vừa có tính acid vừa có tính khử (tráng bạc được)" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 11,
+      chapterId: l11c6.id,
+      topic: "Hợp chất carbonyl - Carboxylic acid",
+      cards: {
+        create: [
+          { order: 1, term: "Phản ứng tráng bạc", meaning: "Phản ứng đặc trưng của nhóm chức -CHO (aldehyde)" },
+          { order: 2, term: "-COOH", meaning: "Nhóm chức carboxyl của carboxylic acid" },
+          { order: 3, term: "HCOOH", meaning: "Formic acid - vừa có tính acid vừa có tính khử (tráng bạc được)" },
         ],
       },
     },
@@ -1457,14 +1527,11 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 12,
-      topic: "Ester - Lipid - Carbohydrate (Chương 1-2)",
+      chapterId: l12c1.id,
+      topic: "Ester - Lipid",
       cards: {
         create: [
           { order: 1, term: "Xà phòng hóa", meaning: "Thủy phân chất béo trong môi trường kiềm, tạo glycerol và xà phòng" },
-          { order: 2, term: "C6H12O6", meaning: "Glucose và fructose (đồng phân của nhau)" },
-          { order: 3, term: "C12H22O11", meaning: "Saccharose hoặc maltose (đồng phân của nhau)" },
-          { order: 4, term: "Maltose", meaning: "Disaccharide có tính khử, tham gia phản ứng tráng bạc (khác saccharose)" },
-          { order: 5, term: "(C6H10O5)n", meaning: "Công thức chung của tinh bột và cellulose" },
         ],
       },
     },
@@ -1473,14 +1540,29 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 12,
-      topic: "Hợp chất chứa Nitrogen - Polymer (Chương 3-4)",
+      chapterId: l12c2.id,
+      topic: "Carbohydrate",
+      cards: {
+        create: [
+          { order: 1, term: "C6H12O6", meaning: "Glucose và fructose (đồng phân của nhau)" },
+          { order: 2, term: "C12H22O11", meaning: "Saccharose hoặc maltose (đồng phân của nhau)" },
+          { order: 3, term: "Maltose", meaning: "Disaccharide có tính khử, tham gia phản ứng tráng bạc (khác saccharose)" },
+          { order: 4, term: "(C6H10O5)n", meaning: "Công thức chung của tinh bột và cellulose" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 12,
+      chapterId: l12c3.id,
+      topic: "Hợp chất chứa Nitrogen",
       cards: {
         create: [
           { order: 1, term: "Amino acid", meaning: "Có cả nhóm -NH2 và -COOH, mang tính lưỡng tính" },
           { order: 2, term: "Liên kết peptide", meaning: "Liên kết -CO-NH- giữa các amino acid trong protein" },
           { order: 3, term: "Phản ứng màu biuret", meaning: "Nhận biết protein (tạo phức màu tím với Cu(OH)2)" },
-          { order: 4, term: "Monomer", meaning: "Đơn vị nhỏ liên kết lặp lại tạo thành polymer" },
-          { order: 5, term: "Trùng ngưng", meaning: "Phản ứng tạo polymer, giải phóng thêm phân tử nhỏ (như nước)" },
         ],
       },
     },
@@ -1489,14 +1571,27 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 12,
-      topic: "Pin điện - Điện phân - Đại cương kim loại (Chương 5-6)",
+      chapterId: l12c4.id,
+      topic: "Polymer",
+      cards: {
+        create: [
+          { order: 1, term: "Monomer", meaning: "Đơn vị nhỏ liên kết lặp lại tạo thành polymer" },
+          { order: 2, term: "Trùng ngưng", meaning: "Phản ứng tạo polymer, giải phóng thêm phân tử nhỏ (như nước)" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 12,
+      chapterId: l12c5.id,
+      topic: "Pin điện và điện phân",
       cards: {
         create: [
           { order: 1, term: "E°(Cu^2+/Cu) = +0,34 V", meaning: "Thế điện cực chuẩn của đồng" },
           { order: 2, term: "E°(Zn^2+/Zn) = -0,76 V", meaning: "Thế điện cực chuẩn của kẽm" },
           { order: 3, term: "Cathode", meaning: "Nơi xảy ra quá trình khử khi điện phân" },
-          { order: 4, term: "Ăn mòn điện hóa", meaning: "Ăn mòn kim loại khi tiếp xúc kim loại khác trong môi trường điện li" },
-          { order: 5, term: "Vật hi sinh (Zn)", meaning: "Kim loại gắn thêm để bảo vệ vỏ tàu thép khỏi ăn mòn" },
         ],
       },
     },
@@ -1505,22 +1600,49 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 12,
-      topic: "Nhóm IA-IIA - Kim loại chuyển tiếp - Phức chất (Chương 7-8)",
+      chapterId: l12c6.id,
+      topic: "Đại cương về kim loại",
+      cards: {
+        create: [
+          { order: 1, term: "Ăn mòn điện hóa", meaning: "Ăn mòn kim loại khi tiếp xúc kim loại khác trong môi trường điện li" },
+          { order: 2, term: "Vật hi sinh (Zn)", meaning: "Kim loại gắn thêm để bảo vệ vỏ tàu thép khỏi ăn mòn" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 12,
+      chapterId: l12c7.id,
+      topic: "Nhóm IA - IIA",
       cards: {
         create: [
           { order: 1, term: "Nhóm IA", meaning: "Kim loại kiềm: Li, Na, K, Rb, Cs" },
           { order: 2, term: "Nhóm IIA", meaning: "Kim loại kiềm thổ: Be, Mg, Ca, Sr, Ba" },
           { order: 3, term: "Nước cứng", meaning: "Nước chứa nhiều ion Ca^2+, Mg^2+" },
-          { order: 4, term: "Phối tử (ligand)", meaning: "Phân tử/ion liên kết với ion kim loại trung tâm tạo phức chất" },
-          { order: 5, term: "[Cu(NH3)4]^2+", meaning: "Phức chất màu xanh lam đậm đặc trưng của Cu^2+" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 12,
+      chapterId: l12c8.id,
+      topic: "Kim loại chuyển tiếp - Phức chất",
+      cards: {
+        create: [
+          { order: 1, term: "Phối tử (ligand)", meaning: "Phân tử/ion liên kết với ion kim loại trung tâm tạo phức chất" },
+          { order: 2, term: "[Cu(NH3)4]^2+", meaning: "Phức chất màu xanh lam đậm đặc trưng của Cu^2+" },
         ],
       },
     },
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 11-12 theo SGK Hóa học (Kết nối tri thức):");
-  console.log("- Lớp 11: 19 tài liệu (Chương 1-6), 6 đề kiểm tra, 3 bộ flashcard");
-  console.log("- Lớp 12: 22 tài liệu (Chương 1-8), 8 đề kiểm tra, 4 bộ flashcard");
+  console.log("- Lớp 11: 6 chương, 19 tài liệu, 6 đề kiểm tra, 6 bộ flashcard");
+  console.log("- Lớp 12: 8 chương, 22 tài liệu, 8 đề kiểm tra, 8 bộ flashcard");
 }
 
 main()

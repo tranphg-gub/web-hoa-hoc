@@ -16,7 +16,10 @@ export default async function EditDocumentPage({
   await requireAdmin();
 
   const { id } = await params;
-  const doc = await prisma.document.findUnique({ where: { id } });
+  const [doc, chapters] = await Promise.all([
+    prisma.document.findUnique({ where: { id } }),
+    prisma.chapter.findMany({ orderBy: [{ grade: "asc" }, { order: "asc" }] }),
+  ]);
   if (!doc) notFound();
 
   return (
@@ -54,8 +57,26 @@ export default async function EditDocumentPage({
               </select>
             </div>
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <Label htmlFor="chapter">Chương</Label>
-              <Input id="chapter" name="chapter" defaultValue={doc.chapter} required />
+              <Label htmlFor="chapterId">Chương</Label>
+              <select
+                id="chapterId"
+                name="chapterId"
+                defaultValue={doc.chapterId}
+                required
+                className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
+              >
+                {[8, 9, 10, 11, 12].map((g) => (
+                  <optgroup key={g} label={`Lớp ${g}`}>
+                    {chapters
+                      .filter((c) => c.grade === g)
+                      .map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.title}
+                        </option>
+                      ))}
+                  </optgroup>
+                ))}
+              </select>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">

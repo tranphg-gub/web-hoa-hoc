@@ -15,13 +15,22 @@ async function main() {
   await prisma.flashcard.deleteMany({ where: { set: { grade: 10 } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: 10 } });
   await prisma.document.deleteMany({ where: { grade: 10 } });
+  await prisma.chapter.deleteMany({ where: { grade: 10 } });
+
+  const ch1 = await prisma.chapter.create({ data: { grade: 10, order: 1, title: "Chương 1. Cấu tạo nguyên tử" } });
+  const ch2 = await prisma.chapter.create({ data: { grade: 10, order: 2, title: "Chương 2. Bảng tuần hoàn các nguyên tố hóa học" } });
+  const ch3 = await prisma.chapter.create({ data: { grade: 10, order: 3, title: "Chương 3. Liên kết hóa học" } });
+  const ch4 = await prisma.chapter.create({ data: { grade: 10, order: 4, title: "Chương 4. Phản ứng oxi hoá - khử" } });
+  const ch5 = await prisma.chapter.create({ data: { grade: 10, order: 5, title: "Chương 5. Năng lượng hoá học" } });
+  const ch6 = await prisma.chapter.create({ data: { grade: 10, order: 6, title: "Chương 6. Tốc độ phản ứng" } });
+  const ch7 = await prisma.chapter.create({ data: { grade: 10, order: 7, title: "Chương 7. Nguyên tố nhóm halogen" } });
 
   // ================= CHƯƠNG 1: CẤU TẠO NGUYÊN TỬ =================
   await prisma.document.createMany({
     data: [
       {
         grade: 10,
-        chapter: "Chương 1. Cấu tạo nguyên tử",
+        chapterId: ch1.id,
         order: 1,
         title: "Bài 1. Thành phần của nguyên tử",
         content:
@@ -38,7 +47,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 1. Cấu tạo nguyên tử",
+        chapterId: ch1.id,
         order: 2,
         title: "Bài 2. Nguyên tố hóa học",
         content:
@@ -56,7 +65,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 1. Cấu tạo nguyên tử",
+        chapterId: ch1.id,
         order: 3,
         title: "Bài 3. Cấu trúc lớp vỏ electron nguyên tử",
         content:
@@ -80,7 +89,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 2. Bảng tuần hoàn các nguyên tố hóa học",
+        chapterId: ch2.id,
         order: 4,
         title: "Bài 5. Cấu tạo của bảng tuần hoàn các nguyên tố hóa học",
         content:
@@ -95,7 +104,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 2. Bảng tuần hoàn các nguyên tố hóa học",
+        chapterId: ch2.id,
         order: 5,
         title: "Bài 6. Xu hướng biến đổi một số tính chất của nguyên tử",
         content:
@@ -112,7 +121,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 2. Bảng tuần hoàn các nguyên tố hóa học",
+        chapterId: ch2.id,
         order: 6,
         title: "Bài 7. Xu hướng biến đổi thành phần và tính chất của hợp chất",
         content:
@@ -122,7 +131,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 2. Bảng tuần hoàn các nguyên tố hóa học",
+        chapterId: ch2.id,
         order: 7,
         title: "Bài 8. Định luật tuần hoàn. Ý nghĩa của bảng tuần hoàn",
         content:
@@ -139,7 +148,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 3. Liên kết hóa học",
+        chapterId: ch3.id,
         order: 8,
         title: "Bài 10. Quy tắc octet",
         content:
@@ -149,7 +158,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 3. Liên kết hóa học",
+        chapterId: ch3.id,
         order: 9,
         title: "Bài 11. Liên kết ion",
         content:
@@ -163,7 +172,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 3. Liên kết hóa học",
+        chapterId: ch3.id,
         order: 10,
         title: "Bài 12. Liên kết cộng hóa trị",
         content:
@@ -176,7 +185,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 3. Liên kết hóa học",
+        chapterId: ch3.id,
         order: 11,
         title: "Bài 13. Liên kết hydrogen và tương tác van der Waals",
         content:
@@ -195,7 +204,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 4. Phản ứng oxi hoá - khử",
+        chapterId: ch4.id,
         order: 12,
         title: "Bài 15. Phản ứng oxi hóa - khử",
         content:
@@ -220,7 +229,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 5. Năng lượng hoá học",
+        chapterId: ch5.id,
         order: 13,
         title: "Bài 17. Biến thiên enthalpy trong các phản ứng hóa học",
         content:
@@ -241,7 +250,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 6. Tốc độ phản ứng",
+        chapterId: ch6.id,
         order: 14,
         title: "Bài 19. Tốc độ phản ứng",
         content:
@@ -264,7 +273,7 @@ async function main() {
     data: [
       {
         grade: 10,
-        chapter: "Chương 7. Nguyên tố nhóm halogen",
+        chapterId: ch7.id,
         order: 15,
         title: "Bài 21. Nhóm halogen",
         content:
@@ -280,7 +289,7 @@ async function main() {
       },
       {
         grade: 10,
-        chapter: "Chương 7. Nguyên tố nhóm halogen",
+        chapterId: ch7.id,
         order: 16,
         title: "Bài 22. Hydrogen halide. Muối halide",
         content:
@@ -299,6 +308,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Cấu tạo nguyên tử (Chương 1 - Lớp 10)",
       grade: 10,
+      chapterId: ch1.id,
       durationSec: 900,
       questions: {
         create: [
@@ -351,6 +361,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Bảng tuần hoàn (Chương 2 - Lớp 10)",
       grade: 10,
+      chapterId: ch2.id,
       durationSec: 900,
       questions: {
         create: [
@@ -391,6 +402,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Liên kết hóa học (Chương 3 - Lớp 10)",
       grade: 10,
+      chapterId: ch3.id,
       durationSec: 900,
       questions: {
         create: [
@@ -441,6 +453,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Phản ứng oxi hóa - khử (Chương 4 - Lớp 10)",
       grade: 10,
+      chapterId: ch4.id,
       durationSec: 600,
       questions: {
         create: [
@@ -474,6 +487,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Năng lượng hóa học (Chương 5 - Lớp 10)",
       grade: 10,
+      chapterId: ch5.id,
       durationSec: 600,
       questions: {
         create: [
@@ -500,6 +514,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Tốc độ phản ứng (Chương 6 - Lớp 10)",
       grade: 10,
+      chapterId: ch6.id,
       durationSec: 600,
       questions: {
         create: [
@@ -531,6 +546,7 @@ async function main() {
     data: {
       title: "Kiểm tra: Nhóm Halogen (Chương 7 - Lớp 10)",
       grade: 10,
+      chapterId: ch7.id,
       durationSec: 600,
       questions: {
         create: [
@@ -564,15 +580,14 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 10,
-      topic: "Cấu tạo nguyên tử - Bảng tuần hoàn (Chương 1-2)",
+      chapterId: ch1.id,
+      topic: "Cấu tạo nguyên tử",
       cards: {
         create: [
           { order: 1, term: "Proton", meaning: "Hạt mang điện dương trong hạt nhân nguyên tử" },
           { order: 2, term: "Neutron", meaning: "Hạt không mang điện trong hạt nhân nguyên tử" },
           { order: 3, term: "Đồng vị", meaning: "Các nguyên tử cùng số proton, khác số neutron" },
           { order: 4, term: "2n^2", meaning: "Số electron tối đa ở lớp thứ n" },
-          { order: 5, term: "Chu kì", meaning: "Dãy nguyên tố có cùng số lớp electron" },
-          { order: 6, term: "Nhóm A", meaning: "Số thứ tự nhóm bằng số electron lớp ngoài cùng" },
         ],
       },
     },
@@ -581,14 +596,27 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 10,
-      topic: "Liên kết hóa học - Oxi hóa khử (Chương 3-4)",
+      chapterId: ch2.id,
+      topic: "Bảng tuần hoàn",
+      cards: {
+        create: [
+          { order: 1, term: "Chu kì", meaning: "Dãy nguyên tố có cùng số lớp electron" },
+          { order: 2, term: "Nhóm A", meaning: "Số thứ tự nhóm bằng số electron lớp ngoài cùng" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 10,
+      chapterId: ch3.id,
+      topic: "Liên kết hóa học",
       cards: {
         create: [
           { order: 1, term: "Quy tắc octet", meaning: "Xu hướng đạt 8 electron lớp ngoài cùng để bền vững" },
           { order: 2, term: "Liên kết ion", meaning: "Lực hút tĩnh điện giữa các ion trái dấu" },
           { order: 3, term: "Liên kết cộng hóa trị", meaning: "Dùng chung cặp electron giữa 2 nguyên tử" },
-          { order: 4, term: "Chất khử", meaning: "Chất nhường electron, số oxi hóa tăng" },
-          { order: 5, term: "Chất oxi hóa", meaning: "Chất nhận electron, số oxi hóa giảm" },
         ],
       },
     },
@@ -597,12 +625,26 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 10,
-      topic: "Năng lượng hóa học - Tốc độ phản ứng (Chương 5-6)",
+      chapterId: ch4.id,
+      topic: "Phản ứng oxi hóa - khử",
+      cards: {
+        create: [
+          { order: 1, term: "Chất khử", meaning: "Chất nhường electron, số oxi hóa tăng" },
+          { order: 2, term: "Chất oxi hóa", meaning: "Chất nhận electron, số oxi hóa giảm" },
+        ],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 10,
+      chapterId: ch5.id,
+      topic: "Năng lượng hóa học",
       cards: {
         create: [
           { order: 1, term: "ΔrH < 0", meaning: "Phản ứng tỏa nhiệt" },
           { order: 2, term: "ΔrH > 0", meaning: "Phản ứng thu nhiệt" },
-          { order: 3, term: "Chất xúc tác", meaning: "Tăng tốc độ phản ứng, không bị biến đổi sau phản ứng" },
         ],
       },
     },
@@ -611,7 +653,19 @@ async function main() {
   await prisma.flashcardSet.create({
     data: {
       grade: 10,
-      topic: "Nhóm Halogen (Chương 7)",
+      chapterId: ch6.id,
+      topic: "Tốc độ phản ứng",
+      cards: {
+        create: [{ order: 1, term: "Chất xúc tác", meaning: "Tăng tốc độ phản ứng, không bị biến đổi sau phản ứng" }],
+      },
+    },
+  });
+
+  await prisma.flashcardSet.create({
+    data: {
+      grade: 10,
+      chapterId: ch7.id,
+      topic: "Nhóm Halogen",
       cards: {
         create: [
           { order: 1, term: "F2, Cl2, Br2, I2", meaning: "Các đơn chất halogen, tính oxi hóa giảm dần" },
@@ -624,7 +678,7 @@ async function main() {
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 10 theo SGK Hóa học (Kết nối tri thức):");
-  console.log("- 16 tài liệu (Chương 1-7), 7 đề kiểm tra, 4 bộ flashcard");
+  console.log("- 7 chương, 16 tài liệu, 7 đề kiểm tra, 7 bộ flashcard");
 }
 
 main()

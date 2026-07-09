@@ -19,16 +19,17 @@ export default async function AdminFlashcardsPage({
   const gradeNum = grade ? Number(grade) : undefined;
   const hasFilter = Boolean(gradeNum || q);
 
-  const [sets, totalCount] = await Promise.all([
+  const [sets, totalCount, chapters] = await Promise.all([
     prisma.flashcardSet.findMany({
       where: {
         ...(gradeNum ? { grade: gradeNum } : {}),
         ...(q ? { topic: { contains: q } } : {}),
       },
       orderBy: [{ grade: "asc" }],
-      include: { _count: { select: { cards: true } } },
+      include: { _count: { select: { cards: true } }, chapter: true },
     }),
     prisma.flashcardSet.count(),
+    prisma.chapter.findMany({ orderBy: [{ grade: "asc" }, { order: "asc" }] }),
   ]);
 
   return (
@@ -68,6 +69,31 @@ export default async function AdminFlashcardsPage({
                 <option key={g} value={g}>
                   Lớp {g}
                 </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5 sm:col-span-3">
+            <Label htmlFor="chapterId">Chương</Label>
+            <select
+              id="chapterId"
+              name="chapterId"
+              required
+              defaultValue=""
+              className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
+            >
+              <option value="" disabled>
+                Chọn chương
+              </option>
+              {[8, 9, 10, 11, 12].map((g) => (
+                <optgroup key={g} label={`Lớp ${g}`}>
+                  {chapters
+                    .filter((c) => c.grade === g)
+                    .map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    ))}
+                </optgroup>
               ))}
             </select>
           </div>
@@ -125,7 +151,7 @@ export default async function AdminFlashcardsPage({
                 <Badge tone="neutral">Lớp {set.grade}</Badge>
                 <span className="font-medium">{set.topic}</span>
               </div>
-              <p className="mt-1 text-sm text-foreground-muted">{set._count.cards} thẻ</p>
+              <p className="mt-1 text-sm text-foreground-muted">{set.chapter.title} · {set._count.cards} thẻ</p>
             </div>
             <div className="flex items-center gap-2">
               <Link href={`/admin/flashcards/${set.id}`}>
