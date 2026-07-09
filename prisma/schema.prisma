@@ -81,6 +81,7 @@ model QuizAttempt {
   submittedAt DateTime?
   answers     String    @default("{}")
   score       Float?
+  late        Boolean   @default(false)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)

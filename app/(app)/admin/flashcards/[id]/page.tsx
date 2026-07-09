@@ -5,6 +5,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
+import { requireAdmin } from "@/lib/require-auth";
 import { addFlashcard, deleteFlashcard } from "../actions";
 
 export default async function AdminFlashcardSetPage({
@@ -12,6 +13,8 @@ export default async function AdminFlashcardSetPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
+
   const { id } = await params;
   const set = await prisma.flashcardSet.findUnique({
     where: { id },

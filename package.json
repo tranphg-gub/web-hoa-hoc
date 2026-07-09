@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "db:backup": "node scripts/backup-db.mjs",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed:thcs": "tsx prisma/seed-thcs.ts",
     "db:seed:thpt": "tsx prisma/seed-thpt-11-12.ts",

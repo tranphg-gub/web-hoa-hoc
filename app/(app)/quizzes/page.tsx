@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default async function QuizzesPage() {
-  const session = await auth();
-  const user = session!.user;
+  const session = await requireUser();
+  const user = session.user;
   const grade = user.grade ?? 8;
 
   const quizzes = await prisma.quiz.findMany({

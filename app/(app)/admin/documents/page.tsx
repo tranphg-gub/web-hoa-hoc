@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, X, Network } from "lucide-react";
+import { requireAdmin } from "@/lib/require-auth";
 import { createDocument, deleteDocument } from "./actions";
 
 export default async function AdminDocumentsPage({
@@ -12,6 +13,8 @@ export default async function AdminDocumentsPage({
 }: {
   searchParams: Promise<{ grade?: string; q?: string }>;
 }) {
+  await requireAdmin();
+
   const { grade, q } = await searchParams;
   const gradeNum = grade ? Number(grade) : undefined;
 

@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { isPastDeadline, scoreQuizAttempt } from "@/lib/quiz-scoring";
 
 export async function startQuizAttempt(quizId: string) {
   const session = await auth();
@@ -33,8 +34,15 @@ export async function saveQuizAnswer(
 
   const attempt = await prisma.quizAttempt.findUnique({
     where: { id: attemptId },
+    include: { quiz: true },
   });
   if (!attempt || attempt.userId !== session.user.id || attempt.submittedAt) {
+    return;
+  }
+
+  // Đã hết giờ (server time) — không nhận thêm đáp án nữa, kể cả khi client
+  // vẫn còn gửi request (ví dụ do tab bị treo hoặc bị can thiệp).
+  if (isPastDeadline(attempt.startedAt, attempt.quiz.durationSec)) {
     return;
   }
 
@@ -60,16 +68,16 @@ export async function submitQuizAttempt(attemptId: string) {
   }
 
   if (!attempt.submittedAt) {
+    // Chấm dựa trên đáp án đã lưu tại thời điểm này. saveQuizAnswer đã từ chối
+    // lưu thêm đáp án sau deadline nên answers ở đây luôn phản ánh đúng trạng
+    // thái tại thời điểm hết giờ, bất kể submitQuizAttempt được gọi trễ bao lâu.
     const answers = JSON.parse(attempt.answers) as Record<string, number>;
-    const total = attempt.quiz.questions.length;
-    const correct = attempt.quiz.questions.filter(
-      (q) => answers[q.id] === q.correctIndex
-    ).length;
-    const score = total > 0 ? (correct / total) * 10 : 0;
+    const score = scoreQuizAttempt(attempt.quiz.questions, answers);
+    const late = isPastDeadline(attempt.startedAt, attempt.quiz.durationSec);
 
     await prisma.quizAttempt.update({
       where: { id: attemptId },
-      data: { submittedAt: new Date(), score },
+      data: { submittedAt: new Date(), score, late },
     });
   }
 

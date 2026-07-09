@@ -1,12 +1,12 @@
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { ChatPanel } from "./chat-panel";
 
 export default async function AskAiPage() {
-  const session = await auth();
+  const session = await requireUser();
 
   const history = await prisma.chatMessage.findMany({
-    where: { userId: session!.user.id },
+    where: { userId: session.user.id },
     orderBy: { createdAt: "asc" },
   });
 

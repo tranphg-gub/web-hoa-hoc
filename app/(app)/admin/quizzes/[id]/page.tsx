@@ -5,6 +5,7 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
+import { requireAdmin } from "@/lib/require-auth";
 import { addQuestion, deleteQuestion } from "../actions";
 
 export default async function AdminQuizDetailPage({
@@ -12,6 +13,8 @@ export default async function AdminQuizDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
+
   const { id } = await params;
   const quiz = await prisma.quiz.findUnique({
     where: { id },

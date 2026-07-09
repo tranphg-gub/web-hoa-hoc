@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
@@ -14,7 +14,7 @@ export default async function QuizResultPage({
   params: Promise<{ id: string; attemptId: string }>;
 }) {
   const { id, attemptId } = await params;
-  const session = await auth();
+  const session = await requireUser();
 
   const attempt = await prisma.quizAttempt.findUnique({
     where: { id: attemptId },
@@ -23,7 +23,7 @@ export default async function QuizResultPage({
     },
   });
 
-  if (!attempt || attempt.userId !== session!.user.id || attempt.quizId !== id) {
+  if (!attempt || attempt.userId !== session.user.id || attempt.quizId !== id) {
     notFound();
   }
   if (!attempt.submittedAt) notFound();
@@ -45,6 +45,11 @@ export default async function QuizResultPage({
           <p className="mt-1 text-sm text-foreground-muted">
             Nộp lúc {attempt.submittedAt.toLocaleString("vi-VN")}
           </p>
+          {attempt.late && (
+            <Badge tone="warning" className="mt-2">
+              Nộp trễ (quá thời gian quy định)
+            </Badge>
+          )}
         </div>
         <Badge tone={(attempt.score ?? 0) >= 5 ? "success" : "danger"} className="text-base">
           {attempt.score?.toFixed(1)} / 10

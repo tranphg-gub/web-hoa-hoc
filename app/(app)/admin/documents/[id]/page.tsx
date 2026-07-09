@@ -5,6 +5,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
+import { requireAdmin } from "@/lib/require-auth";
 import { updateDocument } from "../actions";
 
 export default async function EditDocumentPage({
@@ -12,6 +13,8 @@ export default async function EditDocumentPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
+
   const { id } = await params;
   const doc = await prisma.document.findUnique({ where: { id } });
   if (!doc) notFound();

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { DocumentContent } from "@/components/chemistry/document-content";
 import { Button } from "@/components/ui/button";
@@ -15,13 +15,13 @@ export default async function DocumentDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await auth();
+  const session = await requireUser();
   const doc = await prisma.document.findUnique({ where: { id } });
   if (!doc) notFound();
 
   const readRecord = await prisma.readDocument.findUnique({
     where: {
-      userId_documentId: { userId: session!.user.id, documentId: id },
+      userId_documentId: { userId: session.user.id, documentId: id },
     },
   });
 

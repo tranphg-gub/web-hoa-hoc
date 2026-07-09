@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+~$*
 
 # debug
 npm-debug.log*
@@ -36,6 +37,7 @@ yarn-error.log*
 # database
 /prisma/dev.db
 /prisma/dev.db-journal
+/prisma/backups/
 
 # tài liệu thô tham khảo (không phải mã nguồn, quá nặng để đưa vào git)
 /Tài liệu/

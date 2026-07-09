@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Network } from "lucide-react";
 
 export default async function DocumentsPage() {
-  const session = await auth();
-  const user = session!.user;
+  const session = await requireUser();
+  const user = session.user;
   const grade = user.grade ?? 8;
 
   const [documents, readIds] = await Promise.all([

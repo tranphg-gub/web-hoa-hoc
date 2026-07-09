@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Layers, Shuffle, Zap } from "lucide-react";
 
 export default async function GamesPage() {
-  const session = await auth();
-  const grade = session!.user.grade ?? 8;
+  const session = await requireUser();
+  const grade = session.user.grade ?? 8;
 
   const sets = await prisma.flashcardSet.findMany({
     where: { grade },

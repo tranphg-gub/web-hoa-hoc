@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-auth";
 import { QuizRunner } from "./quiz-runner";
 
 export default async function QuizAttemptPage({
@@ -9,7 +9,7 @@ export default async function QuizAttemptPage({
   params: Promise<{ id: string; attemptId: string }>;
 }) {
   const { id, attemptId } = await params;
-  const session = await auth();
+  const session = await requireUser();
 
   const attempt = await prisma.quizAttempt.findUnique({
     where: { id: attemptId },
@@ -18,7 +18,7 @@ export default async function QuizAttemptPage({
     },
   });
 
-  if (!attempt || attempt.userId !== session!.user.id || attempt.quizId !== id) {
+  if (!attempt || attempt.userId !== session.user.id || attempt.quizId !== id) {
     notFound();
   }
 

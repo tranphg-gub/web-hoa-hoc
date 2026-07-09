@@ -3,9 +3,12 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { requireAdmin } from "@/lib/require-auth";
 import { createStudent, deleteStudent, resetStudentPassword } from "./actions";
 
 export default async function AdminStudentsPage() {
+  await requireAdmin();
+
   const students = await prisma.user.findMany({
     where: { role: "STUDENT" },
     orderBy: { grade: "asc" },
