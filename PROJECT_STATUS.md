@@ -1,6 +1,6 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3, MR-A→MR-L và MR-M, trừ MR-K). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3, MR-A→MR-M, trừ MR-K, và MR-N mining nội dung thật cho Lớp 11). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
@@ -38,6 +38,7 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 | PWA (MR-L) | ✅ | Cài đặt được vào máy/điện thoại, xem mục 2 |
 | Nội dung chi tiết hơn (MR-I) | ✅ | ~40/83 bài được bổ sung ví dụ số liệu cụ thể/ứng dụng thực tế; đã đối chiếu web tham khảo (vietjack, loigiaihay,...) và kiểm tra lại toàn bộ phương trình mới cân bằng đúng |
 | Ngân hàng câu hỏi + Bài tập luyện tập + AI tạo đề (MR-M) | ✅ | Mở rộng 27 đề kiểm tra (từ ~4-5 câu lên 7-9 câu/đề); thêm mục `/practice` cho học sinh (làm tự do theo chương, biết đúng/sai + giải thích ngay, không tính giờ/điểm) với ~2-3 câu/chương khởi điểm; trang admin `/admin/practice` quản lý ngân hàng + `/admin/practice/generate` dùng AI (Gemini, system prompt riêng) soạn nháp câu hỏi, giáo viên duyệt trước khi lưu |
+| Mining đề thi thật cho Lớp 11 (MR-N) | ✅ | Trích xuất từ kho `Tài liệu/Lớp 11/...` (PDF ảnh scan, đọc bằng thị giác + tự render trang qua `pdftoppm` khi cần): 26 đề, 648 câu hỏi trắc nghiệm thật (đề thi thử của giáo viên TYHH, Phạm Văn Trọng, Dương Quốc Trọng, và đề thi thật Sở GD-ĐT Quảng Ninh 2023-2024), qua script `scripts/import-real-exams.mjs` (idempotent, chạy lại an toàn). Các câu tự luận và câu Đúng/Sai (cấu trúc đề mới) bị bỏ qua vì không tương thích schema hiện tại; các câu có độ chắc chắn thấp (đọc phổ/cấu trúc mơ hồ) cũng bị bỏ qua để ưu tiên chất lượng hơn số lượng |
 
 ## 4. Việc đang làm dở / kế hoạch tiếp theo
 
@@ -59,10 +60,12 @@ Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Chỉ còn:
 | 8 | 11 | 2 | 18 | 2 | 15 | 10 |
 | 9 | 15 | 4 | 29 | 4 | 17 | 13 |
 | 10 | 16 | 7 | 41 | 7 | 18 | 19 |
-| 11 | 19 | 6 | 41 | 6 | 18 | 10 |
+| 11 | 19 | 32 | 648 | 6 | 18 | 10 |
 | 12 | 22 | 8 | 50 | 8 | 20 | 9 |
 
 Mỗi lớp có model `Chapter` riêng (grade, title, order) — Document/Quiz/FlashcardSet/PracticeQuestion liên kết qua `chapterId`. Câu hỏi đã có mức độ khó (gán theo vị trí câu trong đề: câu 1-2 Nhận biết, câu 3 Thông hiểu, câu 4+ Vận dụng/Vận dụng cao — giáo viên nên rà lại qua trang quản trị nếu muốn chính xác hơn theo từng câu cụ thể). Ngân hàng `/practice` mới có khởi điểm ~2-3 câu/chương — giáo viên có thể tự mở rộng thêm qua `/admin/practice/generate` (AI soạn nháp, duyệt trước khi lưu) mà không cần sửa code.
+
+Riêng Lớp 11: 26 trong 32 đề (648 câu) là đề thi thật/thi thử sưu tầm từ giáo viên, gộp vào 1 chương dùng chung "Ôn tập tổng hợp Học kì 1" (không map được vào 1 chương cụ thể vì mỗi đề thường trải nhiều chương). Đáp án các đề không có sẵn đáp án án gốc (trừ bộ TYHH có khoanh tay) nên được giải bằng kiến thức hóa học — nên rà soát lại nếu phát hiện đáp án sai.
 
 ## 7. Nguồn dữ liệu / seed script
 
