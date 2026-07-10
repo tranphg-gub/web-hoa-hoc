@@ -1,7 +1,7 @@
 {
   "name": "Hóa Học Cùng Em",
   "short_name": "Hóa Học Cùng Em",
-  "description": "Học Hóa học lớp 8-12: tài liệu, bài kiểm tra, trò chơi ghi nhớ, AI hỏi đáp.",
+  "description": "Học Hóa học lớp 6-12: tài liệu, bài kiểm tra, trò chơi ghi nhớ, AI hỏi đáp.",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -81,7 +81,7 @@ export default async function AdminDocumentsPage({
                 <option value="" disabled>
                   Chọn lớp
                 </option>
-                {[8, 9, 10, 11, 12].map((g) => (
+                {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                   <option key={g} value={g}>
                     Lớp {g}
                   </option>
@@ -100,7 +100,7 @@ export default async function AdminDocumentsPage({
                 <option value="" disabled>
                   Chọn chương
                 </option>
-                {[8, 9, 10, 11, 12].map((g) => (
+                {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                   <optgroup key={g} label={`Lớp ${g}`}>
                     {chapters
                       .filter((c) => c.grade === g)
@@ -156,7 +156,7 @@ export default async function AdminDocumentsPage({
               className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40 sm:w-40"
             >
               <option value="">Tất cả các lớp</option>
-              {[8, 9, 10, 11, 12].map((g) => (
+              {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                 <option key={g} value={g}>
                   Lớp {g}
                 </option>

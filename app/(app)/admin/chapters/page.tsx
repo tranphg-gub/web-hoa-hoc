@@ -16,7 +16,7 @@ export default async function AdminChaptersPage() {
     },
   });
 
-  const grades = [8, 9, 10, 11, 12];
+  const grades = [6, 7, 8, 9, 10, 11, 12];
   const nextOrderByGrade = Object.fromEntries(
     grades.map((g) => [g, (chapters.filter((c) => c.grade === g).at(-1)?.order ?? 0) + 1])
   );

@@ -49,7 +49,7 @@ export default async function EditDocumentPage({
                 defaultValue={doc.grade}
                 className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
               >
-                {[8, 9, 10, 11, 12].map((g) => (
+                {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                   <option key={g} value={g}>
                     Lớp {g}
                   </option>
@@ -65,7 +65,7 @@ export default async function EditDocumentPage({
                 required
                 className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
               >
-                {[8, 9, 10, 11, 12].map((g) => (
+                {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                   <optgroup key={g} label={`Lớp ${g}`}>
                     {chapters
                       .filter((c) => c.grade === g)

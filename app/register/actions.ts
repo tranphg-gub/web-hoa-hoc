@@ -20,7 +20,7 @@ export async function registerStudent(formData: FormData) {
   if (password.length < 6) {
     throw new Error("Mật khẩu phải có ít nhất 6 ký tự.");
   }
-  if (grade < 8 || grade > 12) {
+  if (grade < 6 || grade > 12) {
     throw new Error("Lớp không hợp lệ.");
   }
 

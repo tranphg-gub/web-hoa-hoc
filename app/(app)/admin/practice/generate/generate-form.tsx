@@ -85,7 +85,7 @@ export function GenerateExercisesForm({ chapters }: { chapters: Chapter[] }) {
               <option value="" disabled>
                 Chọn chương
               </option>
-              {[8, 9, 10, 11, 12].map((g) => (
+              {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                 <optgroup key={g} label={`Lớp ${g}`}>
                   {chapters
                     .filter((c) => c.grade === g)

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Hóa Học Cùng Em",
-  description: "Nền tảng học Hóa học lớp 8-12: tài liệu, bài kiểm tra tính giờ, trò chơi ghi nhớ và AI gia sư hỏi đáp.",
+  description: "Nền tảng học Hóa học lớp 6-12: tài liệu, bài kiểm tra tính giờ, trò chơi ghi nhớ và AI gia sư hỏi đáp.",
   manifest: "/manifest.json",
   icons: {
     icon: "/icon-192.png",

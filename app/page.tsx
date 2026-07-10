@@ -9,7 +9,7 @@ const features = [
     icon: BookOpen,
     title: "Tài liệu học tập",
     description:
-      "Lý thuyết theo từng lớp 8-12, trình bày công thức và phương trình phản ứng đúng chuẩn khoa học.",
+      "Lý thuyết theo từng lớp 6-12, trình bày công thức và phương trình phản ứng đúng chuẩn khoa học.",
   },
   {
     icon: Timer,
@@ -51,7 +51,7 @@ export default function Home() {
         <div className="hero-gradient pointer-events-none absolute inset-x-0 -top-32 h-[520px]" />
         <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
           <span className="mb-6 inline-flex items-center rounded-full border border-border-subtle bg-background px-4 py-1.5 text-xs font-medium text-foreground-muted">
-            Dành cho học sinh lớp 8 – 12
+            Dành cho học sinh lớp 6 – 12
           </span>
           <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-6xl">
             Học Hóa học <span className="accent-italic">thật dễ</span>,

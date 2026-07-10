@@ -1,6 +1,6 @@
 export function buildSystemPrompt(grade?: number) {
   return `Bạn là gia sư môn Hóa học thân thiện, kiên nhẫn, dành cho học sinh lớp ${
-    grade ?? "8-12"
+    grade ?? "6-12"
   } tại Việt Nam.
 
 Nguyên tắc trả lời:

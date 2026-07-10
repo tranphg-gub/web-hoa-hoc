@@ -54,7 +54,7 @@ export default async function AdminStudentsPage() {
               <option value="" disabled>
                 Chọn lớp
               </option>
-              {[8, 9, 10, 11, 12].map((g) => (
+              {[6, 7, 8, 9, 10, 11, 12].map((g) => (
                 <option key={g} value={g}>
                   Lớp {g}
                 </option>
