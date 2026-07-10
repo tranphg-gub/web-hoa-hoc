@@ -1,6 +1,6 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-D). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-G). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
@@ -28,15 +28,15 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 | AI hỏi đáp | ⚠️ Code xong (Gemini), **chưa có API key thật** | System prompt đã cải thiện: danh pháp KNTT, luôn cân bằng PTHH, thừa nhận khi không chắc |
 | Admin — học sinh/thanh toán/chương/tài liệu/đề/flashcard | ✅ | CRUD đầy đủ, dropdown chọn Chapter (không gõ tay), trang riêng quản lý danh mục Chương |
 | Mind map | ✅ | Theo `chapterId`, cả trang học sinh và admin |
+| Điểm thưởng & xếp hạng (MR-E) | ✅ | Cộng điểm khi nộp bài kiểm tra (score×10, ×5 nếu nộp trễ), trang `/leaderboard` nội bộ |
+| Diễn đàn (MR-F) | ✅ | `/forum` — đăng câu hỏi, học sinh trả lời lẫn nhau, nút "Hỏi AI gia sư" trả lời ngay trong luồng bình luận |
+| Nhắc nhở học tập (MR-G) | ✅ | Banner trên dashboard: cảnh báo lâu chưa học (`lib/reminders.ts`, có unit test) + liệt kê đề kiểm tra chưa làm |
 
 ## 4. Việc đang làm dở / kế hoạch tiếp theo
 
 Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Tóm tắt các phần **chưa làm**:
 
-- MR-E: Điểm thưởng & bảng xếp hạng nội bộ (`User.points` đã có cột trong schema, chưa có logic cộng điểm/trang xếp hạng)
-- MR-F: Diễn đàn (học sinh ↔ học sinh, học sinh ↔ AI)
-- MR-G: Nhắc nhở học tập trên dashboard
-- MR-H: Test đầu vào + phân luồng học tập + "AI con" quản lý lộ trình (phần phức tạp nhất, chưa bắt đầu)
+- MR-H: Test đầu vào + phân luồng học tập + "AI con" quản lý lộ trình (phần phức tạp nhất, đang lập kế hoạch con)
 - MR-I: Rà soát nội dung chi tiết/chính xác hơn (đối chiếu thêm web khác) — chưa làm đợt này
 - MR-J: Đẩy code lên `https://github.com/tranphg-gub/web-hoa-hoc` — **chưa cấu hình remote, cần xác nhận với người dùng trước khi push lần đầu**
 - MR-K: Public deploy — **chờ người dùng có mặt**, chưa tự làm
