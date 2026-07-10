@@ -15,6 +15,7 @@ import {
   Layers,
   BookMarked,
   Wallet,
+  Trophy,
 } from "lucide-react";
 
 const studentLinks = [
@@ -22,6 +23,7 @@ const studentLinks = [
   { href: "/documents", label: "Tài liệu", icon: BookOpen },
   { href: "/quizzes", label: "Bài kiểm tra", icon: Timer },
   { href: "/games", label: "Trò chơi ghi nhớ", icon: Brain },
+  { href: "/leaderboard", label: "Xếp hạng", icon: Trophy },
   { href: "/ask-ai", label: "Hỏi AI", icon: Sparkles },
 ];
 

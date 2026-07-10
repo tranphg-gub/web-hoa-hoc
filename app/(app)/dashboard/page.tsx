@@ -3,13 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Timer, Brain, Sparkles, ArrowRight } from "lucide-react";
+import { BookOpen, Timer, Brain, Sparkles, ArrowRight, Trophy } from "lucide-react";
 
 export default async function DashboardPage() {
   const session = await requireUser();
   const user = session.user;
 
-  const [documentsCount, readCount, quizzesCount, attempts, recentDocs] =
+  const [documentsCount, readCount, quizzesCount, attempts, recentDocs, points] =
     await Promise.all([
       prisma.document.count({ where: { grade: user.grade ?? undefined } }),
       prisma.readDocument.count({ where: { userId: user.id } }),
@@ -26,6 +26,7 @@ export default async function DashboardPage() {
         orderBy: { order: "asc" },
         take: 3,
       }),
+      prisma.user.findUnique({ where: { id: user.id }, select: { points: true } }),
     ]);
 
   return (
@@ -52,6 +53,17 @@ export default async function DashboardPage() {
           label="Lượt làm bài"
           value={`${attempts.length}`}
         />
+        <Link href="/leaderboard">
+          <Card className="flex h-full flex-col justify-between transition-colors hover:bg-background-subtle">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background-subtle">
+              <Trophy className="h-5 w-5" strokeWidth={1.75} />
+            </div>
+            <div className="mt-3 text-2xl font-semibold tracking-tight">
+              {points?.points ?? 0}
+            </div>
+            <div className="text-sm text-foreground-muted">Điểm thưởng · Xem xếp hạng</div>
+          </Card>
+        </Link>
         <Link href="/ask-ai">
           <Card className="flex h-full flex-col justify-between transition-colors hover:bg-background-subtle">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background-subtle">

@@ -79,6 +79,12 @@ export async function submitQuizAttempt(attemptId: string) {
       where: { id: attemptId },
       data: { submittedAt: new Date(), score, late },
     });
+
+    const pointsEarned = Math.round(score * (late ? 5 : 10));
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { points: { increment: pointsEarned } },
+    });
   }
 
   revalidatePath("/dashboard");
