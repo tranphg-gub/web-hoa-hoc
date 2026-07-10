@@ -16,6 +16,7 @@ export default auth((req) => {
     nextUrl.pathname.startsWith("/games") ||
     nextUrl.pathname.startsWith("/ask-ai") ||
     nextUrl.pathname.startsWith("/leaderboard") ||
+    nextUrl.pathname.startsWith("/forum") ||
     isChangePasswordRoute ||
     isPaymentPendingRoute ||
     isAdminRoute;
@@ -55,6 +56,7 @@ export const config = {
     "/games/:path*",
     "/ask-ai/:path*",
     "/leaderboard/:path*",
+    "/forum/:path*",
     "/admin/:path*",
     "/change-password/:path*",
     "/payment-pending/:path*",

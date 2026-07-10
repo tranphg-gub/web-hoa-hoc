@@ -16,6 +16,7 @@ import {
   BookMarked,
   Wallet,
   Trophy,
+  MessageSquare,
 } from "lucide-react";
 
 const studentLinks = [
@@ -24,6 +25,7 @@ const studentLinks = [
   { href: "/quizzes", label: "Bài kiểm tra", icon: Timer },
   { href: "/games", label: "Trò chơi ghi nhớ", icon: Brain },
   { href: "/leaderboard", label: "Xếp hạng", icon: Trophy },
+  { href: "/forum", label: "Diễn đàn", icon: MessageSquare },
   { href: "/ask-ai", label: "Hỏi AI", icon: Sparkles },
 ];
 

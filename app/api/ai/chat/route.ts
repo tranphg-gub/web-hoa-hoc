@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
 import { isRateLimited } from "@/lib/ai/rate-limit";
+import { getGeminiModel } from "@/lib/ai/gemini";
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -45,11 +45,7 @@ export async function POST(request: Request) {
     parts: [{ text: m.content }],
   }));
 
-  const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = client.getGenerativeModel({
-    model: process.env.GEMINI_MODEL || "gemini-2.5-pro",
-    systemInstruction: buildSystemPrompt(session.user.grade),
-  });
+  const model = getGeminiModel(buildSystemPrompt(session.user.grade));
 
   try {
     const chat = model.startChat({ history: priorTurns });
