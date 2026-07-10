@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { DocumentContent } from "@/components/chemistry/document-content";
+import { DocumentDownloadActions } from "@/components/chemistry/document-download-actions";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
@@ -34,18 +35,24 @@ export default async function DocumentDetailPage({
         <ArrowLeft className="h-4 w-4" /> Quay lại tài liệu
       </Link>
 
-      <div>
-        <Badge tone="neutral">{doc.chapter.title}</Badge>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight">
-          {doc.title}
-        </h1>
+      <div className="flex items-start justify-between gap-4 print:hidden">
+        <div>
+          <Badge tone="neutral">{doc.chapter.title}</Badge>
+          <h1 className="mt-3 text-2xl font-semibold tracking-tight">
+            {doc.title}
+          </h1>
+        </div>
+        <DocumentDownloadActions title={doc.title} content={doc.content} />
       </div>
 
-      <Card>
-        <DocumentContent content={doc.content} />
-      </Card>
+      <div id="printable-document">
+        <h1 className="mb-4 hidden text-xl font-semibold print:block">{doc.title}</h1>
+        <Card>
+          <DocumentContent content={doc.content} />
+        </Card>
+      </div>
 
-      <Card className="flex items-center justify-between bg-background-subtle">
+      <Card className="flex items-center justify-between bg-background-subtle print:hidden">
         <CardDescription>
           {readRecord
             ? "Bạn đã đánh dấu bài học này là đã học."
