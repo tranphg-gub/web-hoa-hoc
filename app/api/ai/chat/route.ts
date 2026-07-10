@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
@@ -23,9 +23,9 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
-      { error: "Chưa cấu hình ANTHROPIC_API_KEY trên server." },
+      { error: "Chưa cấu hình GEMINI_API_KEY trên server." },
       { status: 500 }
     );
   }
@@ -40,21 +40,21 @@ export async function POST(request: Request) {
     take: 20,
   });
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const priorTurns = history.slice(0, -1).map((m) => ({
+    role: m.role === "assistant" ? ("model" as const) : ("user" as const),
+    parts: [{ text: m.content }],
+  }));
+
+  const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = client.getGenerativeModel({
+    model: process.env.GEMINI_MODEL || "gemini-2.5-pro",
+    systemInstruction: buildSystemPrompt(session.user.grade),
+  });
 
   try {
-    const response = await client.messages.create({
-      model: "claude-sonnet-5",
-      max_tokens: 1024,
-      system: buildSystemPrompt(session.user.grade),
-      messages: history.map((m) => ({
-        role: m.role === "assistant" ? "assistant" : "user",
-        content: m.content,
-      })),
-    });
-
-    const textBlock = response.content.find((block) => block.type === "text");
-    const reply = textBlock && textBlock.type === "text" ? textBlock.text : "";
+    const chat = model.startChat({ history: priorTurns });
+    const result = await chat.sendMessage(message);
+    const reply = result.response.text();
 
     await prisma.chatMessage.create({
       data: { userId: session.user.id, role: "assistant", content: reply },
