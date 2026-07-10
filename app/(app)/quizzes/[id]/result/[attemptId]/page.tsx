@@ -8,7 +8,7 @@ import { DifficultyBadge } from "@/components/ui/difficulty-badge";
 import { DIFFICULTY_ORDER } from "@/lib/difficulty";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Check, X } from "lucide-react";
+import { ArrowLeft, Check, X, Sparkles } from "lucide-react";
 
 export default async function QuizResultPage({
   params,
@@ -22,6 +22,7 @@ export default async function QuizResultPage({
     where: { id: attemptId },
     include: {
       quiz: { include: { questions: { orderBy: { order: "asc" } } } },
+      learningPathRecommendation: true,
     },
   });
 
@@ -63,6 +64,18 @@ export default async function QuizResultPage({
           {attempt.score?.toFixed(1)} / 10
         </Badge>
       </Card>
+
+      {attempt.learningPathRecommendation && (
+        <Card className="border-accent-purple/40 bg-gradient-to-br from-[#FFD9E8]/15 via-[#E5D4FF]/15 to-[#D4E9FF]/15">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+            <CardTitle className="text-sm">Phân tích & lộ trình ôn tập (AI)</CardTitle>
+          </div>
+          <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-foreground">
+            <ChemProseText text={attempt.learningPathRecommendation.recommendation} />
+          </p>
+        </Card>
+      )}
 
       {statsByDifficulty.length > 0 && (
         <Card>

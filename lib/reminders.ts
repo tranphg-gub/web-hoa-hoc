@@ -9,10 +9,12 @@ export function buildReminders({
   lastActivityAt,
   now,
   unattemptedQuizTitles,
+  pendingMonthlyCheckTitle,
 }: {
   lastActivityAt: Date | null;
   now: Date;
   unattemptedQuizTitles: string[];
+  pendingMonthlyCheckTitle?: string | null;
 }): Reminder[] {
   const reminders: Reminder[] = [];
 
@@ -36,6 +38,13 @@ export function buildReminders({
     reminders.push({
       id: "new-quiz",
       message: `Bạn có ${unattemptedQuizTitles.length} đề kiểm tra chưa làm thử: ${preview}${rest}.`,
+    });
+  }
+
+  if (pendingMonthlyCheckTitle) {
+    reminders.push({
+      id: "monthly-check",
+      message: `Bạn chưa làm bài đánh giá định kỳ tháng này: "${pendingMonthlyCheckTitle}". Hãy làm để cập nhật lộ trình học phù hợp.`,
     });
   }
 

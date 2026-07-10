@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { isPastDeadline, scoreQuizAttempt } from "@/lib/quiz-scoring";
+import { generateLearningPathRecommendation } from "@/lib/ai/placement-analysis";
 
 export async function startQuizAttempt(quizId: string) {
   const session = await auth();
@@ -85,6 +86,31 @@ export async function submitQuizAttempt(attemptId: string) {
       where: { id: session.user.id },
       data: { points: { increment: pointsEarned } },
     });
+
+    if (attempt.quiz.kind !== "REGULAR") {
+      try {
+        const analysisQuestions = attempt.quiz.questions.map((q) => ({
+          content: q.content,
+          difficulty: q.difficulty,
+          isCorrect: answers[q.id] === q.correctIndex,
+        }));
+        const { weakAreas, recommendation } = await generateLearningPathRecommendation(
+          analysisQuestions,
+          String(attempt.quiz.grade)
+        );
+        await prisma.learningPathRecommendation.create({
+          data: {
+            userId: session.user.id,
+            quizAttemptId: attemptId,
+            weakAreas: JSON.stringify(weakAreas),
+            recommendation,
+          },
+        });
+      } catch {
+        // AI phân tích không bắt buộc để xem kết quả bài làm - bỏ qua nếu lỗi
+        // (vd. chưa cấu hình GEMINI_API_KEY), học sinh vẫn thấy điểm số bình thường.
+      }
+    }
   }
 
   revalidatePath("/dashboard");

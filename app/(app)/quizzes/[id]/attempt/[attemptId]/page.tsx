@@ -43,6 +43,7 @@ export default async function QuizAttemptPage({
       startedAt={attempt.startedAt.toISOString()}
       questions={questions}
       initialAnswers={savedAnswers}
+      kind={attempt.quiz.kind}
     />
   );
 }

@@ -43,7 +43,7 @@ export default async function DashboardPage() {
       select: { readAt: true },
     }),
     prisma.quiz.findMany({
-      where: { grade: user.grade ?? undefined },
+      where: { grade: user.grade ?? undefined, kind: "REGULAR" },
       select: { id: true, title: true },
     }),
     prisma.quizAttempt.findMany({
@@ -52,13 +52,31 @@ export default async function DashboardPage() {
     }),
   ]);
 
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthlyCheckQuiz = await prisma.quiz.findFirst({
+    where: { grade: user.grade ?? undefined, kind: "MONTHLY_CHECK" },
+    orderBy: { createdAt: "desc" },
+  });
+  const monthlyCheckDoneThisMonth = monthlyCheckQuiz
+    ? await prisma.quizAttempt.findFirst({
+        where: {
+          userId: user.id,
+          quizId: monthlyCheckQuiz.id,
+          submittedAt: { gte: startOfMonth },
+        },
+      })
+    : null;
+
   const attemptedIdSet = new Set(attemptedQuizIds.map((a) => a.quizId));
   const reminders = buildReminders({
     lastActivityAt: lastRead?.readAt ?? null,
-    now: new Date(),
+    now,
     unattemptedQuizTitles: allGradeQuizzes
       .filter((q) => !attemptedIdSet.has(q.id))
       .map((q) => q.title),
+    pendingMonthlyCheckTitle:
+      monthlyCheckQuiz && !monthlyCheckDoneThisMonth ? monthlyCheckQuiz.title : null,
   });
 
   return (

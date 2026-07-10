@@ -3,7 +3,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import type { Difficulty } from "@prisma/client";
+import type { Difficulty, QuizKind } from "@prisma/client";
 
 async function requireAdmin() {
   const session = await auth();
@@ -21,6 +21,7 @@ export async function createQuiz(formData: FormData) {
       grade: Number(formData.get("grade")),
       chapterId: String(formData.get("chapterId") ?? ""),
       durationSec: Number(formData.get("durationMin")) * 60,
+      kind: (formData.get("kind") as QuizKind) || "REGULAR",
     },
   });
 

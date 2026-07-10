@@ -88,12 +88,18 @@ Thứ tự thực hiện: A → B → C → D → E → F → G → I (song song
 - Banner trên dashboard: "Bạn chưa học bài nào 3 ngày qua", "Có đề kiểm tra mới ở chương X".
 - Tính toán đơn giản từ `ReadDocument`/`QuizAttempt` timestamps, không cần hạ tầng email/push.
 
-### MR-H: Test đầu vào + phân luồng + AI con (phần phức tạp nhất — sẽ lập kế hoạch con riêng khi bắt đầu)
-- Ngân hàng câu hỏi "test đầu vào" tổng hợp kiến thức năm trước theo từng lớp.
-- Chấm + phân tích điểm yếu theo Chương/Difficulty (tận dụng nền tảng đã có từ GD2-GD3).
-- Đề xuất lộ trình ôn tập dựa trên phân tích.
-- Lên lịch test lại định kỳ hàng tháng.
-- "AI con": một vai trò AI riêng (system prompt riêng) chuyên phân tích kết quả và đề xuất lộ trình, tách biệt khỏi AI gia sư hỏi-đáp thường ngày.
+### MR-H: Test đầu vào + phân luồng + AI con (kế hoạch con — 2026-07-10)
+
+Quyết định thiết kế: **tận dụng lại toàn bộ hạ tầng Quiz/Question/Chapter/Difficulty đã có** thay vì xây một hệ thống "ngân hàng đề" song song — tránh phình to kiến trúc không cần thiết.
+
+1. Thêm `enum QuizKind { REGULAR, PLACEMENT, MONTHLY_CHECK }` và `Quiz.kind` (mặc định REGULAR). Test đầu vào/đánh giá định kỳ chỉ là Quiz có `kind` khác, tạo qua đúng giao diện admin quiz hiện tại (thêm dropdown "Loại đề").
+2. Test đầu vào cho lớp N vẫn cần gắn vào 1 Chapter (ràng buộc hiện tại của Quiz) — giải pháp: giáo viên tạo 1 Chapter "Ôn tập đầu năm" cho lớp N (order 0), rồi tạo Quiz PLACEMENT dưới chương đó với câu hỏi tự chọn tổng hợp kiến thức lớp N-1. Không cần đổi schema Quiz↔Chapter.
+3. Thêm model `LearningPathRecommendation` (userId, quizAttemptId, weakAreas JSON, recommendation text, createdAt) — lưu kết quả phân tích của AI cho 1 lần làm bài PLACEMENT/MONTHLY_CHECK cụ thể.
+4. "AI con" = 1 system prompt riêng (`lib/ai/placement-analysis.ts`), khác với AI gia sư hỏi-đáp: nhận vào danh sách câu hỏi + đúng/sai + mức độ khó của lần làm bài, trả về (a) tóm tắt điểm yếu, (b) đề xuất ôn tập cụ thể, giọng khích lệ. Gọi qua `askGeminiOnce` đã có sẵn từ MR-F.
+5. Khi nộp bài (submitQuizAttempt), nếu `quiz.kind !== REGULAR` → tự động gọi AI con phân tích, lưu `LearningPathRecommendation`, hiển thị ở trang kết quả (card riêng "Phân tích & lộ trình ôn tập").
+6. Trang làm bài: nếu `kind !== REGULAR`, hiện banner cảnh báo nhắc học sinh làm nghiêm túc, không chọn bừa (đúng yêu cầu gốc của người dùng).
+7. "Lên lịch hàng tháng": không cần cron job thật — banner nhắc nhở (tận dụng `lib/reminders.ts` từ MR-G) kiểm tra học sinh đã làm quiz MONTHLY_CHECK của lớp mình trong tháng hiện tại chưa, nếu chưa thì nhắc.
+8. Không làm trong đợt này (out of scope, cân nhắc sau nếu cần): giao diện soạn "ma trận đề" chuyên biệt cho test đầu vào, phân tích xu hướng nhiều tháng, tự động tạo đề ngẫu nhiên từ ngân hàng câu hỏi lớn.
 
 ### MR-I: Nội dung chi tiết & chính xác hơn (song song)
 - Đối chiếu thêm với các web học Hóa học phổ biến (qua tìm kiếm) để bổ sung dạng bài/ví dụ còn thiếu.

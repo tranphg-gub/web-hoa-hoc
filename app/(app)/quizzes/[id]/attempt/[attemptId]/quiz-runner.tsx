@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
 import { cn } from "@/lib/utils";
 import { saveQuizAnswer, submitQuizAttempt } from "@/app/(app)/quizzes/actions";
+import type { QuizKind } from "@prisma/client";
+import { AlertTriangle } from "lucide-react";
 
 type Question = {
   id: string;
@@ -33,6 +35,7 @@ export function QuizRunner({
   startedAt,
   questions,
   initialAnswers,
+  kind,
 }: {
   attemptId: string;
   quizId: string;
@@ -41,6 +44,7 @@ export function QuizRunner({
   startedAt: string;
   questions: Question[];
   initialAnswers: Record<string, number>;
+  kind: QuizKind;
 }) {
   const [answers, setAnswers] = useState<Record<string, number>>(initialAnswers);
   const [remaining, setRemaining] = useState(() =>
@@ -96,6 +100,17 @@ export function QuizRunner({
           {formatTime(remaining)}
         </div>
       </div>
+
+      {kind !== "REGULAR" && (
+        <div className="flex items-start gap-3 rounded-2xl border border-warning-fg/20 bg-warning-bg px-4 py-3 text-sm text-warning-fg">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.75} />
+          <span>
+            Đây là bài {kind === "PLACEMENT" ? "test đầu vào" : "đánh giá định kỳ"} dùng để xếp lộ
+            trình học phù hợp cho bạn. Hãy làm nghiêm túc, không chọn đáp án bừa để kết quả phản
+            ánh đúng năng lực hiện tại nhé.
+          </span>
+        </div>
+      )}
 
       <div className="flex flex-col gap-4">
         {questions.map((q, idx) => (

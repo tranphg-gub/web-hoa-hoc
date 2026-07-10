@@ -32,3 +32,20 @@ test("buildReminders liệt kê đề kiểm tra chưa làm", () => {
   assert.match(quizReminder.message, /Đề A/);
   assert.match(quizReminder.message, /Đề B/);
 });
+
+test("buildReminders nhắc bài đánh giá định kỳ chưa làm khi có tên đề", () => {
+  const reminders = buildReminders({
+    lastActivityAt: now,
+    now,
+    unattemptedQuizTitles: [],
+    pendingMonthlyCheckTitle: "Đánh giá tháng 1",
+  });
+  const monthlyReminder = reminders.find((r) => r.id === "monthly-check");
+  assert.ok(monthlyReminder);
+  assert.match(monthlyReminder.message, /Đánh giá tháng 1/);
+});
+
+test("buildReminders không nhắc đánh giá định kỳ khi không truyền tên đề", () => {
+  const reminders = buildReminders({ lastActivityAt: now, now, unattemptedQuizTitles: [] });
+  assert.equal(reminders.some((r) => r.id === "monthly-check"), false);
+});

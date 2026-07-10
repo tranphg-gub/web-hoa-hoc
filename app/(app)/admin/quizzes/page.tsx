@@ -6,6 +6,7 @@ import { Input, Label } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, X } from "lucide-react";
 import { requireAdmin } from "@/lib/require-auth";
+import { QUIZ_KIND_LABELS, QUIZ_KIND_ORDER } from "@/lib/quiz-kind";
 import { createQuiz, deleteQuiz } from "./actions";
 
 export default async function AdminQuizzesPage({
@@ -101,6 +102,21 @@ export default async function AdminQuizzesPage({
             <Label htmlFor="durationMin">Thời gian (phút)</Label>
             <Input id="durationMin" name="durationMin" type="number" defaultValue={15} required />
           </div>
+          <div className="flex flex-col gap-1.5 sm:col-span-2">
+            <Label htmlFor="kind">Loại đề</Label>
+            <select
+              id="kind"
+              name="kind"
+              defaultValue="REGULAR"
+              className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
+            >
+              {QUIZ_KIND_ORDER.map((k) => (
+                <option key={k} value={k}>
+                  {QUIZ_KIND_LABELS[k]}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="sm:col-span-3">
             <Button type="submit">Tạo đề</Button>
           </div>
@@ -153,6 +169,9 @@ export default async function AdminQuizzesPage({
             <div>
               <div className="flex items-center gap-2">
                 <Badge tone="neutral">Lớp {quiz.grade}</Badge>
+                {quiz.kind !== "REGULAR" && (
+                  <Badge tone="warning">{QUIZ_KIND_LABELS[quiz.kind]}</Badge>
+                )}
                 <span className="font-medium">{quiz.title}</span>
               </div>
               <p className="mt-1 text-sm text-foreground-muted">
