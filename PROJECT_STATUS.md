@@ -1,6 +1,6 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-G). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-H, MR-J, MR-L). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
@@ -12,6 +12,8 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 - SQLite qua Prisma ORM (`prisma/dev.db`, schema tại `prisma/schema.prisma`)
 - Auth.js (NextAuth v5) — Credentials provider, mật khẩu hash bcrypt, JWT session
 - **Google Gemini** (`@google/generative-ai`) cho module AI hỏi đáp — đã đổi từ Anthropic. **Cần điền `GEMINI_API_KEY` thật vào `.env`** (lấy miễn phí tại https://aistudio.google.com/apikey) — hiện đang để trống, chưa test thật.
+- **PWA**: manifest + service worker tối giản (chỉ cache icon/manifest, không cache trang có xác thực) — cài được vào máy/điện thoại qua "Cài đặt ứng dụng" của trình duyệt
+- Code đã đẩy lên `https://github.com/tranphg-gub/web-hoa-hoc` (nhánh `main`), local branch `master` tracking `origin/main`
 - Chạy local qua `npm run dev` (http://localhost:3000)
 
 ## 3. Tính năng đã hoạt động
@@ -30,24 +32,24 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 | Mind map | ✅ | Theo `chapterId`, cả trang học sinh và admin |
 | Điểm thưởng & xếp hạng (MR-E) | ✅ | Cộng điểm khi nộp bài kiểm tra (score×10, ×5 nếu nộp trễ), trang `/leaderboard` nội bộ |
 | Diễn đàn (MR-F) | ✅ | `/forum` — đăng câu hỏi, học sinh trả lời lẫn nhau, nút "Hỏi AI gia sư" trả lời ngay trong luồng bình luận |
-| Nhắc nhở học tập (MR-G) | ✅ | Banner trên dashboard: cảnh báo lâu chưa học (`lib/reminders.ts`, có unit test) + liệt kê đề kiểm tra chưa làm |
+| Nhắc nhở học tập (MR-G) | ✅ | Banner trên dashboard: cảnh báo lâu chưa học (`lib/reminders.ts`, có unit test) + liệt kê đề kiểm tra chưa làm + đề đánh giá định kỳ chưa làm |
+| Test đầu vào/đánh giá định kỳ + AI phân tích lộ trình (MR-H) | ✅ | `Quiz.kind` (REGULAR/PLACEMENT/MONTHLY_CHECK); nộp bài PLACEMENT/MONTHLY_CHECK tự động gọi "AI con" (`lib/ai/placement-analysis.ts`) phân tích điểm yếu + đề xuất ôn tập, hiển thị ở trang kết quả |
+| GitHub (MR-J) | ✅ | Đã push lên `https://github.com/tranphg-gub/web-hoa-hoc` nhánh `main` |
+| PWA (MR-L) | ✅ | Cài đặt được vào máy/điện thoại, xem mục 2 |
 
 ## 4. Việc đang làm dở / kế hoạch tiếp theo
 
 Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Tóm tắt các phần **chưa làm**:
 
-- MR-H: Test đầu vào + phân luồng học tập + "AI con" quản lý lộ trình (phần phức tạp nhất, đang lập kế hoạch con)
-- MR-I: Rà soát nội dung chi tiết/chính xác hơn (đối chiếu thêm web khác) — chưa làm đợt này
-- MR-J: Đẩy code lên `https://github.com/tranphg-gub/web-hoa-hoc` — **chưa cấu hình remote, cần xác nhận với người dùng trước khi push lần đầu**
-- MR-K: Public deploy — **chờ người dùng có mặt**, chưa tự làm
-- MR-L: Đóng gói PWA — chưa làm
+- MR-I: Rà soát nội dung chi tiết/chính xác hơn (đối chiếu thêm web khác) — khối lượng lớn (94 bài học), cần một phiên làm việc riêng
+- MR-K: Public deploy — **chờ người dùng có mặt**, chưa tự làm theo đúng yêu cầu
 
 ## 5. Việc CẦN người dùng làm
 
-- Điền `GEMINI_API_KEY` thật vào `.env` (lấy tại https://aistudio.google.com/apikey) để bật AI hỏi đáp.
-- Xác nhận trước khi push code lên GitHub remote (repo hiện chưa có remote nào).
-- Có mặt khi triển khai public (theo đúng yêu cầu của bạn).
+- Điền `GEMINI_API_KEY` thật vào `.env` (lấy tại https://aistudio.google.com/apikey) để bật AI hỏi đáp và AI phân tích lộ trình học (MR-H).
+- Có mặt khi triển khai public (theo đúng yêu cầu của bạn) — chọn nền tảng hosting (Vercel là lựa chọn tự nhiên nhất cho Next.js).
 - Cung cấp thông tin chuyển khoản thật (số tài khoản ngân hàng...) nếu muốn hiển thị trên trang `/payment-pending` — hiện trang này chỉ ghi "liên hệ giáo viên", chưa có số tài khoản cụ thể vì tôi không tự bịa thông tin thanh toán.
+- Nếu muốn dùng test đầu vào (MR-H) thật: tạo 1 Chapter "Ôn tập đầu năm" cho từng lớp, rồi tạo Quiz với "Loại đề" = Test đầu vào/Đánh giá định kỳ gắn vào chương đó.
 
 ## 6. Nội dung học tập hiện có trong database
 
