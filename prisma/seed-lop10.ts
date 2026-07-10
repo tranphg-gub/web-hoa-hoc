@@ -14,6 +14,7 @@ async function main() {
   await prisma.quiz.deleteMany({ where: { grade: 10 } });
   await prisma.flashcard.deleteMany({ where: { set: { grade: 10 } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: 10 } });
+  await prisma.practiceQuestion.deleteMany({ where: { chapter: { grade: 10 } } });
   await prisma.document.deleteMany({ where: { grade: 10 } });
   await prisma.chapter.deleteMany({ where: { grade: 10 } });
 
@@ -375,6 +376,32 @@ async function main() {
             correctIndex: 0,
             explanation: "Oxygen có 8 electron, phân bố: 1s2 2s2 2p4.",
           },
+          {
+            order: 6,
+            content: "Nguyên tử X có tổng số hạt proton, neutron, electron là 34, trong đó số hạt mang điện gấp 1,833 lần số hạt không mang điện. X là nguyên tố nào?",
+            choices: JSON.stringify(["Na (Z=11)", "Mg (Z=12)", "Al (Z=13)", "Si (Z=14)"]),
+            correctIndex: 0,
+            explanation: "Gọi Z=P=E, N là số neutron: 2Z+N=34 và 2Z=1,833N -> giải ra Z=11, N=12 -> X là Na (Z=11).",
+          },
+          {
+            order: 7,
+            content: "Nguyên tử có điện tích hạt nhân +11 (đơn vị điện tích nguyên tố) thì có bao nhiêu electron?",
+            choices: JSON.stringify(["10", "11", "12", "23"]),
+            correctIndex: 1,
+            explanation: "Nguyên tử trung hòa về điện nên số electron bằng số proton, tức bằng 11.",
+          },
+          {
+            order: 8,
+            content: "Vì sao khối lượng nguyên tử tập trung hầu như hoàn toàn ở hạt nhân?",
+            choices: JSON.stringify([
+              "Vì proton và neutron có khối lượng lớn hơn electron rất nhiều lần",
+              "Vì hạt nhân có kích thước lớn hơn electron",
+              "Vì electron không có khối lượng",
+              "Vì hạt nhân mang điện dương",
+            ]),
+            correctIndex: 0,
+            explanation: "Khối lượng electron rất nhỏ (khoảng 1/1840 khối lượng proton), nên khối lượng nguyên tử tập trung ở hạt nhân (chứa proton, neutron).",
+          },
         ],
       },
     },
@@ -415,6 +442,27 @@ async function main() {
             choices: JSON.stringify(["Oxygen", "Fluorine", "Chlorine", "Nitrogen"]),
             correctIndex: 1,
             explanation: "Fluorine (F) là nguyên tố có độ âm điện lớn nhất.",
+          },
+          {
+            order: 5,
+            content: "Nguyên tố X thuộc chu kì 3, nhóm VIIA. X là nguyên tố nào?",
+            choices: JSON.stringify(["F", "Cl", "Br", "S"]),
+            correctIndex: 1,
+            explanation: "Chu kì 3 nhóm VIIA là chlorine (Cl), cấu hình 1s2 2s2 2p6 3s2 3p5.",
+          },
+          {
+            order: 6,
+            content: "Oxide cao nhất của nguyên tố thuộc nhóm VIA có công thức tổng quát nào?",
+            choices: JSON.stringify(["RO", "RO2", "RO3", "R2O5"]),
+            correctIndex: 2,
+            explanation: "Nguyên tố nhóm VIA có hóa trị cao nhất với oxygen là VI, oxide cao nhất có công thức RO3 (ví dụ SO3)." ,
+          },
+          {
+            order: 7,
+            content: "So sánh tính phi kim của O, S, Se (cùng nhóm VIA): thứ tự giảm dần là?",
+            choices: JSON.stringify(["O > S > Se", "Se > S > O", "S > O > Se", "O > Se > S"]),
+            correctIndex: 0,
+            explanation: "Trong cùng nhóm A, tính phi kim giảm dần từ trên xuống dưới nên O > S > Se.",
           },
         ],
       },
@@ -467,6 +515,27 @@ async function main() {
             correctIndex: 0,
             explanation: "Liên kết hydrogen giữa các phân tử nước khiến nhiệt độ sôi của nước cao hơn nhiều so với dự đoán dựa trên phân tử khối.",
           },
+          {
+            order: 5,
+            content: "Nguyên tử Mg (Z=12) nhường bao nhiêu electron để đạt cấu hình bền của khí hiếm?",
+            choices: JSON.stringify(["1", "2", "3", "8"]),
+            correctIndex: 1,
+            explanation: "Mg có cấu hình 1s2 2s2 2p6 3s2, nhường 2 electron lớp ngoài cùng để đạt cấu hình bền của Ne.",
+          },
+          {
+            order: 6,
+            content: "Hợp chất nào sau đây có liên kết cộng hóa trị có cực?",
+            choices: JSON.stringify(["Cl2", "N2", "HCl", "H2"]),
+            correctIndex: 2,
+            explanation: "HCl gồm 2 nguyên tử khác nhau (H và Cl có độ âm điện khác nhau) nên cặp electron dùng chung lệch về Cl, tạo liên kết có cực.",
+          },
+          {
+            order: 7,
+            content: "Tương tác van der Waals có xu hướng biến đổi như thế nào khi khối lượng phân tử tăng?",
+            choices: JSON.stringify(["Giảm dần", "Tăng dần", "Không đổi", "Biến mất hoàn toàn"]),
+            correctIndex: 1,
+            explanation: "Tương tác van der Waals có xu hướng tăng theo khối lượng phân tử và diện tích tiếp xúc bề mặt.",
+          },
         ],
       },
     },
@@ -501,6 +570,20 @@ async function main() {
             correctIndex: 2,
             explanation: "Oxygen thường có số oxi hóa -2, trừ một số trường hợp đặc biệt như peroxide, OF2.",
           },
+          {
+            order: 4,
+            content: "Số oxi hóa của S trong H2SO4 là bao nhiêu?",
+            choices: JSON.stringify(["+4", "+6", "-2", "+2"]),
+            correctIndex: 1,
+            explanation: "H(+1)x2 + S(x) + O(-2)x4 = 0 -> 2 + x - 8 = 0 -> x = +6.",
+          },
+          {
+            order: 5,
+            content: "Trong phản ứng 2Na + Cl2 -> 2NaCl, chất nào là chất oxi hóa?",
+            choices: JSON.stringify(["Na", "Cl2", "NaCl", "Không có chất oxi hóa"]),
+            correctIndex: 1,
+            explanation: "Cl2 nhận electron (từ 0 xuống -1) nên là chất oxi hóa; Na nhường electron nên là chất khử.",
+          },
         ],
       },
     },
@@ -527,6 +610,25 @@ async function main() {
             choices: JSON.stringify(["0°C, 1 atm", "25°C, 1 bar", "100°C, 1 bar", "Bất kỳ điều kiện nào"]),
             correctIndex: 1,
             explanation: "Điều kiện chuẩn để xác định enthalpy tạo thành chuẩn là 25°C, 1 bar.",
+          },
+          {
+            order: 3,
+            content: "Phản ứng thu nhiệt là phản ứng:",
+            choices: JSON.stringify([
+              "Giải phóng năng lượng ra môi trường",
+              "Hấp thụ năng lượng từ môi trường",
+              "Không trao đổi năng lượng với môi trường",
+              "Luôn xảy ra ở nhiệt độ phòng",
+            ]),
+            correctIndex: 1,
+            explanation: "Phản ứng thu nhiệt hấp thụ năng lượng từ môi trường xung quanh, có ΔrH > 0.",
+          },
+          {
+            order: 4,
+            content: "Phản ứng đốt cháy nhiên liệu (than, xăng dầu) thuộc loại phản ứng nào?",
+            choices: JSON.stringify(["Thu nhiệt", "Tỏa nhiệt", "Không tỏa/thu nhiệt", "Chỉ xảy ra khi có ánh sáng"]),
+            correctIndex: 1,
+            explanation: "Đốt cháy nhiên liệu là phản ứng tỏa nhiệt mạnh, được dùng để cung cấp năng lượng.",
           },
         ],
       },
@@ -559,6 +661,25 @@ async function main() {
             ]),
             correctIndex: 1,
             explanation: "Chất xúc tác làm tăng tốc độ phản ứng nhưng không bị biến đổi về khối lượng và tính chất sau phản ứng.",
+          },
+          {
+            order: 3,
+            content: "Thực nghiệm cho thấy cứ tăng thêm 10°C thì tốc độ nhiều phản ứng tăng khoảng mấy lần?",
+            choices: JSON.stringify(["1-2 lần", "2-4 lần", "5-6 lần", "10 lần"]),
+            correctIndex: 1,
+            explanation: "Với nhiều phản ứng, cứ tăng 10°C thì tốc độ phản ứng tăng khoảng 2-4 lần (quy tắc Van't Hoff gần đúng)." ,
+          },
+          {
+            order: 4,
+            content: "Vì sao thực phẩm để trong tủ lạnh lâu hỏng hơn để ở nhiệt độ phòng?",
+            choices: JSON.stringify([
+              "Vì nhiệt độ thấp làm giảm tốc độ phản ứng phân hủy",
+              "Vì tủ lạnh diệt hết vi khuẩn hoàn toàn",
+              "Vì tủ lạnh làm tăng nồng độ chất bảo quản",
+              "Không liên quan gì đến tốc độ phản ứng",
+            ]),
+            correctIndex: 0,
+            explanation: "Nhiệt độ thấp làm giảm tốc độ các phản ứng/quá trình phân hủy sinh hóa trong thực phẩm.",
           },
         ],
       },
@@ -593,6 +714,27 @@ async function main() {
             choices: JSON.stringify(["Trắng", "Vàng nhạt", "Vàng đậm", "Đen"]),
             correctIndex: 0,
             explanation: "AgCl là kết tủa trắng, dùng để nhận biết ion Cl- trong dung dịch.",
+          },
+          {
+            order: 4,
+            content: "Hydrohalic acid nào có tính acid yếu nhất trong dãy HF, HCl, HBr, HI?",
+            choices: JSON.stringify(["HF", "HCl", "HBr", "HI"]),
+            correctIndex: 0,
+            explanation: "HF có tính acid yếu nhất do liên kết H-F rất bền, dù các acid còn lại đều mạnh và tăng dần từ HCl đến HI.",
+          },
+          {
+            order: 5,
+            content: "Khí Cl2 tác dụng với dung dịch NaOH loãng nguội tạo ra sản phẩm nào?",
+            choices: JSON.stringify(["Chỉ tạo NaCl", "NaCl và NaClO", "Chỉ tạo NaClO", "Không phản ứng"]),
+            correctIndex: 1,
+            explanation: "Cl2 + 2NaOH -> NaCl + NaClO + H2O (phản ứng tự oxi hóa - khử của chlorine).",
+          },
+          {
+            order: 6,
+            content: "Cho 7,1 gam Cl2 (M=71) tác dụng hết với Na dư: Cl2 + 2Na -> 2NaCl. Khối lượng NaCl tạo thành là?",
+            choices: JSON.stringify(["11,7 gam", "23,4 gam", "35,1 gam", "46,8 gam"]),
+            correctIndex: 0,
+            explanation: "n(Cl2)=7,1/71=0,1 mol -> n(NaCl)=0,2 mol -> m=0,2x58,5=11,7 gam.",
           },
         ],
       },
@@ -698,6 +840,44 @@ async function main() {
         ],
       },
     },
+  });
+
+  // ================= BÀI TẬP LUYỆN TẬP (PRACTICE) =================
+  await prisma.practiceQuestion.createMany({
+    data: [
+      // Chương 1
+      { chapterId: ch1.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Hạt nhân nguyên tử được cấu tạo từ những hạt nào?", choices: JSON.stringify(["Proton và neutron", "Proton và electron", "Neutron và electron", "Chỉ có proton"]), correctIndex: 0, explanation: "Hạt nhân gồm proton (mang điện dương) và neutron (không mang điện)." },
+      { chapterId: ch1.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Nguyên tử X có Z=17. Số electron ở lớp ngoài cùng của X là bao nhiêu?", choices: JSON.stringify(["5", "6", "7", "8"]), correctIndex: 2, explanation: "Cấu hình X (Z=17): 1s2 2s2 2p6 3s2 3p5 -> lớp ngoài cùng (lớp 3) có 7 electron." },
+      { chapterId: ch1.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Nguyên tử của nguyên tố Y có tổng số hạt (p+n+e) là 40, trong đó số hạt mang điện nhiều hơn số hạt không mang điện là 12. Số proton của Y là?", choices: JSON.stringify(["12", "13", "14", "15"]), correctIndex: 1, explanation: "2Z+N=40 và 2Z-N=12 -> cộng lại: 4Z=52 -> Z=13." },
+
+      // Chương 2
+      { chapterId: ch2.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Nguyên tố có Z=20 thuộc chu kì mấy?", choices: JSON.stringify(["3", "4", "5", "2"]), correctIndex: 1, explanation: "Ca (Z=20) có cấu hình 1s2 2s2 2p6 3s2 3p6 4s2, có 4 lớp electron nên thuộc chu kì 4." },
+      { chapterId: ch2.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "So sánh tính kim loại của Na, Mg, Al (cùng chu kì 3): thứ tự giảm dần là?", choices: JSON.stringify(["Na > Mg > Al", "Al > Mg > Na", "Mg > Na > Al", "Al > Na > Mg"]), correctIndex: 0, explanation: "Trong cùng chu kì, tính kim loại giảm dần từ trái sang phải nên Na > Mg > Al." },
+      { chapterId: ch2.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Oxide cao nhất của nguyên tố R có công thức RO2. R thuộc nhóm nào?", choices: JSON.stringify(["IIA", "IVA", "VIA", "VIIA"]), correctIndex: 1, explanation: "Hóa trị cao nhất với oxygen của R là IV (RO2) nên R thuộc nhóm IVA." },
+
+      // Chương 3
+      { chapterId: ch3.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Liên kết ion thường hình thành giữa loại nguyên tố nào?", choices: JSON.stringify(["Kim loại điển hình và phi kim điển hình", "Hai phi kim giống nhau", "Hai kim loại", "Hai khí hiếm"]), correctIndex: 0, explanation: "Liên kết ion hình thành giữa kim loại điển hình (dễ nhường electron) và phi kim điển hình (dễ nhận electron)." },
+      { chapterId: ch3.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Phân tử nào sau đây chỉ có liên kết cộng hóa trị không cực?", choices: JSON.stringify(["HCl", "N2", "H2O", "NH3"]), correctIndex: 1, explanation: "N2 gồm 2 nguyên tử N giống nhau nên liên kết cộng hóa trị không cực." },
+      { chapterId: ch3.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Giải thích vì sao NaCl có nhiệt độ nóng chảy rất cao (801°C)?", choices: JSON.stringify(["Vì là hợp chất ion, lực hút tĩnh điện giữa các ion rất mạnh", "Vì NaCl có khối lượng phân tử lớn", "Vì NaCl có liên kết cộng hóa trị", "Vì NaCl không tan trong nước"]), correctIndex: 0, explanation: "NaCl là hợp chất ion, lực hút tĩnh điện giữa Na+ và Cl- trong mạng tinh thể rất mạnh nên cần nhiệt độ cao để phá vỡ." },
+
+      // Chương 4
+      { chapterId: ch4.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Chất oxi hóa là chất:", choices: JSON.stringify(["Nhường electron", "Nhận electron", "Không đổi số oxi hóa", "Luôn là kim loại"]), correctIndex: 1, explanation: "Chất oxi hóa nhận electron, làm số oxi hóa của nó giảm xuống." },
+      { chapterId: ch4.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Số oxi hóa của Mn trong KMnO4 là bao nhiêu?", choices: JSON.stringify(["+2", "+4", "+6", "+7"]), correctIndex: 3, explanation: "K(+1) + Mn(x) + O(-2)x4 = 0 -> 1+x-8=0 -> x=+7." },
+      { chapterId: ch4.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cân bằng phản ứng Fe2O3 + CO -> Fe + CO2 bằng phương pháp thăng bằng electron, hệ số của CO là bao nhiêu?", choices: JSON.stringify(["1", "2", "3", "4"]), correctIndex: 2, explanation: "Phương trình cân bằng: Fe2O3 + 3CO -> 2Fe + 3CO2, hệ số CO là 3." },
+
+      // Chương 5
+      { chapterId: ch5.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Đơn vị thường dùng của biến thiên enthalpy là gì?", choices: JSON.stringify(["kJ hoặc kJ/mol", "lít", "mol/L", "độ C"]), correctIndex: 0, explanation: "Biến thiên enthalpy (ΔrH) thường có đơn vị kJ hoặc kJ/mol." },
+      { chapterId: ch5.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho phản ứng C(s) + O2(g) -> CO2(g), ΔfH°(CO2)=-393,5 kJ/mol. Đốt cháy 1 mol than (carbon) tỏa ra bao nhiêu kJ?", choices: JSON.stringify(["+393,5 kJ", "-393,5 kJ", "-196,75 kJ", "-787 kJ"]), correctIndex: 1, explanation: "ΔrH° = ΔfH°(CO2) - ΔfH°(C) - ΔfH°(O2) = -393,5 - 0 - 0 = -393,5 kJ (tỏa nhiệt)." },
+
+      // Chương 6
+      { chapterId: ch6.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Tốc độ phản ứng được đo bằng sự biến thiên đại lượng nào theo thời gian?", choices: JSON.stringify(["Nồng độ chất phản ứng hoặc sản phẩm", "Khối lượng bình phản ứng", "Màu sắc dung dịch", "Áp suất khí quyển"]), correctIndex: 0, explanation: "Tốc độ phản ứng đo bằng sự biến thiên nồng độ của chất phản ứng hoặc sản phẩm trong một đơn vị thời gian." },
+      { chapterId: ch6.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Đun sôi nước nhanh hơn ở áp suất cao vì lý do gì liên quan đến tốc độ phản ứng/quá trình?", choices: JSON.stringify(["Nhiệt độ sôi tăng làm tăng tốc độ quá trình", "Áp suất làm giảm nồng độ", "Không liên quan gì", "Áp suất làm giảm nhiệt độ"]), correctIndex: 0, explanation: "Áp suất cao làm nước sôi ở nhiệt độ cao hơn, giúp tăng tốc độ nấu chín thức ăn." },
+
+      // Chương 7
+      { chapterId: ch7.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Đơn chất halogen nào ở thể lỏng tại điều kiện thường?", choices: JSON.stringify(["F2", "Cl2", "Br2", "I2"]), correctIndex: 2, explanation: "Br2 (bromine) là chất lỏng màu nâu đỏ ở điều kiện thường; F2, Cl2 là khí, I2 là chất rắn." },
+      { chapterId: ch7.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Vì sao HF là acid yếu trong khi HCl, HBr, HI đều là acid mạnh?", choices: JSON.stringify(["Vì liên kết H-F rất bền, khó phân li ra ion H+", "Vì F có tính oxi hóa yếu", "Vì HF không tan trong nước", "Vì F có bán kính nguyên tử lớn"]), correctIndex: 0, explanation: "Liên kết H-F rất bền (năng lượng liên kết lớn) khiến HF khó phân li hoàn toàn ra ion trong nước, nên là acid yếu." },
+      { chapterId: ch7.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho 4,25 gam AgNO3 (M=170) phản ứng vừa đủ với dung dịch NaCl: AgNO3+NaCl->AgCl+NaNO3. Khối lượng kết tủa AgCl thu được là?", choices: JSON.stringify(["1,4375 gam", "2,875 gam", "3,5875 gam", "5,75 gam"]), correctIndex: 2, explanation: "n(AgNO3)=4,25/170=0,025 mol -> n(AgCl)=0,025 mol -> m=0,025x143,5=3,5875 gam." },
+    ],
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 10 theo SGK Hóa học (Kết nối tri thức):");

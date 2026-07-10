@@ -16,6 +16,7 @@ async function main() {
   await prisma.quiz.deleteMany({ where: { grade: { in: [8, 9] } } });
   await prisma.flashcard.deleteMany({ where: { set: { grade: { in: [8, 9] } } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: { in: [8, 9] } } });
+  await prisma.practiceQuestion.deleteMany({ where: { chapter: { grade: { in: [8, 9] } } } });
   await prisma.document.deleteMany({ where: { grade: { in: [8, 9] } } });
   await prisma.chapter.deleteMany({ where: { grade: { in: [8, 9] } } });
 
@@ -615,6 +616,32 @@ async function main() {
             correctIndex: 2,
             explanation: "Phương trình cân bằng đúng là: 3Fe + 2O2 -> Fe3O4",
           },
+          {
+            order: 7,
+            content: "Hòa tan 20 gam NaOH vào nước để được 200 gam dung dịch. Nồng độ phần trăm của dung dịch là?",
+            choices: JSON.stringify(["5%", "10%", "20%", "40%"]),
+            correctIndex: 1,
+            explanation: "C% = (m chất tan / m dung dịch) x 100% = (20/200) x 100% = 10%.",
+          },
+          {
+            order: 8,
+            content: "Đốt cháy hoàn toàn 2,4 gam Mg (M = 24 g/mol) trong khí oxygen dư: 2Mg + O2 -> 2MgO. Khối lượng MgO thu được là?",
+            choices: JSON.stringify(["2 gam", "4 gam", "6 gam", "8 gam"]),
+            correctIndex: 1,
+            explanation: "n(Mg) = 2,4/24 = 0,1 mol -> n(MgO) = 0,1 mol -> m(MgO) = 0,1 x 40 = 4 gam.",
+          },
+          {
+            order: 9,
+            content: "Vì sao khi luộc thực phẩm ở áp suất cao (nồi áp suất) thức ăn chín nhanh hơn?",
+            choices: JSON.stringify([
+              "Vì tăng nhiệt độ sôi của nước làm tăng tốc độ phản ứng",
+              "Vì giảm nồng độ chất phản ứng",
+              "Vì giảm diện tích tiếp xúc",
+              "Vì không liên quan đến tốc độ phản ứng",
+            ]),
+            correctIndex: 0,
+            explanation: "Áp suất cao làm nước sôi ở nhiệt độ cao hơn 100°C, nhiệt độ tăng làm tăng tốc độ các phản ứng/quá trình biến đổi thực phẩm.",
+          },
         ],
       },
     },
@@ -675,6 +702,32 @@ async function main() {
             choices: JSON.stringify(["Nitrogen", "Phosphorus", "Potassium", "Calcium"]),
             correctIndex: 0,
             explanation: "Phân đạm cung cấp nguyên tố nitrogen, giúp cây phát triển thân, lá.",
+          },
+          {
+            order: 7,
+            content: "Cho 100 gam dung dịch HCl phản ứng vừa đủ với NaOH tạo dung dịch trung hòa. Đây là loại phản ứng gì?",
+            choices: JSON.stringify(["Phản ứng oxi hóa - khử", "Phản ứng trung hòa", "Phản ứng phân hủy", "Phản ứng thế"]),
+            correctIndex: 1,
+            explanation: "Phản ứng giữa acid và base tạo muối và nước được gọi là phản ứng trung hòa: HCl + NaOH -> NaCl + H2O.",
+          },
+          {
+            order: 8,
+            content: "Muối nào sau đây không tan trong nước?",
+            choices: JSON.stringify(["NaCl", "KNO3", "BaSO4", "CaCl2"]),
+            correctIndex: 2,
+            explanation: "BaSO4 là muối không tan (kết tủa trắng), thường dùng để nhận biết ion sulfate.",
+          },
+          {
+            order: 9,
+            content: "Trên bao bì phân bón NPK ghi 16-16-8, các con số này biểu thị điều gì?",
+            choices: JSON.stringify([
+              "Khối lượng phân bón (kg)",
+              "% khối lượng N, P2O5, K2O",
+              "Số nguyên tử N, P, K",
+              "Giá tiền của phân bón",
+            ]),
+            correctIndex: 1,
+            explanation: "Ba con số trên bao bì NPK biểu thị % khối lượng N, P2O5 và K2O có trong phân bón.",
           },
         ],
       },
@@ -740,6 +793,32 @@ async function main() {
             correctIndex: 2,
             explanation: "Phi kim ở trạng thái rắn thường giòn, trong khi kim loại có tính dẻo, dẫn điện tốt và có ánh kim.",
           },
+          {
+            order: 6,
+            content: "Cho 5,6 gam Fe (M = 56 g/mol) tác dụng hết với dung dịch HCl dư. Thể tích khí H2 thu được ở đkc là?",
+            choices: JSON.stringify(["1,2395 lít", "2,479 lít", "3,7185 lít", "4,958 lít"]),
+            correctIndex: 1,
+            explanation: "n(Fe) = 5,6/56 = 0,1 mol; Fe + 2HCl -> FeCl2 + H2 nên n(H2) = 0,1 mol -> V = 0,1 x 24,79 = 2,479 lít.",
+          },
+          {
+            order: 7,
+            content: "Phương pháp nào dùng để tách kim loại hoạt động mạnh như Na, K, Ca ra khỏi hợp chất?",
+            choices: JSON.stringify(["Nhiệt luyện", "Thủy luyện", "Điện phân nóng chảy", "Chưng cất"]),
+            correctIndex: 2,
+            explanation: "Kim loại hoạt động mạnh (Na, K, Ca...) được điều chế bằng phương pháp điện phân nóng chảy hợp chất của chúng.",
+          },
+          {
+            order: 8,
+            content: "Vì sao không nên dùng chậu nhôm để đựng vôi hoặc nước vôi lâu ngày?",
+            choices: JSON.stringify([
+              "Vì nhôm phản ứng được với base tạo khí H2, ăn mòn chậu",
+              "Vì nhôm không dẫn nhiệt",
+              "Vì nhôm quá nặng",
+              "Vì nhôm không phản ứng với vôi nên không có tác hại gì",
+            ]),
+            correctIndex: 0,
+            explanation: "Nhôm là kim loại lưỡng tính, phản ứng được với dung dịch base mạnh (như Ca(OH)2) giải phóng khí H2, làm ăn mòn dần lớp nhôm.",
+          },
         ],
       },
     },
@@ -794,6 +873,20 @@ async function main() {
             correctIndex: 3,
             explanation: "Ethanol sinh học là nhiên liệu tái tạo (sản xuất từ sinh khối), không phải nhiên liệu hóa thạch.",
           },
+          {
+            order: 6,
+            content: "Đốt cháy hoàn toàn 1,6 gam khí methane (CH4, M = 16 g/mol) sinh ra bao nhiêu gam CO2?",
+            choices: JSON.stringify(["2,2 gam", "4,4 gam", "6,6 gam", "8,8 gam"]),
+            correctIndex: 1,
+            explanation: "n(CH4) = 1,6/16 = 0,1 mol; CH4 + 2O2 -> CO2 + 2H2O nên n(CO2) = 0,1 mol -> m = 0,1 x 44 = 4,4 gam.",
+          },
+          {
+            order: 7,
+            content: "Dầu mỏ được tách thành xăng, dầu hỏa, dầu diesel... bằng phương pháp nào?",
+            choices: JSON.stringify(["Chưng cất phân đoạn", "Kết tinh", "Chiết", "Sắc kí"]),
+            correctIndex: 0,
+            explanation: "Chưng cất phân đoạn dựa vào sự khác nhau về nhiệt độ sôi để tách các thành phần của dầu mỏ.",
+          },
         ],
       },
     },
@@ -835,6 +928,20 @@ async function main() {
             choices: JSON.stringify(["O2", "CO2", "H2", "N2"]),
             correctIndex: 2,
             explanation: "2C2H5OH + 2Na -> 2C2H5ONa + H2",
+          },
+          {
+            order: 5,
+            content: "Uống nhiều rượu, bia gây hại chủ yếu cho cơ quan nào?",
+            choices: JSON.stringify(["Gan", "Da", "Tóc", "Móng tay"]),
+            correctIndex: 0,
+            explanation: "Ethylic alcohol được chuyển hóa chủ yếu ở gan; lạm dụng rượu bia gây tổn hại gan nghiêm trọng (xơ gan, gan nhiễm mỡ).",
+          },
+          {
+            order: 6,
+            content: "Chất nào sau đây phản ứng được với CaCO3 giải phóng khí CO2?",
+            choices: JSON.stringify(["Ethylic alcohol", "Acetic acid", "Glucose", "Tinh bột"]),
+            correctIndex: 1,
+            explanation: "Acetic acid có tính acid nên phản ứng với muối carbonate: 2CH3COOH + CaCO3 -> (CH3COO)2Ca + CO2 + H2O.",
           },
         ],
       },
@@ -896,6 +1003,30 @@ async function main() {
             choices: JSON.stringify(["Monomer", "Isomer", "Nguyên tử", "Ion"]),
             correctIndex: 0,
             explanation: "Monomer là đơn vị nhỏ liên kết lặp lại tạo thành polymer, qua phản ứng trùng hợp hoặc trùng ngưng.",
+          },
+          {
+            order: 7,
+            content: "Saccharose và maltose đều có công thức phân tử C12H22O11 nhưng chỉ maltose tráng bạc được. Vì sao?",
+            choices: JSON.stringify([
+              "Vì maltose còn nhóm -OH hemiacetal tự do, saccharose thì không",
+              "Vì maltose có khối lượng phân tử nhỏ hơn",
+              "Vì saccharose không tan trong nước",
+              "Vì maltose có nhiều nguyên tử carbon hơn",
+            ]),
+            correctIndex: 0,
+            explanation: "Maltose còn nhóm -OH hemiacetal tự do nên có tính khử (tráng bạc được), còn saccharose thì không.",
+          },
+          {
+            order: 8,
+            content: "Protein bị đông tụ (biến tính) khi nào?",
+            choices: JSON.stringify([
+              "Khi đun nóng hoặc gặp một số hóa chất",
+              "Khi để trong tủ lạnh",
+              "Khi hòa tan trong nước cất",
+              "Protein không bao giờ bị biến tính",
+            ]),
+            correctIndex: 0,
+            explanation: "Protein bị đông tụ (mất hoạt tính sinh học) khi đun nóng hoặc tác dụng với một số hóa chất - ví dụ lòng trắng trứng đông lại khi luộc.",
           },
         ],
       },
@@ -1009,6 +1140,46 @@ async function main() {
         ],
       },
     },
+  });
+
+  // ================= BÀI TẬP LUYỆN TẬP (PRACTICE) =================
+  await prisma.practiceQuestion.createMany({
+    data: [
+      // Chương I - Lớp 8
+      { chapterId: ch8_1.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "1 mol chất bất kì chứa bao nhiêu hạt (nguyên tử/phân tử)?", choices: JSON.stringify(["6,022x10^22", "6,022x10^23", "3,011x10^23", "1,0x10^23"]), correctIndex: 1, explanation: "Số Avogadro N = 6,022x10^23 hạt/mol." },
+      { chapterId: ch8_1.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Nồng độ mol (CM) của dung dịch được tính theo công thức nào?", choices: JSON.stringify(["CM = n/V", "CM = m/V", "CM = n x V", "CM = m x V"]), correctIndex: 0, explanation: "CM = n (mol) / V (lít dung dịch)." },
+      { chapterId: ch8_1.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Hòa tan 0,5 mol NaCl vào nước để được 2 lít dung dịch. Nồng độ mol của dung dịch là?", choices: JSON.stringify(["0,25M", "0,5M", "1M", "2M"]), correctIndex: 0, explanation: "CM = n/V = 0,5/2 = 0,25 mol/L." },
+      { chapterId: ch8_1.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho 13 gam Zn (M = 65) tác dụng hết với HCl dư: Zn + 2HCl -> ZnCl2 + H2. Thể tích H2 ở đkc là?", choices: JSON.stringify(["2,479 lít", "4,958 lít", "7,437 lít", "9,916 lít"]), correctIndex: 1, explanation: "n(Zn) = 13/65 = 0,2 mol -> n(H2) = 0,2 mol -> V = 0,2x24,79 = 4,958 lít." },
+      { chapterId: ch8_1.id, difficulty: "VAN_DUNG_CAO", source: "SBT KNTT", content: "Nung 20 gam CaCO3, sau phản ứng thu được 10,08 gam CaO. Hiệu suất phản ứng là bao nhiêu? (CaCO3 -> CaO + CO2, M(CaCO3)=100, M(CaO)=56)", choices: JSON.stringify(["80%", "90%", "95%", "100%"]), correctIndex: 1, explanation: "n(CaCO3)=20/100=0,2 mol -> khối lượng CaO lí thuyết = 0,2x56=11,2 gam. Hiệu suất = 10,08/11,2 x100% = 90%." },
+
+      // Chương II - Lớp 8
+      { chapterId: ch8_2.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Chất nào sau đây là oxide lưỡng tính?", choices: JSON.stringify(["Na2O", "Al2O3", "SO3", "CO"]), correctIndex: 1, explanation: "Al2O3 phản ứng được với cả acid và base nên là oxide lưỡng tính." },
+      { chapterId: ch8_2.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Base nào sau đây không tan trong nước?", choices: JSON.stringify(["NaOH", "KOH", "Fe(OH)3", "Ba(OH)2"]), correctIndex: 2, explanation: "Fe(OH)3 là base không tan (kết tủa nâu đỏ)." },
+      { chapterId: ch8_2.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Dung dịch nào làm quỳ tím chuyển sang màu xanh?", choices: JSON.stringify(["HCl", "NaOH", "NaCl", "CH3COOH"]), correctIndex: 1, explanation: "NaOH là base (kiềm) mạnh, làm quỳ tím chuyển xanh." },
+      { chapterId: ch8_2.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Trung hòa 200ml dung dịch HCl 1M cần bao nhiêu ml dung dịch NaOH 1M?", choices: JSON.stringify(["100ml", "200ml", "300ml", "400ml"]), correctIndex: 1, explanation: "n(HCl) = 0,2 mol; HCl + NaOH -> NaCl + H2O nên n(NaOH) cần = 0,2 mol -> V = 0,2/1 = 0,2 lít = 200ml." },
+      { chapterId: ch8_2.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Một loại phân đạm ammonium sulfate (NH4)2SO4 (M=132) có %N là bao nhiêu?", choices: JSON.stringify(["18,9%", "21,2%", "28%", "46,7%"]), correctIndex: 1, explanation: "Khối lượng N = 2x14 = 28 gam trong 132 gam -> %N = 28/132 x100% ≈ 21,2%." },
+
+      // Chương 6 - Lớp 9
+      { chapterId: ch9_6.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Kim loại nào sau đây không phản ứng với dung dịch HCl loãng?", choices: JSON.stringify(["Fe", "Zn", "Cu", "Mg"]), correctIndex: 2, explanation: "Cu đứng sau H trong dãy hoạt động hóa học nên không phản ứng với HCl loãng giải phóng H2." },
+      { chapterId: ch9_6.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Đồng thau là hợp kim của đồng với kim loại nào?", choices: JSON.stringify(["Kẽm", "Thiếc", "Nhôm", "Sắt"]), correctIndex: 0, explanation: "Đồng thau là hợp kim của đồng (Cu) với kẽm (Zn)." },
+      { chapterId: ch9_6.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho 2,7 gam Al (M=27) phản ứng hết với dung dịch CuSO4 dư: 2Al + 3CuSO4 -> Al2(SO4)3 + 3Cu. Khối lượng Cu thu được là?", choices: JSON.stringify(["6,4 gam", "9,6 gam", "12,8 gam", "19,2 gam"]), correctIndex: 1, explanation: "n(Al) = 2,7/27 = 0,1 mol -> n(Cu) = 0,1x3/2 = 0,15 mol -> m = 0,15x64 = 9,6 gam." },
+      { chapterId: ch9_6.id, difficulty: "VAN_DUNG_CAO", source: "SBT KNTT", content: "Ngâm một lá Fe vào 200ml dung dịch CuSO4 1M đến khi phản ứng xong, khối lượng lá Fe tăng bao nhiêu gam? (Fe + CuSO4 -> FeSO4 + Cu)", choices: JSON.stringify(["0,8 gam", "1,6 gam", "2,4 gam", "3,2 gam"]), correctIndex: 1, explanation: "n(CuSO4) = 0,2 mol phản ứng hết -> khối lượng tăng = m(Cu bám vào) - m(Fe tan ra) = 0,2x64 - 0,2x56 = 12,8-11,2=1,6 gam." },
+
+      // Chương 7 - Lớp 9
+      { chapterId: ch9_7.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Alkyne có công thức chung là gì?", choices: JSON.stringify(["CnH2n+2", "CnH2n", "CnH2n-2", "CnH2n-6"]), correctIndex: 2, explanation: "Alkyne (có 1 liên kết ba) có công thức chung CnH2n-2 (n≥2)." },
+      { chapterId: ch9_7.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Vì sao alkane ít phản ứng hơn alkene?", choices: JSON.stringify(["Vì alkane chỉ có liên kết đơn bền, alkene có liên kết đôi kém bền hơn", "Vì alkane nặng hơn", "Vì alkane không cháy được", "Vì alkane có màu"]), correctIndex: 0, explanation: "Alkane chỉ có liên kết đơn C-C, C-H bền vững nên trơ hơn; alkene có liên kết đôi dễ tham gia phản ứng cộng." },
+      { chapterId: ch9_7.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Đốt cháy hoàn toàn 2,8 gam khí C2H4 (M=28) thì cần bao nhiêu lít O2 (đkc)? (C2H4+3O2->2CO2+2H2O)", choices: JSON.stringify(["2,479 lít", "4,958 lít", "7,437 lít", "9,916 lít"]), correctIndex: 2, explanation: "n(C2H4)=2,8/28=0,1 mol -> n(O2)=0,1x3=0,3 mol -> V=0,3x24,79=7,437 lít." },
+
+      // Chương 8 - Lớp 9
+      { chapterId: ch9_8.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Nhóm chức của acetic acid là nhóm nào?", choices: JSON.stringify(["-OH", "-COOH", "-CHO", "-NH2"]), correctIndex: 1, explanation: "Acetic acid CH3COOH có nhóm chức carboxyl -COOH." },
+      { chapterId: ch9_8.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Sản phẩm của phản ứng ester hóa giữa CH3COOH và C2H5OH là gì?", choices: JSON.stringify(["CH3COOC2H5", "C2H5COOCH3", "CH3COOH", "C2H5OH"]), correctIndex: 0, explanation: "CH3COOH + C2H5OH -> CH3COOC2H5 (ethyl acetate) + H2O." },
+      { chapterId: ch9_8.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho 6 gam CH3COOH (M=60) tác dụng vừa đủ với NaHCO3. Thể tích khí CO2 thu được ở đkc là?", choices: JSON.stringify(["1,2395 lít", "2,479 lít", "3,7185 lít", "4,958 lít"]), correctIndex: 1, explanation: "n(CH3COOH)=6/60=0,1 mol; CH3COOH+NaHCO3->CH3COONa+CO2+H2O nên n(CO2)=0,1 mol -> V=2,479 lít." },
+
+      // Chương 9 - Lớp 9
+      { chapterId: ch9_9.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Carbohydrate nào sau đây là monosaccharide?", choices: JSON.stringify(["Glucose", "Saccharose", "Tinh bột", "Cellulose"]), correctIndex: 0, explanation: "Glucose là đường đơn (monosaccharide); saccharose là đường đôi; tinh bột, cellulose là polysaccharide." },
+      { chapterId: ch9_9.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Vì sao lòng trắng trứng bị đông lại khi luộc?", choices: JSON.stringify(["Vì protein bị đông tụ (biến tính) do nhiệt", "Vì nước bay hơi hết", "Vì phản ứng với vỏ trứng", "Vì lòng trắng trứng là chất béo"]), correctIndex: 0, explanation: "Nhiệt độ cao làm protein trong lòng trắng trứng bị đông tụ (biến tính), mất cấu trúc ban đầu." },
+      { chapterId: ch9_9.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Thủy phân hoàn toàn 1 mol saccharose thu được bao nhiêu mol glucose và fructose?", choices: JSON.stringify(["1 mol glucose và 1 mol fructose", "2 mol glucose", "1 mol glucose và 2 mol fructose", "2 mol fructose"]), correctIndex: 0, explanation: "Saccharose thủy phân tạo đúng 1 mol glucose và 1 mol fructose: C12H22O11 + H2O -> C6H12O6 (glucose) + C6H12O6 (fructose)." },
+    ],
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 8-9 theo SGK KHTN (Kết nối tri thức):");

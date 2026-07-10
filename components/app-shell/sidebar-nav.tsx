@@ -17,11 +17,13 @@ import {
   Wallet,
   Trophy,
   MessageSquare,
+  PenLine,
 } from "lucide-react";
 
 const studentLinks = [
   { href: "/dashboard", label: "Tổng quan", icon: LayoutDashboard },
   { href: "/documents", label: "Tài liệu", icon: BookOpen },
+  { href: "/practice", label: "Bài tập", icon: PenLine },
   { href: "/quizzes", label: "Bài kiểm tra", icon: Timer },
   { href: "/games", label: "Trò chơi ghi nhớ", icon: Brain },
   { href: "/leaderboard", label: "Xếp hạng", icon: Trophy },
@@ -34,6 +36,7 @@ const adminLinks = [
   { href: "/admin/payments", label: "Thanh toán", icon: Wallet },
   { href: "/admin/chapters", label: "Chương", icon: BookMarked },
   { href: "/admin/documents", label: "Tài liệu", icon: FileText },
+  { href: "/admin/practice", label: "Bài tập", icon: PenLine },
   { href: "/admin/quizzes", label: "Đề kiểm tra", icon: ListChecks },
   { href: "/admin/flashcards", label: "Bộ flashcard", icon: Layers },
 ];

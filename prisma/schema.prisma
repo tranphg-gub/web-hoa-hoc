@@ -78,9 +78,10 @@ model Chapter {
   title String
   order Int
 
-  documents     Document[]
-  quizzes       Quiz[]
-  flashcardSets FlashcardSet[]
+  documents         Document[]
+  quizzes           Quiz[]
+  flashcardSets     FlashcardSet[]
+  practiceQuestions PracticeQuestion[]
 
   @@unique([grade, order])
 }
@@ -162,6 +163,21 @@ model LearningPathRecommendation {
 
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizAttempt QuizAttempt @relation(fields: [quizAttemptId], references: [id], onDelete: Cascade)
+}
+
+model PracticeQuestion {
+  id           String     @id @default(cuid())
+  chapterId    String
+  content      String
+  choices      String
+  correctIndex Int
+  explanation  String?
+  difficulty   Difficulty @default(NHAN_BIET)
+  source       String?
+  published    Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
 
 model FlashcardSet {

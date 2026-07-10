@@ -13,6 +13,7 @@ export default auth((req) => {
     nextUrl.pathname.startsWith("/dashboard") ||
     nextUrl.pathname.startsWith("/documents") ||
     nextUrl.pathname.startsWith("/quizzes") ||
+    nextUrl.pathname.startsWith("/practice") ||
     nextUrl.pathname.startsWith("/games") ||
     nextUrl.pathname.startsWith("/ask-ai") ||
     nextUrl.pathname.startsWith("/leaderboard") ||
@@ -53,6 +54,7 @@ export const config = {
     "/dashboard/:path*",
     "/documents/:path*",
     "/quizzes/:path*",
+    "/practice/:path*",
     "/games/:path*",
     "/ask-ai/:path*",
     "/leaderboard/:path*",

@@ -18,6 +18,7 @@ async function main() {
   await prisma.quiz.deleteMany({ where: { grade: { in: [11, 12] } } });
   await prisma.flashcard.deleteMany({ where: { set: { grade: { in: [11, 12] } } } });
   await prisma.flashcardSet.deleteMany({ where: { grade: { in: [11, 12] } } });
+  await prisma.practiceQuestion.deleteMany({ where: { chapter: { grade: { in: [11, 12] } } } });
   await prisma.document.deleteMany({ where: { grade: { in: [11, 12] } } });
   await prisma.chapter.deleteMany({ where: { grade: { in: [11, 12] } } });
 
@@ -883,6 +884,32 @@ async function main() {
             correctIndex: 2,
             explanation: "Dung dịch base có pH lớn hơn 7 (ở 25°C).",
           },
+          {
+            order: 6,
+            content: "Ở một nhiệt độ xác định, phản ứng N2O4 ⇌ 2NO2 đạt cân bằng với [N2O4]=0,2M, [NO2]=0,4M. Hằng số cân bằng Kc là?",
+            choices: JSON.stringify(["0,4", "0,8", "1,6", "2,0"]),
+            correctIndex: 1,
+            explanation: "Kc = [NO2]^2/[N2O4] = 0,4^2/0,2 = 0,16/0,2 = 0,8.",
+          },
+          {
+            order: 7,
+            content: "Một dung dịch có pH = 4. Nồng độ ion H+ trong dung dịch là bao nhiêu?",
+            choices: JSON.stringify(["10^-4 mol/L", "4 mol/L", "10^4 mol/L", "0,4 mol/L"]),
+            correctIndex: 0,
+            explanation: "pH = -log[H+] = 4 -> [H+] = 10^-4 mol/L.",
+          },
+          {
+            order: 8,
+            content: "Khi tăng áp suất của hệ cân bằng có chất khí, cân bằng sẽ chuyển dịch theo chiều nào?",
+            choices: JSON.stringify([
+              "Chiều làm tăng số mol khí",
+              "Chiều làm giảm số mol khí",
+              "Không chuyển dịch",
+              "Luôn chuyển dịch theo chiều thuận",
+            ]),
+            correctIndex: 1,
+            explanation: "Theo Le Chatelier, khi tăng áp suất, cân bằng chuyển dịch theo chiều làm giảm số mol khí để giảm áp suất.",
+          },
         ],
       },
     },
@@ -930,6 +957,32 @@ async function main() {
             choices: JSON.stringify(["Cl-", "NO3^-", "SO4^2-", "CO3^2-"]),
             correctIndex: 2,
             explanation: "BaCl2 + SO4^2- tạo kết tủa trắng BaSO4 không tan trong acid.",
+          },
+          {
+            order: 6,
+            content: "Cho 3,36 lít khí N2 (đkc, n≈0,1355 mol - làm tròn 0,3 mol theo tỉ lệ phản ứng hoàn toàn) phản ứng vừa đủ với H2 tạo NH3: N2+3H2⇌2NH3. Nếu hiệu suất 100%, thể tích NH3 (đkc) gấp bao nhiêu lần thể tích N2 ban đầu?",
+            choices: JSON.stringify(["1 lần", "1,5 lần", "2 lần", "3 lần"]),
+            correctIndex: 2,
+            explanation: "Theo phương trình, tỉ lệ mol N2 : NH3 = 1 : 2 nên ở cùng điều kiện, thể tích NH3 luôn gấp 2 lần thể tích N2 phản ứng.",
+          },
+          {
+            order: 7,
+            content: "Kim loại nào sau đây KHÔNG phản ứng được với dung dịch HNO3 (kể cả đặc, nóng)?",
+            choices: JSON.stringify(["Fe", "Cu", "Au", "Zn"]),
+            correctIndex: 2,
+            explanation: "Au (vàng) và Pt là 2 kim loại không phản ứng với HNO3 dù đặc và nóng.",
+          },
+          {
+            order: 8,
+            content: "Vì sao cần rót từ từ acid sulfuric đặc vào nước khi pha loãng, không làm ngược lại?",
+            choices: JSON.stringify([
+              "Vì phản ứng hòa tan tỏa nhiệt rất mạnh, làm ngược lại có thể bắn acid gây bỏng",
+              "Vì nước nặng hơn acid",
+              "Vì acid sẽ bay hơi hết",
+              "Vì không có lý do đặc biệt nào",
+            ]),
+            correctIndex: 0,
+            explanation: "Khi hòa tan H2SO4 đặc vào nước, phản ứng tỏa nhiệt rất mạnh; nếu đổ nước vào acid, nhiệt tỏa ra đột ngột có thể làm nước sôi bắn acid ra ngoài gây bỏng nặng.",
           },
         ],
       },
@@ -982,6 +1035,20 @@ async function main() {
             correctIndex: 0,
             explanation: "Đồng phân là những chất có cùng công thức phân tử nhưng khác nhau về cấu tạo hóa học nên tính chất khác nhau.",
           },
+          {
+            order: 5,
+            content: "Hợp chất X có M=46 g/mol, chứa 52,17%C, 13,05%H, 34,78%O. Công thức phân tử của X là?",
+            choices: JSON.stringify(["CH4O", "C2H6O", "C2H4O2", "C3H8O"]),
+            correctIndex: 1,
+            explanation: "Số nguyên tử C = (46x0,5217)/12=2; H=(46x0,1305)/1=6; O=(46x0,3478)/16=1 -> công thức C2H6O." ,
+          },
+          {
+            order: 6,
+            content: "Phương pháp nào tách chất dựa vào độ tan khác nhau trong hai dung môi không trộn lẫn?",
+            choices: JSON.stringify(["Chưng cất", "Chiết", "Kết tinh", "Sắc kí"]),
+            correctIndex: 1,
+            explanation: "Chiết tách chất dựa vào độ tan khác nhau của chất trong hai dung môi không trộn lẫn (chiết lỏng-lỏng).",
+          },
         ],
       },
     },
@@ -1029,6 +1096,25 @@ async function main() {
             choices: JSON.stringify(["Phản ứng thế", "Phản ứng trùng hợp", "Phản ứng oxi hóa hoàn toàn", "Phản ứng thủy phân"]),
             correctIndex: 0,
             explanation: "Do hệ vòng thơm bền vững, arene dễ tham gia phản ứng thế hơn là phản ứng cộng.",
+          },
+          {
+            order: 6,
+            content: "Đốt cháy hoàn toàn 2,8 gam C2H4 (M=28) thì thu được bao nhiêu gam CO2? (C2H4+3O2->2CO2+2H2O)",
+            choices: JSON.stringify(["4,4 gam", "8,8 gam", "13,2 gam", "17,6 gam"]),
+            correctIndex: 1,
+            explanation: "n(C2H4)=2,8/28=0,1 mol -> n(CO2)=0,2 mol -> m=0,2x44=8,8 gam.",
+          },
+          {
+            order: 7,
+            content: "Dẫn khí propene (CH2=CH-CH3) qua dung dịch bromine, hiện tượng quan sát được là gì?",
+            choices: JSON.stringify([
+              "Dung dịch bromine bị mất màu",
+              "Xuất hiện kết tủa trắng",
+              "Có khí thoát ra",
+              "Không có hiện tượng gì",
+            ]),
+            correctIndex: 0,
+            explanation: "Propene có liên kết đôi C=C nên phản ứng cộng với Br2, làm mất màu dung dịch bromine (phản ứng đặc trưng của alkene).",
           },
         ],
       },
@@ -1081,6 +1167,20 @@ async function main() {
             correctIndex: 1,
             explanation: "Phenol có nhóm -OH liên kết trực tiếp với carbon của vòng benzene.",
           },
+          {
+            order: 5,
+            content: "Cho 9,2 gam ethanol (C2H5OH, M=46) tác dụng hết với Na dư. Thể tích khí H2 thu được ở đkc là?",
+            choices: JSON.stringify(["2,479 lít", "4,958 lít", "7,437 lít", "9,916 lít"]),
+            correctIndex: 0,
+            explanation: "n(C2H5OH)=9,2/46=0,2 mol; 2C2H5OH+2Na->2C2H5ONa+H2 nên n(H2)=0,1 mol -> V=0,1x24,79=2,479 lít.",
+          },
+          {
+            order: 6,
+            content: "Đun etanol với H2SO4 đặc ở 170°C tạo sản phẩm chính nào?",
+            choices: JSON.stringify(["Ether", "Ethylene (phản ứng tách nước)", "Ethyl hydrogen sulfate", "Acetic acid"]),
+            correctIndex: 1,
+            explanation: "Ở 170°C với H2SO4 đặc, ethanol bị tách nước tạo ethylene: C2H5OH -> C2H4 + H2O.",
+          },
         ],
       },
     },
@@ -1126,6 +1226,20 @@ async function main() {
             choices: JSON.stringify(["Aldehyde", "Ester", "Ketone", "Amine"]),
             correctIndex: 1,
             explanation: "Đây là phản ứng ester hóa, tạo ra ester và nước.",
+          },
+          {
+            order: 5,
+            content: "Cho 3 gam CH3CHO tác dụng hết với dung dịch AgNO3/NH3 dư. Khối lượng Ag kết tủa thu được là? (M(CH3CHO)=44, M(Ag)=108)",
+            choices: JSON.stringify(["7,36 gam", "14,7 gam", "22,1 gam", "29,5 gam"]),
+            correctIndex: 1,
+            explanation: "n(CH3CHO)=3/44≈0,068 mol; 1 mol aldehyde tráng bạc tạo 2 mol Ag nên n(Ag)≈0,136 mol -> m≈0,136x108≈14,7 gam.",
+          },
+          {
+            order: 6,
+            content: "Nhóm carbonyl (C=O) có mặt trong loại hợp chất nào sau đây?",
+            choices: JSON.stringify(["Alcohol", "Aldehyde và ketone", "Carboxylic acid mà không có nhóm khác", "Ether"]),
+            correctIndex: 1,
+            explanation: "Cả aldehyde (-CHO) và ketone (>C=O) đều chứa nhóm chức carbonyl.",
           },
         ],
       },
@@ -1173,6 +1287,25 @@ async function main() {
             ]),
             correctIndex: 0,
             explanation: "Xà phòng tạo kết tủa với Ca^2+, Mg^2+ trong nước cứng làm giảm tác dụng; chất giặt rửa tổng hợp thì không.",
+          },
+          {
+            order: 5,
+            content: "Xà phòng hóa hoàn toàn 17,8 gam tristearin (M=890) cần vừa đủ bao nhiêu mol NaOH?",
+            choices: JSON.stringify(["0,02 mol", "0,04 mol", "0,06 mol", "0,08 mol"]),
+            correctIndex: 2,
+            explanation: "n(chất béo)=17,8/890=0,02 mol; 1 mol chất béo cần 3 mol NaOH nên n(NaOH)=0,02x3=0,06 mol.",
+          },
+          {
+            order: 6,
+            content: "Phân tử ester đơn giản nhất tạo bởi acid nào và alcohol nào?",
+            choices: JSON.stringify([
+              "Acetic acid và methanol tạo methyl acetate",
+              "Chỉ tạo được từ acid vô cơ",
+              "Chỉ tạo được từ phenol",
+              "Không có ester đơn giản",
+            ]),
+            correctIndex: 0,
+            explanation: "CH3COOH + CH3OH -> CH3COOCH3 (methyl acetate) + H2O là ví dụ điển hình của phản ứng ester hóa.",
           },
         ],
       },
@@ -1232,6 +1365,25 @@ async function main() {
             correctIndex: 0,
             explanation: "Cellulose có mạch thẳng không phân nhánh (khác tinh bột có mạch xoắn/phân nhánh), nên bền và chắc hơn.",
           },
+          {
+            order: 6,
+            content: "Lên men 18 gam glucose (M=180) với hiệu suất 80%, khối lượng ethanol thu được là bao nhiêu? (C6H12O6->2C2H5OH+2CO2)",
+            choices: JSON.stringify(["3,68 gam", "7,36 gam", "9,2 gam", "14,72 gam"]),
+            correctIndex: 1,
+            explanation: "n(glucose)=18/180=0,1 mol -> n(C2H5OH) lí thuyết=0,2 mol -> khối lượng thực tế = 0,2x46x80%=7,36 gam.",
+          },
+          {
+            order: 7,
+            content: "Maltose khác saccharose ở điểm nào dù có cùng công thức phân tử C12H22O11?",
+            choices: JSON.stringify([
+              "Maltose còn nhóm -OH hemiacetal tự do nên tráng bạc được, saccharose thì không",
+              "Maltose không tan trong nước",
+              "Maltose không thủy phân được",
+              "Saccharose có khối lượng phân tử lớn hơn",
+            ]),
+            correctIndex: 0,
+            explanation: "Maltose (2 gốc glucose) còn nhóm -OH hemiacetal tự do nên có tính khử; saccharose (glucose+fructose) thì không.",
+          },
         ],
       },
     },
@@ -1285,6 +1437,20 @@ async function main() {
             correctIndex: 2,
             explanation: "Enzyme là chất xúc tác sinh học có bản chất protein.",
           },
+          {
+            order: 6,
+            content: "Cho 4,5 gam methylamine (CH3NH2, M=31) phản ứng vừa đủ với dung dịch HCl. Khối lượng muối thu được là?",
+            choices: JSON.stringify(["8,175 gam", "9,775 gam", "10,45 gam", "12,3 gam"]),
+            correctIndex: 1,
+            explanation: "n(CH3NH2)=4,5/31≈0,145 mol; CH3NH2+HCl->CH3NH3Cl (M=67,5) nên m=0,145x67,5≈9,775 gam.",
+          },
+          {
+            order: 7,
+            content: "Protein bị đông tụ (biến tính) trong trường hợp nào?",
+            choices: JSON.stringify(["Khi hòa tan trong nước lạnh", "Khi đun nóng hoặc gặp một số hóa chất", "Khi để trong bóng tối", "Protein không bao giờ biến tính"]),
+            correctIndex: 1,
+            explanation: "Protein bị đông tụ khi đun nóng hoặc tác dụng với một số hóa chất, làm mất hoạt tính sinh học.",
+          },
         ],
       },
     },
@@ -1331,6 +1497,20 @@ async function main() {
             correctIndex: 2,
             explanation: "Nylon là tơ tổng hợp; bông và tơ tằm là tơ thiên nhiên.",
           },
+          {
+            order: 5,
+            content: "Một mẫu PVC (poly(vinyl chloride), -[CH2-CHCl]n-, mắt xích M=62,5) có phân tử khối trung bình 250.000. Hệ số trùng hợp n là bao nhiêu?",
+            choices: JSON.stringify(["2000", "3000", "4000", "5000"]),
+            correctIndex: 2,
+            explanation: "n = 250.000/62,5 = 4000.",
+          },
+          {
+            order: 6,
+            content: "Chất dẻo nào sau đây được dùng làm thủy tinh hữu cơ?",
+            choices: JSON.stringify(["PE", "PVC", "Poly(methyl methacrylate)", "Cao su buna"]),
+            correctIndex: 2,
+            explanation: "Poly(methyl methacrylate) - PMMA có độ trong suốt cao, được dùng làm thủy tinh hữu cơ (plexiglass).",
+          },
         ],
       },
     },
@@ -1376,6 +1556,20 @@ async function main() {
             choices: JSON.stringify(["Cu", "Fe", "Na, K, Al", "Ag"]),
             correctIndex: 2,
             explanation: "Kim loại hoạt động mạnh như Na, K, Al thường được điều chế bằng điện phân nóng chảy.",
+          },
+          {
+            order: 5,
+            content: "Biết E°(Zn^2+/Zn)=-0,76V và E°(Ag+/Ag)=+0,80V. Suất điện động chuẩn của pin Zn-Ag là bao nhiêu?",
+            choices: JSON.stringify(["0,04 V", "0,76 V", "1,56 V", "-1,56 V"]),
+            correctIndex: 2,
+            explanation: "E°(pin) = E°(cực dương, Ag) - E°(cực âm, Zn) = 0,80 - (-0,76) = 1,56 V.",
+          },
+          {
+            order: 6,
+            content: "Điện phân dung dịch CuSO4 với I=5A trong 3860 giây (F=96500). Khối lượng Cu bám vào cathode là bao nhiêu?",
+            choices: JSON.stringify(["3,2 gam", "6,4 gam", "9,6 gam", "12,8 gam"]),
+            correctIndex: 1,
+            explanation: "n(electron)=It/F=5x3860/96500=0,2 mol; Cu^2+ +2e->Cu nên n(Cu)=0,1 mol -> m=0,1x64=6,4 gam.",
           },
         ],
       },
@@ -1425,6 +1619,20 @@ async function main() {
             correctIndex: 1,
             explanation: "Kẽm hoạt động hóa học mạnh hơn sắt nên đóng vai trò \"vật hi sinh\", bị ăn mòn thay cho thép.",
           },
+          {
+            order: 6,
+            content: "Khử 16 gam Fe2O3 (M=160) bằng CO dư (nhiệt luyện): Fe2O3+3CO->2Fe+3CO2. Khối lượng Fe thu được là?",
+            choices: JSON.stringify(["5,6 gam", "8,4 gam", "11,2 gam", "16,8 gam"]),
+            correctIndex: 2,
+            explanation: "n(Fe2O3)=16/160=0,1 mol -> n(Fe)=0,2 mol -> m=0,2x56=11,2 gam.",
+          },
+          {
+            order: 7,
+            content: "Hợp kim nào sau đây là hợp kim của nhôm?",
+            choices: JSON.stringify(["Thép", "Đồng thau", "Duralumin", "Đồng thanh"]),
+            correctIndex: 2,
+            explanation: "Duralumin là hợp kim của nhôm với đồng, magnesium, có độ bền cao và nhẹ.",
+          },
         ],
       },
     },
@@ -1466,6 +1674,20 @@ async function main() {
             correctIndex: 1,
             explanation: "Nước cứng chứa nhiều ion Ca^2+ và Mg^2+.",
           },
+          {
+            order: 5,
+            content: "Cho 4,6 gam Na (M=23) tác dụng hết với nước: 2Na+2H2O->2NaOH+H2. Thể tích H2 thu được ở đkc là?",
+            choices: JSON.stringify(["1,2395 lít", "2,479 lít", "3,7185 lít", "4,958 lít"]),
+            correctIndex: 1,
+            explanation: "n(Na)=4,6/23=0,2 mol -> n(H2)=0,1 mol -> V=0,1x24,79=2,479 lít.",
+          },
+          {
+            order: 6,
+            content: "Cách nào sau đây KHÔNG dùng để làm mềm nước cứng?",
+            choices: JSON.stringify(["Đun sôi (với nước cứng tạm thời)", "Dùng phương pháp trao đổi ion", "Dùng phương pháp kết tủa", "Thêm muối NaCl vào nước"]),
+            correctIndex: 3,
+            explanation: "Thêm NaCl không loại bỏ được ion Ca^2+, Mg^2+ nên không làm mềm được nước cứng.",
+          },
         ],
       },
     },
@@ -1499,6 +1721,20 @@ async function main() {
             choices: JSON.stringify(["Đỏ máu", "Xanh lam đậm", "Vàng", "Không màu"]),
             correctIndex: 1,
             explanation: "Phức [Cu(NH3)4]^2+ có màu xanh lam đậm đặc trưng, dùng để nhận biết ion Cu^2+.",
+          },
+          {
+            order: 4,
+            content: "Ion Fe^3+ được nhận biết đặc trưng bằng cách phản ứng với ion nào tạo màu đỏ máu?",
+            choices: JSON.stringify(["Chloride (Cl-)", "Thiocyanate (SCN-)", "Sulfate (SO4^2-)", "Nitrate (NO3^-)"]),
+            correctIndex: 1,
+            explanation: "Fe^3+ phản ứng với ion thiocyanate (SCN-) tạo phức có màu đỏ máu đặc trưng.",
+          },
+          {
+            order: 5,
+            content: "Hemoglobin trong máu người chứa phức chất của nguyên tố kim loại nào?",
+            choices: JSON.stringify(["Đồng (Cu)", "Sắt (Fe)", "Magnesium (Mg)", "Kẽm (Zn)"]),
+            correctIndex: 1,
+            explanation: "Hemoglobin chứa phức chất của iron (Fe) với vòng porphyrin, có vai trò vận chuyển oxygen trong máu.",
           },
         ],
       },
@@ -1711,6 +1947,63 @@ async function main() {
         ],
       },
     },
+  });
+
+  // ================= BÀI TẬP LUYỆN TẬP (PRACTICE) - LỚP 11 =================
+  await prisma.practiceQuestion.createMany({
+    data: [
+      // Chương 1 - Cân bằng hóa học
+      { chapterId: l11c1.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Hằng số cân bằng Kc phụ thuộc vào yếu tố nào?", choices: JSON.stringify(["Nồng độ ban đầu", "Nhiệt độ", "Áp suất", "Chất xúc tác"]), correctIndex: 1, explanation: "Kc chỉ phụ thuộc vào nhiệt độ và bản chất phản ứng, không phụ thuộc nồng độ ban đầu." },
+      { chapterId: l11c1.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Một dung dịch có pH=9. Nồng độ ion OH- là bao nhiêu? (Kw=10^-14)", choices: JSON.stringify(["10^-5 mol/L", "10^-9 mol/L", "10^-14 mol/L", "9 mol/L"]), correctIndex: 0, explanation: "[H+]=10^-9 -> [OH-]=Kw/[H+]=10^-14/10^-9=10^-5 mol/L." },
+
+      // Chương 2 - Nitrogen - Sulfur
+      { chapterId: l11c2.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Khí nào có mùi khai đặc trưng, dùng để nhận biết muối ammonium?", choices: JSON.stringify(["H2", "NH3", "SO2", "NO2"]), correctIndex: 1, explanation: "Đun muối ammonium với kiềm giải phóng khí NH3 có mùi khai." },
+      { chapterId: l11c2.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Cho 3,2 gam sulfur (M=32) cháy hết trong oxygen: S+O2->SO2. Thể tích SO2 thu được ở đkc là?", choices: JSON.stringify(["1,2395 lít", "2,479 lít", "3,7185 lít", "4,958 lít"]), correctIndex: 1, explanation: "n(S)=3,2/32=0,1 mol -> n(SO2)=0,1 mol -> V=0,1x24,79=2,479 lít." },
+
+      // Chương 3 - Đại cương hữu cơ
+      { chapterId: l11c3.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Phương pháp sắc kí dùng để làm gì?", choices: JSON.stringify(["Tách các chất dựa vào tốc độ di chuyển khác nhau qua pha tĩnh", "Chỉ dùng để đo nhiệt độ sôi", "Chỉ áp dụng cho chất khí", "Tổng hợp hợp chất hữu cơ"]), correctIndex: 0, explanation: "Sắc kí tách các chất trong hỗn hợp dựa vào tốc độ di chuyển khác nhau qua pha tĩnh khi được pha động lôi cuốn." },
+
+      // Chương 4 - Hydrocarbon
+      { chapterId: l11c4.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Chất nào sau đây làm mất màu dung dịch KMnO4?", choices: JSON.stringify(["CH4", "C2H4", "C2H6", "C3H8"]), correctIndex: 1, explanation: "Alkene (C2H4) có liên kết đôi nên bị oxi hóa bởi KMnO4, làm mất màu tím." },
+      { chapterId: l11c4.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Đốt cháy hoàn toàn 4,4 gam propane (C3H8, M=44). Khối lượng CO2 sinh ra là?", choices: JSON.stringify(["8,8 gam", "13,2 gam", "17,6 gam", "22 gam"]), correctIndex: 1, explanation: "n(C3H8)=4,4/44=0,1 mol -> n(CO2)=0,3 mol -> m=0,3x44=13,2 gam." },
+
+      // Chương 5 - Dẫn xuất halogen - Alcohol - Phenol
+      { chapterId: l11c5.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Glycerol phản ứng với Cu(OH)2 tạo dung dịch màu gì?", choices: JSON.stringify(["Đỏ", "Xanh lam", "Vàng", "Tím"]), correctIndex: 1, explanation: "Glycerol (polyalcohol) phản ứng với Cu(OH)2 tạo phức màu xanh lam đặc trưng." },
+      { chapterId: l11c5.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Phenol phản ứng với dung dịch bromine dư tạo 2,4,6-tribromophenol theo phương trình C6H5OH + 3Br2 -> C6H2Br3OH + 3HBr. Với 0,05 mol phenol phản ứng hết, cần dùng bao nhiêu mol Br2?", choices: JSON.stringify(["0,05 mol", "0,10 mol", "0,15 mol", "0,20 mol"]), correctIndex: 2, explanation: "Tỉ lệ mol phenol : Br2 = 1 : 3 nên n(Br2) = 0,05 x 3 = 0,15 mol." },
+
+      // Chương 6 - Carbonyl - Carboxylic acid
+      { chapterId: l11c6.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Chất nào sau đây vừa có tính acid vừa tham gia phản ứng tráng bạc?", choices: JSON.stringify(["Acetic acid (CH3COOH)", "Formic acid (HCOOH)", "Ethanol", "Propanoic acid"]), correctIndex: 1, explanation: "Formic acid còn nhóm -CHO trong phân tử nên vừa có tính acid vừa có tính khử (tráng bạc được)." },
+    ],
+  });
+
+  // ================= BÀI TẬP LUYỆN TẬP (PRACTICE) - LỚP 12 =================
+  await prisma.practiceQuestion.createMany({
+    data: [
+      // Chương 1 - Ester - Lipid
+      { chapterId: l12c1.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Xà phòng hóa 8,9 gam tristearin (M=890) bằng NaOH vừa đủ. Số mol NaOH cần dùng là?", choices: JSON.stringify(["0,01 mol", "0,02 mol", "0,03 mol", "0,04 mol"]), correctIndex: 2, explanation: "n(chất béo)=8,9/890=0,01 mol -> n(NaOH)=0,01x3=0,03 mol." },
+
+      // Chương 2 - Carbohydrate
+      { chapterId: l12c2.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Chất nào sau đây thủy phân tạo ra glucose và fructose?", choices: JSON.stringify(["Tinh bột", "Cellulose", "Saccharose", "Maltose"]), correctIndex: 2, explanation: "Saccharose thủy phân tạo glucose và fructose; tinh bột/cellulose tạo glucose; maltose tạo glucose." },
+      { chapterId: l12c2.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Thủy phân hoàn toàn 1kg tinh bột (hiệu suất 100%) thu được bao nhiêu kg glucose? ((C6H10O5)n + nH2O -> nC6H12O6, tỉ lệ khối lượng 162n:180n)", choices: JSON.stringify(["0,9 kg", "1,0 kg", "1,11 kg", "1,2 kg"]), correctIndex: 2, explanation: "Tỉ lệ khối lượng (C6H10O5)n : C6H12O6 = 162:180 nên m(glucose)=1x180/162≈1,11 kg." },
+
+      // Chương 3 - Hợp chất chứa Nitrogen
+      { chapterId: l12c3.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Amino acid tồn tại chủ yếu ở dạng nào trong dung dịch?", choices: JSON.stringify(["Phân tử trung hòa thông thường", "Ion lưỡng cực", "Cation", "Anion"]), correctIndex: 1, explanation: "Amino acid tồn tại chủ yếu ở dạng ion lưỡng cực (nhóm -NH2 nhận H+ từ nhóm -COOH ngay trong phân tử)." },
+
+      // Chương 4 - Polymer
+      { chapterId: l12c4.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Phản ứng trùng hợp cần monomer có đặc điểm gì?", choices: JSON.stringify(["Có liên kết bội hoặc vòng kém bền", "Có ít nhất 2 nhóm chức", "Luôn là hydrocarbon no", "Không cần điều kiện gì đặc biệt"]), correctIndex: 0, explanation: "Trùng hợp cần monomer có liên kết bội (như C=C) hoặc vòng kém bền để mở ra liên kết." },
+
+      // Chương 5 - Pin điện và điện phân
+      { chapterId: l12c5.id, difficulty: "VAN_DUNG", source: "SBT KNTT", content: "Điện phân dung dịch AgNO3 với I=2A trong 965 giây (F=96500). Khối lượng Ag thu được là?", choices: JSON.stringify(["1,08 gam", "2,16 gam", "3,24 gam", "4,32 gam"]), correctIndex: 1, explanation: "n(e)=It/F=2x965/96500=0,02 mol; Ag+ +e->Ag nên n(Ag)=0,02 mol -> m=0,02x108=2,16 gam." },
+
+      // Chương 6 - Đại cương kim loại
+      { chapterId: l12c6.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Ăn mòn hóa học khác ăn mòn điện hóa ở điểm nào?", choices: JSON.stringify(["Ăn mòn hóa học không phát sinh dòng điện", "Ăn mòn hóa học chỉ xảy ra với phi kim", "Ăn mòn hóa học nhanh hơn", "Không có sự khác biệt"]), correctIndex: 0, explanation: "Ăn mòn hóa học là phản ứng trực tiếp giữa kim loại và chất oxi hóa, không phát sinh dòng điện; ăn mòn điện hóa thì có." },
+
+      // Chương 7 - Nhóm IA - IIA
+      { chapterId: l12c7.id, difficulty: "THONG_HIEU", source: "SBT KNTT", content: "Vì sao phải bảo quản kim loại kiềm trong dầu hỏa?", choices: JSON.stringify(["Vì kim loại kiềm phản ứng mạnh với nước và oxygen trong không khí", "Vì kim loại kiềm dễ bay hơi", "Vì dầu hỏa làm kim loại kiềm cứng hơn", "Không có lý do đặc biệt"]), correctIndex: 0, explanation: "Kim loại kiềm phản ứng rất mạnh với hơi nước và oxygen trong không khí nên cần ngâm trong dầu hỏa để cách li." },
+
+      // Chương 8 - Kim loại chuyển tiếp - Phức chất
+      { chapterId: l12c8.id, difficulty: "NHAN_BIET", source: "SBT KNTT", content: "Vì sao hợp chất của kim loại chuyển tiếp thường có màu sắc đặc trưng?", choices: JSON.stringify(["Do sự chuyển electron trong phân lớp d chưa lấp đầy", "Do kim loại chuyển tiếp luôn ở thể khí", "Do chúng không tan trong nước", "Không có lý do hóa học nào"]), correctIndex: 0, explanation: "Sự chuyển mức năng lượng của electron trong phân lớp d chưa lấp đầy hấp thụ ánh sáng ở bước sóng nhất định, tạo màu sắc đặc trưng." },
+    ],
   });
 
   console.log("Đã thêm đầy đủ dữ liệu Hóa học Lớp 11-12 theo SGK Hóa học (Kết nối tri thức):");

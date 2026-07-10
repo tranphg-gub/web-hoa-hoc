@@ -1,6 +1,6 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-L, trừ MR-K). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3, MR-A→MR-L và MR-M, trừ MR-K). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
@@ -9,7 +9,7 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 ## 2. Công nghệ đang dùng
 
 - Next.js 16 (App Router) + TypeScript + Tailwind CSS
-- SQLite qua Prisma ORM (`prisma/dev.db`, schema tại `prisma/schema.prisma`)
+- **PostgreSQL (Supabase)** qua Prisma ORM (đã đổi từ SQLite để deploy công khai được — SQLite không phù hợp hosting serverless như Vercel). Schema tại `prisma/schema.prisma`, kết nối qua `DATABASE_URL` (pooled) + `DIRECT_URL` (trực tiếp, dùng cho migration)
 - Auth.js (NextAuth v5) — Credentials provider, mật khẩu hash bcrypt, JWT session
 - **Google Gemini** (`@google/generative-ai`) cho module AI hỏi đáp — đã đổi từ Anthropic. **Cần điền `GEMINI_API_KEY` thật vào `.env`** (lấy miễn phí tại https://aistudio.google.com/apikey) — hiện đang để trống, chưa test thật.
 - **PWA**: manifest + service worker tối giản (chỉ cache icon/manifest, không cache trang có xác thực) — cài được vào máy/điện thoại qua "Cài đặt ứng dụng" của trình duyệt
@@ -37,12 +37,13 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 | GitHub (MR-J) | ✅ | Đã push lên `https://github.com/tranphg-gub/web-hoa-hoc` nhánh `main` |
 | PWA (MR-L) | ✅ | Cài đặt được vào máy/điện thoại, xem mục 2 |
 | Nội dung chi tiết hơn (MR-I) | ✅ | ~40/83 bài được bổ sung ví dụ số liệu cụ thể/ứng dụng thực tế; đã đối chiếu web tham khảo (vietjack, loigiaihay,...) và kiểm tra lại toàn bộ phương trình mới cân bằng đúng |
+| Ngân hàng câu hỏi + Bài tập luyện tập + AI tạo đề (MR-M) | ✅ | Mở rộng 27 đề kiểm tra (từ ~4-5 câu lên 7-9 câu/đề); thêm mục `/practice` cho học sinh (làm tự do theo chương, biết đúng/sai + giải thích ngay, không tính giờ/điểm) với ~2-3 câu/chương khởi điểm; trang admin `/admin/practice` quản lý ngân hàng + `/admin/practice/generate` dùng AI (Gemini, system prompt riêng) soạn nháp câu hỏi, giáo viên duyệt trước khi lưu |
 
 ## 4. Việc đang làm dở / kế hoạch tiếp theo
 
 Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Chỉ còn:
 
-- MR-K: Public deploy — **chờ người dùng có mặt**, chưa tự làm theo đúng yêu cầu
+- MR-K: Public deploy — **tạm dừng giữa chừng theo yêu cầu người dùng để rà soát lại nội dung trước (dẫn tới MR-M)**, cần tiếp tục: import project trên Vercel, set 5 biến môi trường (DATABASE_URL, DIRECT_URL, AUTH_SECRET, GEMINI_API_KEY, GEMINI_MODEL), bấm Deploy
 
 ## 5. Việc CẦN người dùng làm
 
@@ -53,15 +54,15 @@ Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Chỉ còn:
 
 ## 6. Nội dung học tập hiện có trong database
 
-| Lớp | Số bài | Đề kiểm tra | Câu hỏi | Bộ flashcard | Số thẻ |
-|---|---|---|---|---|---|
-| 8 | 11 | 2 | 12 | 2 | 15 |
-| 9 | 15 | 4 | 20 | 3 | 17 |
-| 10 | 16 | 7 | 23 | 4 | 18 |
-| 11 | 19 | 6 | 27 | 6 | 18 |
-| 12 | 22 | 8 | 34 | 8 | 20 |
+| Lớp | Số bài | Đề kiểm tra | Câu hỏi (đề KT) | Bộ flashcard | Số thẻ | Câu luyện tập (`/practice`) |
+|---|---|---|---|---|---|---|
+| 8 | 11 | 2 | 18 | 2 | 15 | 10 |
+| 9 | 15 | 4 | 29 | 4 | 17 | 13 |
+| 10 | 16 | 7 | 41 | 7 | 18 | 19 |
+| 11 | 19 | 6 | 41 | 6 | 18 | 10 |
+| 12 | 22 | 8 | 50 | 8 | 20 | 9 |
 
-Mỗi lớp có model `Chapter` riêng (grade, title, order) — Document/Quiz/FlashcardSet liên kết qua `chapterId`. Câu hỏi đã có mức độ khó (gán theo vị trí câu trong đề: câu 1-2 Nhận biết, câu 3 Thông hiểu, câu 4+ Vận dụng/Vận dụng cao — giáo viên nên rà lại qua trang quản trị nếu muốn chính xác hơn theo từng câu cụ thể).
+Mỗi lớp có model `Chapter` riêng (grade, title, order) — Document/Quiz/FlashcardSet/PracticeQuestion liên kết qua `chapterId`. Câu hỏi đã có mức độ khó (gán theo vị trí câu trong đề: câu 1-2 Nhận biết, câu 3 Thông hiểu, câu 4+ Vận dụng/Vận dụng cao — giáo viên nên rà lại qua trang quản trị nếu muốn chính xác hơn theo từng câu cụ thể). Ngân hàng `/practice` mới có khởi điểm ~2-3 câu/chương — giáo viên có thể tự mở rộng thêm qua `/admin/practice/generate` (AI soạn nháp, duyệt trước khi lưu) mà không cần sửa code.
 
 ## 7. Nguồn dữ liệu / seed script
 
