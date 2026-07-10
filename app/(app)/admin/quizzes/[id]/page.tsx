@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 import { requireAdmin } from "@/lib/require-auth";
+import { DifficultyBadge } from "@/components/ui/difficulty-badge";
+import { DIFFICULTY_LABELS, DIFFICULTY_ORDER } from "@/lib/difficulty";
 import { addQuestion, deleteQuestion } from "../actions";
 
 export default async function AdminQuizDetailPage({
@@ -97,6 +99,22 @@ export default async function AdminQuizDetailPage({
             </select>
           </div>
           <div className="flex flex-col gap-1.5">
+            <Label htmlFor="difficulty">Mức độ</Label>
+            <select
+              id="difficulty"
+              name="difficulty"
+              required
+              defaultValue="NHAN_BIET"
+              className="w-full max-w-[220px] rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
+            >
+              {DIFFICULTY_ORDER.map((d) => (
+                <option key={d} value={d}>
+                  {DIFFICULTY_LABELS[d]}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5">
             <Label htmlFor="explanation">Giải thích (tùy chọn)</Label>
             <textarea
               id="explanation"
@@ -117,9 +135,14 @@ export default async function AdminQuizDetailPage({
           return (
             <Card key={q.id}>
               <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-medium">
-                  Câu {idx + 1}. {q.content}
-                </p>
+                <div>
+                  <p className="text-sm font-medium">
+                    Câu {idx + 1}. {q.content}
+                  </p>
+                  <div className="mt-2">
+                    <DifficultyBadge difficulty={q.difficulty} />
+                  </div>
+                </div>
                 <form
                   action={async () => {
                     "use server";

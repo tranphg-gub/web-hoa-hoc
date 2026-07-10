@@ -17,6 +17,8 @@
   --danger-fg: #b3372c;
   --warning-bg: #fff6e0;
   --warning-fg: #92660a;
+  --orange-bg: #ffece0;
+  --orange-fg: #ad4c1a;
 
   --radius-card: 1.25rem;
   --radius-pill: 999px;
@@ -37,6 +39,8 @@
   --color-danger-fg: var(--danger-fg);
   --color-warning-bg: var(--warning-bg);
   --color-warning-fg: var(--warning-fg);
+  --color-orange-bg: var(--orange-bg);
+  --color-orange-fg: var(--orange-fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

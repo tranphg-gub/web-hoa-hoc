@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import type { Difficulty } from "@prisma/client";
 
 async function requireAdmin() {
   const session = await auth();
@@ -52,6 +53,7 @@ export async function addQuestion(quizId: string, formData: FormData) {
       correctIndex: Number(formData.get("correctIndex")),
       explanation: String(formData.get("explanation") ?? "") || null,
       order: existingCount,
+      difficulty: formData.get("difficulty") as Difficulty,
     },
   });
 

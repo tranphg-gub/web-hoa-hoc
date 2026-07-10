@@ -1,13 +1,14 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-type BadgeTone = "neutral" | "success" | "danger" | "warning";
+type BadgeTone = "neutral" | "success" | "danger" | "warning" | "orange";
 
 const toneClasses: Record<BadgeTone, string> = {
   neutral: "bg-background-subtle text-foreground-muted",
   success: "bg-success-bg text-success-fg",
   danger: "bg-danger-bg text-danger-fg",
   warning: "bg-warning-bg text-warning-fg",
+  orange: "bg-orange-bg text-orange-fg",
 };
 
 export function Badge({

@@ -12,6 +12,13 @@ enum Role {
   STUDENT
 }
 
+enum Difficulty {
+  NHAN_BIET
+  THONG_HIEU
+  VAN_DUNG
+  VAN_DUNG_CAO
+}
+
 model User {
   id        String   @id @default(cuid())
   username  String   @unique
@@ -78,13 +85,14 @@ model Quiz {
 }
 
 model Question {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   quizId       String
   content      String
   choices      String
   correctIndex Int
   explanation  String?
-  order        Int    @default(0)
+  order        Int        @default(0)
+  difficulty   Difficulty @default(NHAN_BIET)
 
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }

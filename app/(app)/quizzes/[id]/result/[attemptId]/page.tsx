@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { DifficultyBadge } from "@/components/ui/difficulty-badge";
+import { DIFFICULTY_ORDER } from "@/lib/difficulty";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Check, X } from "lucide-react";
@@ -29,6 +31,12 @@ export default async function QuizResultPage({
   if (!attempt.submittedAt) notFound();
 
   const answers = JSON.parse(attempt.answers) as Record<string, number>;
+
+  const statsByDifficulty = DIFFICULTY_ORDER.map((difficulty) => {
+    const questions = attempt.quiz.questions.filter((q) => q.difficulty === difficulty);
+    const correct = questions.filter((q) => answers[q.id] === q.correctIndex).length;
+    return { difficulty, correct, total: questions.length };
+  }).filter((s) => s.total > 0);
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6 pb-16">
@@ -56,6 +64,25 @@ export default async function QuizResultPage({
         </Badge>
       </Card>
 
+      {statsByDifficulty.length > 0 && (
+        <Card>
+          <CardTitle className="text-sm">Kết quả theo mức độ</CardTitle>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {statsByDifficulty.map((s) => (
+              <div
+                key={s.difficulty}
+                className="flex items-center gap-2 rounded-xl border border-border-subtle px-3 py-2 text-sm"
+              >
+                <DifficultyBadge difficulty={s.difficulty} />
+                <span className="text-foreground-muted">
+                  {s.correct}/{s.total} câu
+                </span>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
       <div className="flex flex-col gap-4">
         {attempt.quiz.questions.map((q, idx) => {
           const choices = JSON.parse(q.choices) as string[];
@@ -65,10 +92,15 @@ export default async function QuizResultPage({
           return (
             <Card key={q.id}>
               <div className="mb-3 flex items-start justify-between gap-3">
-                <p className="text-sm font-medium">
-                  <span className="text-foreground-muted">Câu {idx + 1}. </span>
-                  <ChemProseText text={q.content} />
-                </p>
+                <div>
+                  <p className="text-sm font-medium">
+                    <span className="text-foreground-muted">Câu {idx + 1}. </span>
+                    <ChemProseText text={q.content} />
+                  </p>
+                  <div className="mt-2">
+                    <DifficultyBadge difficulty={q.difficulty} />
+                  </div>
+                </div>
                 {isCorrect ? (
                   <Badge tone="success">
                     <Check className="h-3.5 w-3.5" />
