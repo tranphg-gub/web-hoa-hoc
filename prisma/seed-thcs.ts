@@ -177,7 +177,15 @@ async function main() {
           "- Tác dụng với oxide base tạo thành muối và nước.\n\n" +
           "## Một số acid thường gặp\n" +
           "- HCl (hydrochloric acid), H2SO4 (sulfuric acid), HNO3 (nitric acid): các acid vô cơ mạnh.\n" +
-          "- CH3COOH (acetic acid): acid hữu cơ yếu, có trong giấm ăn.",
+          "- CH3COOH (acetic acid): acid hữu cơ yếu, có trong giấm ăn.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Hòa tan hoàn toàn 5,6 gam iron (Fe, M = 56 g/mol) vào dung dịch HCl dư:\nFe + 2HCl -> FeCl2 + H2\n" +
+          "- Số mol Fe: n = 5,6/56 = 0,1 mol.\n" +
+          "- Theo phương trình, n(H2) = n(Fe) = 0,1 mol -> thể tích khí H2 thoát ra ở đkc: V = 0,1 x 24,79 = 2,479 lít.\n\n" +
+          "## Ứng dụng thực tế\n" +
+          "- Dịch vị dạ dày người chứa hydrochloric acid loãng (nồng độ khoảng 0,001-0,01 mol/L, tương ứng pH 1,5-3,5) giúp tiêu hóa thức ăn và diệt khuẩn.\n\n" +
+          "## Lưu ý\n" +
+          "- Kim loại đứng SAU hydrogen trong dãy hoạt động hóa học (Cu, Ag, Au...) KHÔNG phản ứng với acid HCl, H2SO4 loãng để giải phóng khí H2 - đây là lỗi học sinh hay nhầm.",
       },
       {
         grade: 8,
@@ -198,7 +206,11 @@ async function main() {
           "- pH nhỏ hơn 7: dung dịch có môi trường acid.\n" +
           "- pH bằng 7: dung dịch trung tính.\n" +
           "- pH lớn hơn 7: dung dịch có môi trường base (kiềm).\n" +
-          "- pH càng nhỏ tính acid càng mạnh; pH càng lớn tính base càng mạnh.",
+          "- pH càng nhỏ tính acid càng mạnh; pH càng lớn tính base càng mạnh.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Một số giá trị pH quen thuộc: nước chanh pH ~ 2 (acid), sữa tươi pH ~ 6,5 (acid rất yếu), nước cất pH = 7 (trung tính), nước xà phòng pH ~ 9-10 (base), dung dịch NaOH đặc pH ~ 13-14 (base mạnh).\n\n" +
+          "## Lưu ý\n" +
+          "- Base không tan (Cu(OH)2, Fe(OH)3, Mg(OH)2) KHÔNG làm đổi màu quỳ tím hay dung dịch phenolphthalein vì không tan trong nước để phân li ra ion OH- - chỉ có base tan (kiềm) mới có tính chất này.",
       },
       {
         grade: 8,
@@ -216,7 +228,13 @@ async function main() {
           "## Tính chất hóa học\n" +
           "- Oxide acid tác dụng với nước tạo thành acid tương ứng: SO3 + H2O -> H2SO4\n" +
           "- Oxide base tác dụng với nước tạo thành base tương ứng (với oxide của kim loại kiềm, kiềm thổ): CaO + H2O -> Ca(OH)2\n" +
-          "- Oxide acid tác dụng với base tạo muối và nước; oxide base tác dụng với acid tạo muối và nước.",
+          "- Oxide acid tác dụng với base tạo muối và nước; oxide base tác dụng với acid tạo muối và nước.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 5,6 gam CaO (M = 56 g/mol) tác dụng hết với nước:\nCaO + H2O -> Ca(OH)2\n" +
+          "- Số mol CaO: n = 5,6/56 = 0,1 mol.\n" +
+          "- Theo phương trình, n(Ca(OH)2) = 0,1 mol -> khối lượng Ca(OH)2 tạo thành: m = 0,1 x 74 = 7,4 gam.\n\n" +
+          "## Ứng dụng thực tế\n" +
+          "- CaO (vôi sống) tôi với nước tạo Ca(OH)2 (vôi tôi) - phản ứng tỏa nhiệt mạnh, dùng trong xây dựng và khử chua đất trồng.",
       },
       {
         grade: 8,
@@ -244,7 +262,13 @@ async function main() {
           "- Phân đạm: cung cấp nguyên tố nitrogen, giúp cây phát triển thân, lá. Ví dụ: urea CO(NH2)2, ammonium nitrate NH4NO3, ammonium sulfate (NH4)2SO4.\n" +
           "- Phân lân: cung cấp nguyên tố phosphorus, giúp cây phát triển bộ rễ. Ví dụ: superphosphate Ca(H2PO4)2.\n" +
           "- Phân kali: cung cấp nguyên tố potassium, giúp cây ra hoa, quả và tăng khả năng chống chịu. Ví dụ: KCl, K2SO4.\n" +
-          "- Phân hỗn hợp NPK chứa đồng thời cả ba nguyên tố nitrogen, phosphorus, potassium theo một tỉ lệ nhất định.",
+          "- Phân hỗn hợp NPK chứa đồng thời cả ba nguyên tố nitrogen, phosphorus, potassium theo một tỉ lệ nhất định.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Tính thành phần phần trăm nitrogen trong phân đạm urea CO(NH2)2 (M = 60 g/mol):\n" +
+          "- Khối lượng N trong 1 mol urea: 2 x 14 = 28 gam.\n" +
+          "- %N = 28/60 x 100% = 46,7% - đây là lý do urea được coi là loại phân đạm có hàm lượng dinh dưỡng cao nhất trong các loại phân đạm thông dụng.\n\n" +
+          "## Lưu ý\n" +
+          "- Trên bao bì NPK, 3 con số (ví dụ NPK 16-16-8) lần lượt là % khối lượng N, P2O5 và K2O - không phải % khối lượng nguyên tố P, K nguyên chất.",
       },
     ],
   });
@@ -263,7 +287,11 @@ async function main() {
           "## Tính chất hóa học\n" +
           "- Tác dụng với phi kim: nhiều kim loại phản ứng với oxygen tạo thành oxide, ví dụ 3Fe + 2O2 -> Fe3O4; kim loại cũng phản ứng được với một số phi kim khác như chlorine, sulfur tạo thành muối.\n" +
           "- Tác dụng với dung dịch acid: kim loại đứng trước hydrogen trong dãy hoạt động hóa học phản ứng với dung dịch acid giải phóng khí H2.\n" +
-          "- Tác dụng với dung dịch muối: kim loại hoạt động mạnh hơn đẩy được kim loại yếu hơn ra khỏi dung dịch muối của nó, ví dụ: Fe + CuSO4 -> FeSO4 + Cu",
+          "- Tác dụng với dung dịch muối: kim loại hoạt động mạnh hơn đẩy được kim loại yếu hơn ra khỏi dung dịch muối của nó, ví dụ: Fe + CuSO4 -> FeSO4 + Cu\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 5,6 gam Fe (M = 56 g/mol) vào dung dịch CuSO4 dư:\nFe + CuSO4 -> FeSO4 + Cu\n" +
+          "- Số mol Fe: n = 5,6/56 = 0,1 mol.\n" +
+          "- Theo phương trình, n(Cu) = n(Fe) = 0,1 mol -> khối lượng Cu sinh ra: m = 0,1 x 64 = 6,4 gam (chất rắn màu đỏ bám trên đinh sắt).",
       },
       {
         grade: 9,
@@ -278,7 +306,11 @@ async function main() {
           "- Kim loại đứng trước (H) phản ứng được với một số dung dịch acid (HCl, H2SO4 loãng,...) giải phóng khí H2.\n" +
           "- Kim loại đứng trước (trừ nhóm kim loại phản ứng mạnh với nước) đẩy được kim loại đứng sau ra khỏi dung dịch muối của kim loại đó.\n\n" +
           "## Mẹo nhớ\n" +
-          "- \"Khi Nào Bạn Cần May Áo Záp Sắt Nhớ Sang Phố Hỏi Cửa Hàng Á Phi Âu\" (K, Na, Ba, Ca, Mg, Al, Zn, Fe, Ni, Sn, Pb, H, Cu, Ag, Pt, Au).",
+          "- \"Khi Nào Bạn Cần May Áo Záp Sắt Nhớ Sang Phố Hỏi Cửa Hàng Á Phi Âu\" (K, Na, Ba, Ca, Mg, Al, Zn, Fe, Ni, Sn, Pb, H, Cu, Ag, Pt, Au).\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Xét xem phản ứng nào xảy ra: (a) Cu + AgNO3, (b) Ag + CuSO4.\n" +
+          "- (a) Cu đứng trước Ag trong dãy hoạt động -> Cu đẩy được Ag ra khỏi muối: Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag (phản ứng xảy ra).\n" +
+          "- (b) Ag đứng sau Cu -> Ag KHÔNG đẩy được Cu ra khỏi muối (phản ứng không xảy ra).",
       },
       {
         grade: 9,
@@ -293,7 +325,10 @@ async function main() {
           "## Hợp kim\n" +
           "- Hợp kim là vật liệu kim loại có chứa một kim loại cơ bản và một hay nhiều nguyên tố khác (kim loại hoặc phi kim).\n" +
           "- Ví dụ: gang và thép là hợp kim của sắt với carbon (gang có hàm lượng carbon cao hơn thép); duralumin là hợp kim của nhôm với đồng, magnesium.\n" +
-          "- So với kim loại nguyên chất, hợp kim thường cứng hơn, bền hơn.",
+          "- So với kim loại nguyên chất, hợp kim thường cứng hơn, bền hơn.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "- Gang: hàm lượng carbon khoảng 2-5%, cứng và giòn hơn thép, dùng đúc các vật như nắp cống, thân máy.\n" +
+          "- Thép: hàm lượng carbon dưới 2%, dẻo dai hơn gang, dùng làm khung nhà, cầu, dụng cụ.",
       },
       {
         grade: 9,
@@ -330,7 +365,9 @@ async function main() {
           "- Dẫn xuất của hydrocarbon: phân tử còn chứa thêm các nguyên tố khác như oxygen, nitrogen,... ví dụ alcohol, acid hữu cơ.\n\n" +
           "## Công thức hóa học\n" +
           "- Công thức phân tử cho biết số lượng nguyên tử của mỗi nguyên tố trong một phân tử.\n" +
-          "- Công thức cấu tạo cho biết thứ tự và cách thức liên kết giữa các nguyên tử trong phân tử.",
+          "- Công thức cấu tạo cho biết thứ tự và cách thức liên kết giữa các nguyên tử trong phân tử.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "- Ethanol và dimethyl ether cùng có công thức phân tử C2H6O nhưng công thức cấu tạo khác nhau (CH3-CH2-OH và CH3-O-CH3) nên tính chất hoàn toàn khác nhau - đây gọi là hiện tượng đồng phân.",
       },
       {
         grade: 9,
@@ -346,7 +383,11 @@ async function main() {
           "- Phản ứng cháy tỏa nhiều nhiệt: CH4 + 2O2 -> CO2 + 2H2O\n" +
           "- Khá trơ về mặt hóa học so với alkene, không làm mất màu dung dịch bromine.\n\n" +
           "## Ứng dụng\n" +
-          "- Methane là thành phần chính của khí thiên nhiên và khí biogas, được dùng làm nhiên liệu đốt cháy sinh nhiệt.",
+          "- Methane là thành phần chính của khí thiên nhiên và khí biogas, được dùng làm nhiên liệu đốt cháy sinh nhiệt.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Đốt cháy hoàn toàn 3,2 gam methane (CH4, M = 16 g/mol):\nCH4 + 2O2 -> CO2 + 2H2O\n" +
+          "- Số mol CH4: n = 3,2/16 = 0,2 mol.\n" +
+          "- Theo phương trình, n(CO2) = 0,2 mol -> khối lượng CO2 sinh ra: m = 0,2 x 44 = 8,8 gam.",
       },
       {
         grade: 9,
@@ -437,7 +478,10 @@ async function main() {
           "## Vai trò\n" +
           "- Cung cấp và dự trữ năng lượng cho cơ thể, là dung môi hòa tan một số vitamin như A, D, E, K.\n\n" +
           "## Phản ứng xà phòng hóa\n" +
-          "- Thủy phân chất béo trong môi trường kiềm (dung dịch NaOH hoặc KOH) tạo ra glycerol và muối của acid béo (xà phòng); phản ứng này được gọi là phản ứng xà phòng hóa.",
+          "- Thủy phân chất béo trong môi trường kiềm (dung dịch NaOH hoặc KOH) tạo ra glycerol và muối của acid béo (xà phòng); phản ứng này được gọi là phản ứng xà phòng hóa.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Phản ứng xà phòng hóa tristearin (một chất béo no) với NaOH:\n(C17H35COO)3C3H5 + 3NaOH -> 3C17H35COONa + C3H5(OH)3\n" +
+          "- Cứ 1 mol chất béo phản ứng với 3 mol NaOH, sinh ra 3 mol xà phòng (muối natri của acid béo) và 1 mol glycerol.",
       },
       {
         grade: 9,

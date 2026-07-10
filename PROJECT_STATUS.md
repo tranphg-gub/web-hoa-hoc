@@ -1,6 +1,6 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-H, MR-J, MR-L). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3 và MR-A→MR-L, trừ MR-K). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
@@ -36,12 +36,12 @@ Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 h
 | Test đầu vào/đánh giá định kỳ + AI phân tích lộ trình (MR-H) | ✅ | `Quiz.kind` (REGULAR/PLACEMENT/MONTHLY_CHECK); nộp bài PLACEMENT/MONTHLY_CHECK tự động gọi "AI con" (`lib/ai/placement-analysis.ts`) phân tích điểm yếu + đề xuất ôn tập, hiển thị ở trang kết quả |
 | GitHub (MR-J) | ✅ | Đã push lên `https://github.com/tranphg-gub/web-hoa-hoc` nhánh `main` |
 | PWA (MR-L) | ✅ | Cài đặt được vào máy/điện thoại, xem mục 2 |
+| Nội dung chi tiết hơn (MR-I) | ✅ | ~40/83 bài được bổ sung ví dụ số liệu cụ thể/ứng dụng thực tế; đã đối chiếu web tham khảo (vietjack, loigiaihay,...) và kiểm tra lại toàn bộ phương trình mới cân bằng đúng |
 
 ## 4. Việc đang làm dở / kế hoạch tiếp theo
 
-Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Tóm tắt các phần **chưa làm**:
+Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Chỉ còn:
 
-- MR-I: Rà soát nội dung chi tiết/chính xác hơn (đối chiếu thêm web khác) — khối lượng lớn (94 bài học), cần một phiên làm việc riêng
 - MR-K: Public deploy — **chờ người dùng có mặt**, chưa tự làm theo đúng yêu cầu
 
 ## 5. Việc CẦN người dùng làm

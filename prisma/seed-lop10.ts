@@ -79,7 +79,11 @@ async function main() {
           "- Cấu hình electron biểu diễn sự phân bố electron trên các phân lớp trong nguyên tử, tuân theo nguyên lí vững bền (electron chiếm mức năng lượng thấp trước), nguyên lí Pauli và quy tắc Hund.\n" +
           "- Ví dụ: cấu hình electron của nguyên tử oxygen (Z = 8) là 1s2 2s2 2p4.\n\n" +
           "## Electron lớp ngoài cùng\n" +
-          "- Số electron ở lớp ngoài cùng quyết định phần lớn tính chất hóa học của nguyên tố (kim loại, phi kim hay khí hiếm).",
+          "- Số electron ở lớp ngoài cùng quyết định phần lớn tính chất hóa học của nguyên tố (kim loại, phi kim hay khí hiếm).\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Viết cấu hình electron của nguyên tử sodium (Na, Z = 11):\n" +
+          "- Phân bố 11 electron theo thứ tự mức năng lượng: 1s2 2s2 2p6 3s1.\n" +
+          "- Na có 1 electron lớp ngoài cùng (lớp 3) -> dễ nhường electron này để đạt cấu hình bền của khí hiếm Ne, thể hiện tính kim loại điển hình.",
       },
     ],
   });
@@ -100,7 +104,11 @@ async function main() {
           "## Ô nguyên tố, chu kì, nhóm\n" +
           "- Ô nguyên tố cho biết số hiệu nguyên tử, kí hiệu hóa học, tên nguyên tố và nguyên tử khối.\n" +
           "- Chu kì là dãy nguyên tố có cùng số lớp electron, được đánh số từ 1 đến 7; chu kì 1, 2, 3 là chu kì nhỏ, chu kì 4 đến 7 là chu kì lớn.\n" +
-          "- Nhóm gồm nhóm A (chứa các nguyên tố s, p) và nhóm B (chứa các nguyên tố d, f - kim loại chuyển tiếp); với nhóm A, số thứ tự nhóm bằng số electron lớp ngoài cùng.",
+          "- Nhóm gồm nhóm A (chứa các nguyên tố s, p) và nhóm B (chứa các nguyên tố d, f - kim loại chuyển tiếp); với nhóm A, số thứ tự nhóm bằng số electron lớp ngoài cùng.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Nguyên tử chlorine (Cl) có Z = 17, cấu hình electron 1s2 2s2 2p6 3s2 3p5:\n" +
+          "- Có 3 lớp electron -> thuộc chu kì 3.\n" +
+          "- Có 7 electron lớp ngoài cùng -> thuộc nhóm VIIA.",
       },
       {
         grade: 10,
@@ -117,7 +125,12 @@ async function main() {
           "- Fluorine (F) là nguyên tố có độ âm điện lớn nhất trong bảng tuần hoàn.\n\n" +
           "## Tính kim loại - phi kim\n" +
           "- Trong một chu kì, tính kim loại giảm dần và tính phi kim tăng dần từ trái sang phải.\n" +
-          "- Trong một nhóm A, tính kim loại tăng dần và tính phi kim giảm dần từ trên xuống dưới.",
+          "- Trong một nhóm A, tính kim loại tăng dần và tính phi kim giảm dần từ trên xuống dưới.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "So sánh bán kính nguyên tử của Na, Mg, K (cùng nhóm IA với Na là K, cùng chu kì 3 với Na là Mg):\n" +
+          "- Na và Mg cùng chu kì 3: Mg đứng sau Na (điện tích hạt nhân lớn hơn) -> bán kính Mg nhỏ hơn Na.\n" +
+          "- Na và K cùng nhóm IA: K ở chu kì 4 (nhiều lớp electron hơn) -> bán kính K lớn hơn Na.\n" +
+          "- Vậy thứ tự bán kính tăng dần: Mg < Na < K.",
       },
       {
         grade: 10,
@@ -138,7 +151,9 @@ async function main() {
           "## Nội dung định luật tuần hoàn\n" +
           "- Tính chất của các nguyên tố và đơn chất, cũng như thành phần và tính chất của các hợp chất tạo nên từ các nguyên tố đó, biến đổi tuần hoàn theo chiều tăng của điện tích hạt nhân nguyên tử.\n\n" +
           "## Ý nghĩa của bảng tuần hoàn\n" +
-          "- Biết vị trí của một nguyên tố trong bảng tuần hoàn, có thể suy ra cấu tạo nguyên tử và tính chất cơ bản của nguyên tố đó, và ngược lại - đây là công cụ dự đoán tính chất rất hữu ích trong hóa học.",
+          "- Biết vị trí của một nguyên tố trong bảng tuần hoàn, có thể suy ra cấu tạo nguyên tử và tính chất cơ bản của nguyên tố đó, và ngược lại - đây là công cụ dự đoán tính chất rất hữu ích trong hóa học.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Nguyên tố X ở chu kì 3, nhóm IIA. Suy ra: X có 3 lớp electron, 2 electron lớp ngoài cùng, là kim loại (X chính là magnesium, Mg), oxide cao nhất MgO là oxide base, hydroxide tương ứng Mg(OH)2 là base.",
       },
     ],
   });
@@ -154,7 +169,10 @@ async function main() {
         content:
           "## Nội dung quy tắc\n" +
           "- Trong quá trình hình thành liên kết hóa học, nguyên tử có xu hướng nhường, nhận hoặc góp chung electron để đạt được cấu hình electron bền vững của khí hiếm gần nhất, thường là 8 electron ở lớp ngoài cùng (riêng nguyên tố helium là 2 electron).\n" +
-          "- Quy tắc octet là cơ sở để giải thích sự hình thành của cả liên kết ion và liên kết cộng hóa trị.",
+          "- Quy tắc octet là cơ sở để giải thích sự hình thành của cả liên kết ion và liên kết cộng hóa trị.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "- Nguyên tử Cl (7 electron lớp ngoài cùng) nhận thêm 1 electron để có 8 electron lớp ngoài cùng, đạt cấu hình bền của khí hiếm Ar.\n" +
+          "- Nguyên tử Mg (2 electron lớp ngoài cùng) nhường 2 electron để lớp electron sát ngoài cùng (đã đủ 8) trở thành lớp ngoài cùng mới, đạt cấu hình bền của khí hiếm Ne.",
       },
       {
         grade: 10,
@@ -194,7 +212,9 @@ async function main() {
           "- Liên kết hydrogen giúp giải thích vì sao nước có nhiệt độ sôi cao bất thường so với các hợp chất có phân tử khối tương đương.\n\n" +
           "## Tương tác van der Waals\n" +
           "- Tương tác van der Waals là lực hút yếu giữa các phân tử, có xu hướng tăng theo khối lượng phân tử và diện tích tiếp xúc bề mặt phân tử.\n" +
-          "- Tương tác van der Waals càng mạnh thì nhiệt độ nóng chảy, nhiệt độ sôi của chất càng cao.",
+          "- Tương tác van der Waals càng mạnh thì nhiệt độ nóng chảy, nhiệt độ sôi của chất càng cao.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "- H2O (M = 18) sôi ở 100°C trong khi H2S (M = 34, phân tử khối lớn hơn) chỉ sôi ở -60°C, vì phân tử H2O có liên kết hydrogen còn H2S thì không - minh chứng liên kết hydrogen ảnh hưởng mạnh hơn nhiều so với khối lượng phân tử.",
       },
     ],
   });
@@ -239,6 +259,9 @@ async function main() {
           "## Enthalpy tạo thành chuẩn\n" +
           "- Enthalpy tạo thành chuẩn của một chất là biến thiên enthalpy của phản ứng tạo thành 1 mol chất đó từ các đơn chất bền, ở điều kiện chuẩn (25°C, 1 bar).\n" +
           "- Có thể tính biến thiên enthalpy của một phản ứng dựa vào enthalpy tạo thành chuẩn của các chất: ΔrH bằng tổng enthalpy tạo thành của sản phẩm trừ đi tổng enthalpy tạo thành của chất phản ứng.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Phản ứng CH4 + 2O2 -> CO2 + 2H2O (khí), biết ΔfH°(CH4) = -74,8 kJ/mol, ΔfH°(CO2) = -393,5 kJ/mol, ΔfH°(H2O, khí) = -241,8 kJ/mol, ΔfH°(O2) = 0:\n" +
+          "ΔrH° = [-393,5 + 2x(-241,8)] - [-74,8 + 2x0] = -877,1 - (-74,8) = -802,3 kJ -> phản ứng tỏa nhiệt mạnh (ΔrH° < 0).\n\n" +
           "## Ứng dụng thực tế\n" +
           "- Phản ứng đốt cháy nhiên liệu (than, xăng dầu, khí gas) là phản ứng tỏa nhiệt mạnh, được ứng dụng rộng rãi để cung cấp năng lượng cho đời sống và sản xuất.",
       },

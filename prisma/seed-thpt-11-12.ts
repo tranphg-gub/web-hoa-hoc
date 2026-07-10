@@ -55,6 +55,9 @@ async function main() {
           "- Với phản ứng tổng quát aA + bB ⇌ cC + dD, Kc chỉ phụ thuộc vào nhiệt độ và bản chất phản ứng, không phụ thuộc vào nồng độ ban đầu của các chất.\n\n" +
           "## Nguyên lí chuyển dịch cân bằng Le Chatelier\n" +
           "- Khi một hệ đang ở trạng thái cân bằng chịu một tác động từ bên ngoài (thay đổi nồng độ, nhiệt độ, áp suất), cân bằng sẽ chuyển dịch theo chiều làm giảm tác động đó.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Ở một nhiệt độ xác định, phản ứng H2 + I2 ⇌ 2HI đạt cân bằng với [H2] = 0,1 mol/L, [I2] = 0,1 mol/L, [HI] = 0,8 mol/L:\n" +
+          "Kc = [HI]^2 / ([H2][I2]) = 0,8^2 / (0,1 x 0,1) = 64.\n\n" +
           "## Lưu ý\n" +
           "- Đừng nhầm \"cân bằng\" với \"phản ứng đã dừng lại\": ở trạng thái cân bằng, phản ứng thuận và nghịch vẫn diễn ra liên tục, chỉ là tốc độ hai chiều bằng nhau.",
       },
@@ -98,6 +101,10 @@ async function main() {
           "- Ở nhiệt độ rất cao (tia lửa điện, sấm sét), nitrogen phản ứng với oxygen:\nN2 + O2 -> 2NO\n\n" +
           "## Ứng dụng\n" +
           "- Nitrogen là nguyên liệu quan trọng để sản xuất ammonia và phân đạm, đồng thời được dùng làm môi trường trơ trong công nghiệp và bảo quản thực phẩm.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 2,24 lít khí N2 (đkc, n = 2,24/24,79 ≈ 0,09 mol) phản ứng với H2 dư, hiệu suất phản ứng 25%:\nN2 + 3H2 ⇌ 2NH3\n" +
+          "- Số mol NH3 tính theo lí thuyết (hiệu suất 100%): 0,09 x 2 = 0,18 mol.\n" +
+          "- Số mol NH3 thực tế thu được: 0,18 x 25% = 0,045 mol.\n\n" +
           "## Lưu ý\n" +
           "- Chính liên kết ba N≡N rất bền là lý do phản ứng tổng hợp NH3 cần nhiệt độ, áp suất cao và xúc tác mới xảy ra được với tốc độ đủ nhanh.",
       },
@@ -129,7 +136,10 @@ async function main() {
           "- Phản ứng được với hầu hết kim loại (trừ Au, Pt), tạo muối nitrate và giải phóng các sản phẩm khử khác nhau của nitrogen (NO2, NO,...) tùy theo nồng độ acid.\n\n" +
           "## Muối nitrate\n" +
           "- Đều tan tốt trong nước; khi bị nhiệt phân sẽ giải phóng oxygen nên dễ gây cháy nổ nếu bảo quản không đúng cách.\n" +
-          "- Được dùng phổ biến làm phân bón, ví dụ potassium nitrate, ammonium nitrate.",
+          "- Được dùng phổ biến làm phân bón, ví dụ potassium nitrate, ammonium nitrate.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho Cu tác dụng với HNO3 đặc, nóng:\nCu + 4HNO3(đặc) -> Cu(NO3)2 + 2NO2 + 2H2O\n" +
+          "- Với 6,4 gam Cu (n = 6,4/64 = 0,1 mol), theo phương trình n(NO2) = 2 x n(Cu) = 0,2 mol -> thể tích khí NO2 (màu nâu đỏ) thoát ra ở đkc: V = 0,2 x 24,79 = 4,958 lít.",
       },
       {
         grade: 11,
@@ -144,7 +154,10 @@ async function main() {
           "- SO2 là khí không màu, mùi hắc, độc; là một oxide acid, tan trong nước tạo thành sulfurous acid:\nSO2 + H2O ⇌ H2SO3\n" +
           "- SO2 vừa có tính oxi hóa vừa có tính khử do nguyên tử sulfur trong SO2 có số oxi hóa trung gian (+4).\n\n" +
           "## Tác động môi trường\n" +
-          "- SO2 là một trong các tác nhân chính gây ra hiện tượng mưa acid.",
+          "- SO2 là một trong các tác nhân chính gây ra hiện tượng mưa acid.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Đốt cháy hoàn toàn 3,2 gam sulfur (S, M = 32 g/mol):\nS + O2 -> SO2\n" +
+          "- Số mol S: n = 3,2/32 = 0,1 mol -> n(SO2) = 0,1 mol -> thể tích SO2 ở đkc: V = 0,1 x 24,79 = 2,479 lít.",
       },
       {
         grade: 11,
@@ -159,6 +172,9 @@ async function main() {
           "- Phản ứng được với nhiều kim loại kể cả kim loại đứng sau hydrogen (như đồng) nhưng không giải phóng khí H2 mà tạo thành khí SO2:\nCu + 2H2SO4 -> CuSO4 + SO2 + 2H2O\n\n" +
           "## Nhận biết muối sulfate\n" +
           "- Dùng dung dịch BaCl2, tạo kết tủa trắng BaSO4 không tan trong acid.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 5,6 gam Fe tác dụng hết với dung dịch H2SO4 loãng dư:\nFe + H2SO4 -> FeSO4 + H2\n" +
+          "- Số mol Fe: n = 5,6/56 = 0,1 mol -> n(H2) = 0,1 mol -> thể tích H2 ở đkc: V = 0,1 x 24,79 = 2,479 lít.\n\n" +
           "## Ứng dụng\n" +
           "- Sulfuric acid là một trong những hóa chất quan trọng bậc nhất của công nghiệp, dùng để sản xuất phân bón, chất tẩy rửa, phẩm nhuộm và trong chế biến dầu mỏ.\n\n" +
           "## Lưu ý\n" +
@@ -185,7 +201,10 @@ async function main() {
           "- Các phản ứng hữu cơ thường xảy ra chậm và có thể theo nhiều hướng khác nhau, tạo hỗn hợp sản phẩm.\n\n" +
           "## Phân loại\n" +
           "- Hydrocarbon: phân tử chỉ chứa carbon và hydrogen.\n" +
-          "- Dẫn xuất của hydrocarbon: phân tử còn chứa thêm các nguyên tố khác như oxygen, nitrogen, halogen.",
+          "- Dẫn xuất của hydrocarbon: phân tử còn chứa thêm các nguyên tố khác như oxygen, nitrogen, halogen.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "- CH4, C2H4, C6H6 là hydrocarbon (chỉ chứa C, H).\n" +
+          "- C2H5OH (chứa thêm O), CH3NH2 (chứa thêm N), CH3Cl (chứa thêm Cl) là dẫn xuất của hydrocarbon.",
       },
       {
         grade: 11,
@@ -213,7 +232,13 @@ async function main() {
           "## Công thức phân tử\n" +
           "- Biểu thị đúng số lượng nguyên tử của mỗi nguyên tố có trong một phân tử hợp chất.\n\n" +
           "## Cách xác định\n" +
-          "- Để lập được công thức phân tử của một hợp chất hữu cơ, cần xác định thành phần phần trăm khối lượng của các nguyên tố (thông qua phân tích định lượng) và phân tử khối của hợp chất đó (thông qua phổ khối lượng hoặc tỉ khối hơi so với một khí đã biết).",
+          "- Để lập được công thức phân tử của một hợp chất hữu cơ, cần xác định thành phần phần trăm khối lượng của các nguyên tố (thông qua phân tích định lượng) và phân tử khối của hợp chất đó (thông qua phổ khối lượng hoặc tỉ khối hơi so với một khí đã biết).\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Hợp chất X có M = 46 g/mol, chứa 52,17% C, 13,05% H, 34,78% O về khối lượng. Tìm công thức phân tử:\n" +
+          "- Khối lượng C: 46 x 52,17% ≈ 24 -> số nguyên tử C = 24/12 = 2.\n" +
+          "- Khối lượng H: 46 x 13,05% ≈ 6 -> số nguyên tử H = 6/1 = 6.\n" +
+          "- Khối lượng O: 46 x 34,78% ≈ 16 -> số nguyên tử O = 16/16 = 1.\n" +
+          "- Công thức phân tử: C2H6O (chính là ethanol C2H5OH).",
       },
       {
         grade: 11,
@@ -249,7 +274,10 @@ async function main() {
           "- Phản ứng cháy tỏa nhiều nhiệt.\n" +
           "- Phản ứng tách (cracking, tách hydrogen) ở nhiệt độ cao có xúc tác, tạo thành hydrocarbon không no và/hoặc alkane có mạch ngắn hơn.\n\n" +
           "## Ứng dụng\n" +
-          "- Alkane là thành phần chính của khí thiên nhiên, khí đồng hành và xăng dầu; được dùng làm nhiên liệu và là nguyên liệu quan trọng cho công nghiệp hóa dầu (thông qua phản ứng cracking).",
+          "- Alkane là thành phần chính của khí thiên nhiên, khí đồng hành và xăng dầu; được dùng làm nhiên liệu và là nguyên liệu quan trọng cho công nghiệp hóa dầu (thông qua phản ứng cracking).\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Đốt cháy hoàn toàn 4,4 gam propane (C3H8, M = 44 g/mol):\nC3H8 + 5O2 -> 3CO2 + 4H2O\n" +
+          "- Số mol C3H8: n = 4,4/44 = 0,1 mol -> n(CO2) = 0,3 mol -> khối lượng CO2: m = 0,3 x 44 = 13,2 gam.",
       },
       {
         grade: 11,
@@ -265,7 +293,10 @@ async function main() {
           "- Có phản ứng cộng (cộng được hai lần với H2, halogen, hydrogen halide), phản ứng trùng hợp.\n" +
           "- Alk-1-yne (alkyne có liên kết ba ở đầu mạch) còn có phản ứng thế với dung dịch AgNO3/NH3 tạo kết tủa vàng - phản ứng đặc trưng dùng để nhận biết.\n\n" +
           "## Ứng dụng\n" +
-          "- Ethylene, propylene dùng sản xuất nhựa PE, PP; acetylene được dùng làm nhiên liệu cho đèn xì hàn cắt kim loại và làm nguyên liệu tổng hợp hữu cơ.",
+          "- Ethylene, propylene dùng sản xuất nhựa PE, PP; acetylene được dùng làm nhiên liệu cho đèn xì hàn cắt kim loại và làm nguyên liệu tổng hợp hữu cơ.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Dẫn 2,8 gam ethylene (C2H4, M = 28 g/mol) qua dung dịch bromine dư:\nC2H4 + Br2 -> C2H4Br2\n" +
+          "- Số mol C2H4: n = 2,8/28 = 0,1 mol -> n(Br2) phản ứng = 0,1 mol -> khối lượng Br2 đã phản ứng: m = 0,1 x 160 = 16 gam.",
       },
       {
         grade: 11,
@@ -300,7 +331,10 @@ async function main() {
           "- Phản ứng thế nguyên tử halogen bằng nhóm -OH khi đun nóng với dung dịch kiềm, tạo thành alcohol.\n" +
           "- Phản ứng tách hydrogen halide (HX) khi đun nóng với kiềm trong alcohol, tạo thành alkene.\n\n" +
           "## Ứng dụng và lưu ý\n" +
-          "- Một số dẫn xuất halogen từng được dùng làm dung môi và chất làm lạnh (như CFC), nhưng do gây phá hủy tầng ozone nên hiện nay bị hạn chế sử dụng, được thay thế bằng các chất thân thiện với môi trường hơn.",
+          "- Một số dẫn xuất halogen từng được dùng làm dung môi và chất làm lạnh (như CFC), nhưng do gây phá hủy tầng ozone nên hiện nay bị hạn chế sử dụng, được thay thế bằng các chất thân thiện với môi trường hơn.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "C2H5Br + NaOH (đun nóng trong nước) -> C2H5OH + NaBr (phản ứng thế tạo alcohol).\n" +
+          "C2H5Br + NaOH (đun nóng trong alcohol) -> C2H4 + NaBr + H2O (phản ứng tách tạo alkene) - cùng chất đầu nhưng điều kiện phản ứng khác nhau cho sản phẩm khác nhau.",
       },
       {
         grade: 11,
@@ -318,7 +352,10 @@ async function main() {
           "- Phản ứng oxi hóa: alcohol bậc 1 bị oxi hóa tạo aldehyde rồi carboxylic acid; alcohol bậc 2 bị oxi hóa tạo ketone.\n\n" +
           "## Polyalcohol\n" +
           "- Ethylene glycol và glycerol là các polyalcohol (đa chức) quan trọng.\n" +
-          "- Glycerol có phản ứng đặc trưng với copper(II) hydroxide, tạo thành dung dịch màu xanh lam đặc trưng - dùng để nhận biết các polyalcohol có nhóm -OH liền kề nhau.",
+          "- Glycerol có phản ứng đặc trưng với copper(II) hydroxide, tạo thành dung dịch màu xanh lam đặc trưng - dùng để nhận biết các polyalcohol có nhóm -OH liền kề nhau.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 4,6 gam ethanol (C2H5OH, M = 46 g/mol) phản ứng hết với Na dư:\n2C2H5OH + 2Na -> 2C2H5ONa + H2\n" +
+          "- Số mol ethanol: n = 4,6/46 = 0,1 mol -> n(H2) = 0,1/2 = 0,05 mol -> thể tích H2 ở đkc: V = 0,05 x 24,79 = 1,2395 lít.",
       },
       {
         grade: 11,
@@ -354,7 +391,10 @@ async function main() {
           "- Có tính khử, tham gia phản ứng tráng bạc (phản ứng với dung dịch AgNO3/NH3 tạo kết tủa bạc) - đây là phản ứng đặc trưng dùng để phân biệt aldehyde với ketone (ketone không có phản ứng này).\n" +
           "- Cả aldehyde và ketone đều có phản ứng cộng hydrogen (bị khử tạo thành alcohol tương ứng).\n\n" +
           "## Ứng dụng\n" +
-          "- Formaldehyde (HCHO) dùng để sản xuất nhựa, làm chất bảo quản mẫu vật sinh học; acetone (CH3COCH3) là dung môi hữu cơ rất phổ biến.",
+          "- Formaldehyde (HCHO) dùng để sản xuất nhựa, làm chất bảo quản mẫu vật sinh học; acetone (CH3COCH3) là dung môi hữu cơ rất phổ biến.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho CH3CHO tác dụng với dung dịch AgNO3/NH3 dư:\nCH3CHO + 2AgNO3 + 3NH3 + H2O -> CH3COONH4 + 2Ag + 2NH4NO3\n" +
+          "- Cứ 1 mol aldehyde tráng bạc tạo ra 2 mol Ag (kết tủa bạc sáng bóng) - tỉ lệ mol 1:2 này thường dùng để tính toán trong bài tập.",
       },
       {
         grade: 11,
@@ -392,7 +432,11 @@ async function main() {
           "- Chất béo là trieste của glycerol với các acid béo (acid béo no như palmitic acid, stearic acid; acid béo không no như oleic acid).\n\n" +
           "## Phản ứng thủy phân chất béo\n" +
           "- Trong môi trường acid tạo glycerol và acid béo (phản ứng thuận nghịch).\n" +
-          "- Trong môi trường kiềm tạo glycerol và muối của acid béo (xà phòng) - đây là phản ứng một chiều, gọi là phản ứng xà phòng hóa.",
+          "- Trong môi trường kiềm tạo glycerol và muối của acid béo (xà phòng) - đây là phản ứng một chiều, gọi là phản ứng xà phòng hóa.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Xà phòng hóa hoàn toàn 17,8 gam tristearin (C17H35COO)3C3H5, M = 890 g/mol) bằng NaOH vừa đủ:\n" +
+          "(C17H35COO)3C3H5 + 3NaOH -> 3C17H35COONa + C3H5(OH)3\n" +
+          "- Số mol chất béo: n = 17,8/890 = 0,02 mol -> n(glycerol) = 0,02 mol -> khối lượng glycerol: m = 0,02 x 92 = 1,84 gam.",
       },
       {
         grade: 12,
@@ -427,7 +471,11 @@ async function main() {
           "- Đồng thời có tính chất của polyalcohol do có nhiều nhóm -OH liền kề (phản ứng với copper(II) hydroxide tạo dung dịch màu xanh lam).\n\n" +
           "## Fructose\n" +
           "- C6H12O6, là đồng phân của glucose, tồn tại chủ yếu ở dạng mạch vòng 5 cạnh, có nhóm chức ketone ở dạng mạch hở.\n" +
-          "- Trong môi trường kiềm, fructose có thể chuyển hóa thành glucose nên vẫn tham gia được phản ứng tráng bạc.",
+          "- Trong môi trường kiềm, fructose có thể chuyển hóa thành glucose nên vẫn tham gia được phản ứng tráng bạc.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Lên men 18 gam glucose (M = 180 g/mol) với hiệu suất 80%:\nC6H12O6 -> 2C2H5OH + 2CO2\n" +
+          "- Số mol glucose: n = 18/180 = 0,1 mol -> n(C2H5OH) lí thuyết = 0,2 mol.\n" +
+          "- Khối lượng ethanol thực tế thu được: m = 0,2 x 46 x 80% = 7,36 gam.",
       },
       {
         grade: 12,
@@ -479,7 +527,10 @@ async function main() {
           "- Có tính base (do nguyên tử nitrogen còn cặp electron chưa liên kết), làm quỳ tím hóa xanh (đối với amine mạch hở), phản ứng được với acid tạo thành muối.\n\n" +
           "## Aniline\n" +
           "- C6H5NH2 là amine thơm quan trọng, có tính base yếu hơn so với amine no mạch hở do ảnh hưởng của vòng benzene.\n" +
-          "- Phản ứng với dung dịch bromine tạo kết tủa trắng, tương tự phenol.",
+          "- Phản ứng với dung dịch bromine tạo kết tủa trắng, tương tự phenol.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 4,5 gam methylamine (CH3NH2, M = 31 g/mol) phản ứng vừa đủ với dung dịch HCl:\nCH3NH2 + HCl -> CH3NH3Cl\n" +
+          "- Số mol CH3NH2: n = 4,5/31 ≈ 0,145 mol -> n(HCl) cần dùng = 0,145 mol (tỉ lệ mol 1:1 vì amine bậc 1 chỉ có 1 cặp electron tự do phản ứng với 1 phân tử acid).",
       },
       {
         grade: 12,
@@ -493,7 +544,10 @@ async function main() {
           "- Trong dung dịch, amino acid tồn tại chủ yếu ở dạng ion lưỡng cực.\n\n" +
           "## Peptide\n" +
           "- Là hợp chất chứa từ 2 đến khoảng 50 gốc amino acid liên kết với nhau qua liên kết peptide (-CO-NH-).\n" +
-          "- Liên kết peptide được hình thành giữa nhóm -COOH của amino acid này với nhóm -NH2 của amino acid kia, đồng thời giải phóng một phân tử nước.",
+          "- Liên kết peptide được hình thành giữa nhóm -COOH của amino acid này với nhóm -NH2 của amino acid kia, đồng thời giải phóng một phân tử nước.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Glycine (Gly, H2N-CH2-COOH) kết hợp với alanine (Ala) tạo đipeptide Gly-Ala:\nH2N-CH2-COOH + H2N-CH(CH3)-COOH -> H2N-CH2-CO-NH-CH(CH3)-COOH + H2O\n" +
+          "- Một phân tử nước được giải phóng khi hình thành mỗi liên kết peptide; n amino acid tạo thành 1 chuỗi sẽ giải phóng (n-1) phân tử nước.",
       },
       {
         grade: 12,
@@ -530,7 +584,10 @@ async function main() {
           "- Mạch không phân nhánh, mạch phân nhánh, hoặc mạch mạng lưới (không gian).\n\n" +
           "## Tính chất vật lí\n" +
           "- Hầu hết polymer là chất rắn, không bay hơi, không có nhiệt độ nóng chảy xác định (nóng chảy trong một khoảng nhiệt độ).\n" +
-          "- Nhiều polymer có tính dẻo, tính đàn hồi hoặc có thể kéo thành sợi.",
+          "- Nhiều polymer có tính dẻo, tính đàn hồi hoặc có thể kéo thành sợi.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Một mẫu PE (poly(ethylene), -[CH2-CH2]n-) có phân tử khối trung bình 280.000 g/mol:\n" +
+          "- Hệ số trùng hợp n = 280.000 / 28 (M của mắt xích -CH2-CH2-) = 10.000 - nghĩa là mỗi phân tử PE được tạo thành từ khoảng 10.000 mắt xích ethylene liên kết với nhau.",
       },
       {
         grade: 12,
@@ -582,7 +639,11 @@ async function main() {
           "- Tại anode (cực dương): xảy ra quá trình oxi hóa (ion âm hoặc phân tử nhường electron).\n\n" +
           "## Ứng dụng\n" +
           "- Điện phân nóng chảy được dùng để điều chế các kim loại hoạt động mạnh như Na, K, Ca, Al.\n" +
-          "- Điện phân dung dịch được dùng để điều chế một số kim loại trung bình hoặc yếu, để mạ điện và tinh luyện kim loại.",
+          "- Điện phân dung dịch được dùng để điều chế một số kim loại trung bình hoặc yếu, để mạ điện và tinh luyện kim loại.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Điện phân dung dịch CuSO4 với điện cực trơ, cường độ dòng điện I = 5A trong thời gian t = 3860 giây:\n" +
+          "- Áp dụng định luật Faraday: n(electron trao đổi) = It/F = (5 x 3860)/96500 = 0,2 mol.\n" +
+          "- Tại cathode: Cu^2+ + 2e -> Cu, nên n(Cu) = 0,2/2 = 0,1 mol -> khối lượng Cu bám vào cathode: m = 0,1 x 64 = 6,4 gam.",
       },
     ],
   });
@@ -613,7 +674,10 @@ async function main() {
           "- Tính dẻo, dẫn điện, dẫn nhiệt, có ánh kim - đều do các electron tự do trong tinh thể kim loại gây ra.\n\n" +
           "## Tính chất hóa học\n" +
           "- Tính chất hóa học chung của kim loại là tính khử (kim loại dễ nhường electron để tạo thành cation).\n" +
-          "- Kim loại tác dụng được với phi kim, tác dụng với dung dịch acid, và tác dụng với dung dịch muối của kim loại yếu hơn.",
+          "- Kim loại tác dụng được với phi kim, tác dụng với dung dịch acid, và tác dụng với dung dịch muối của kim loại yếu hơn.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 2,7 gam Al (M = 27 g/mol) tác dụng hết với dung dịch HCl dư:\n2Al + 6HCl -> 2AlCl3 + 3H2\n" +
+          "- Số mol Al: n = 2,7/27 = 0,1 mol -> n(H2) = 0,1 x 3/2 = 0,15 mol -> thể tích H2 ở đkc: V = 0,15 x 24,79 = 3,7185 lít.",
       },
       {
         grade: 12,
@@ -628,7 +692,10 @@ async function main() {
           "## Ba phương pháp điều chế\n" +
           "- Nhiệt luyện: dùng chất khử như carbon, khí CO, nhôm ở nhiệt độ cao, áp dụng cho kim loại có độ hoạt động trung bình như Fe, Zn.\n" +
           "- Thủy luyện: dùng kim loại mạnh hơn để đẩy kim loại yếu hơn ra khỏi dung dịch muối, áp dụng cho kim loại yếu như Cu, Ag.\n" +
-          "- Điện phân (thường là điện phân nóng chảy): áp dụng cho kim loại hoạt động mạnh như Na, K, Ca, Mg, Al.",
+          "- Điện phân (thường là điện phân nóng chảy): áp dụng cho kim loại hoạt động mạnh như Na, K, Ca, Mg, Al.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Khử 16 gam Fe2O3 (M = 160 g/mol) bằng khí CO dư ở nhiệt độ cao (phương pháp nhiệt luyện):\nFe2O3 + 3CO -> 2Fe + 3CO2\n" +
+          "- Số mol Fe2O3: n = 16/160 = 0,1 mol -> n(Fe) = 0,2 mol -> khối lượng Fe thu được: m = 0,2 x 56 = 11,2 gam.",
       },
       {
         grade: 12,
@@ -684,7 +751,10 @@ async function main() {
           "## Hợp chất quan trọng\n" +
           "- NaOH (xút, dùng sản xuất xà phòng, giấy, tơ sợi).\n" +
           "- Na2CO3 (soda, dùng sản xuất thủy tinh, chất tẩy rửa).\n" +
-          "- NaHCO3 (dùng trong thực phẩm và y tế).",
+          "- NaHCO3 (dùng trong thực phẩm và y tế).\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Cho 4,6 gam Na (M = 23 g/mol) tác dụng hết với nước:\n2Na + 2H2O -> 2NaOH + H2\n" +
+          "- Số mol Na: n = 4,6/23 = 0,2 mol -> n(H2) = 0,1 mol -> thể tích H2 ở đkc: V = 0,1 x 24,79 = 2,479 lít.",
       },
       {
         grade: 12,
@@ -703,7 +773,10 @@ async function main() {
           "- CaCO3 (thành phần chính của đá vôi, đá phấn), CaO (vôi sống), Ca(OH)2 (vôi tôi), thạch cao (CaSO4.2H2O).\n\n" +
           "## Nước cứng\n" +
           "- Là nước chứa nhiều ion Ca^2+, Mg^2+, gây nhiều tác hại như đóng cặn đường ống nước, làm giảm tác dụng của xà phòng.\n" +
-          "- Có thể làm mềm nước cứng bằng phương pháp trao đổi ion hoặc phương pháp kết tủa.",
+          "- Có thể làm mềm nước cứng bằng phương pháp trao đổi ion hoặc phương pháp kết tủa.\n\n" +
+          "## Ví dụ minh họa\n" +
+          "Làm mềm nước cứng tạm thời (chứa Ca(HCO3)2) bằng cách đun nóng:\nCa(HCO3)2 -> CaCO3 + CO2 + H2O\n" +
+          "- Ca(HCO3)2 tan bị phân hủy thành CaCO3 kết tủa (dễ lọc bỏ), giải thích vì sao ấm đun nước lâu ngày bị đóng cặn trắng ở đáy.",
       },
     ],
   });
