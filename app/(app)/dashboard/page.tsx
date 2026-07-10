@@ -3,31 +3,63 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Timer, Brain, Sparkles, ArrowRight, Trophy } from "lucide-react";
+import { BookOpen, Timer, Brain, Sparkles, ArrowRight, Trophy, Bell } from "lucide-react";
+import { buildReminders } from "@/lib/reminders";
 
 export default async function DashboardPage() {
   const session = await requireUser();
   const user = session.user;
 
-  const [documentsCount, readCount, quizzesCount, attempts, recentDocs, points] =
-    await Promise.all([
-      prisma.document.count({ where: { grade: user.grade ?? undefined } }),
-      prisma.readDocument.count({ where: { userId: user.id } }),
-      prisma.quiz.count({ where: { grade: user.grade ?? undefined } }),
-      prisma.quizAttempt.findMany({
-        where: { userId: user.id, submittedAt: { not: null } },
-        include: { quiz: true },
-        orderBy: { submittedAt: "desc" },
-        take: 3,
-      }),
-      prisma.document.findMany({
-        where: { grade: user.grade ?? undefined },
-        include: { chapter: true },
-        orderBy: { order: "asc" },
-        take: 3,
-      }),
-      prisma.user.findUnique({ where: { id: user.id }, select: { points: true } }),
-    ]);
+  const [
+    documentsCount,
+    readCount,
+    quizzesCount,
+    attempts,
+    recentDocs,
+    points,
+    lastRead,
+    allGradeQuizzes,
+    attemptedQuizIds,
+  ] = await Promise.all([
+    prisma.document.count({ where: { grade: user.grade ?? undefined } }),
+    prisma.readDocument.count({ where: { userId: user.id } }),
+    prisma.quiz.count({ where: { grade: user.grade ?? undefined } }),
+    prisma.quizAttempt.findMany({
+      where: { userId: user.id, submittedAt: { not: null } },
+      include: { quiz: true },
+      orderBy: { submittedAt: "desc" },
+      take: 3,
+    }),
+    prisma.document.findMany({
+      where: { grade: user.grade ?? undefined },
+      include: { chapter: true },
+      orderBy: { order: "asc" },
+      take: 3,
+    }),
+    prisma.user.findUnique({ where: { id: user.id }, select: { points: true } }),
+    prisma.readDocument.findFirst({
+      where: { userId: user.id },
+      orderBy: { readAt: "desc" },
+      select: { readAt: true },
+    }),
+    prisma.quiz.findMany({
+      where: { grade: user.grade ?? undefined },
+      select: { id: true, title: true },
+    }),
+    prisma.quizAttempt.findMany({
+      where: { userId: user.id },
+      select: { quizId: true },
+    }),
+  ]);
+
+  const attemptedIdSet = new Set(attemptedQuizIds.map((a) => a.quizId));
+  const reminders = buildReminders({
+    lastActivityAt: lastRead?.readAt ?? null,
+    now: new Date(),
+    unattemptedQuizTitles: allGradeQuizzes
+      .filter((q) => !attemptedIdSet.has(q.id))
+      .map((q) => q.title),
+  });
 
   return (
     <div className="flex flex-col gap-8">
@@ -40,6 +72,20 @@ export default async function DashboardPage() {
           Tiến độ học tập môn Hóa học lớp {user.grade}
         </p>
       </div>
+
+      {reminders.length > 0 && (
+        <div className="flex flex-col gap-2">
+          {reminders.map((r) => (
+            <div
+              key={r.id}
+              className="flex items-center gap-3 rounded-2xl border border-warning-fg/20 bg-warning-bg px-4 py-3 text-sm text-warning-fg"
+            >
+              <Bell className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+              {r.message}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
