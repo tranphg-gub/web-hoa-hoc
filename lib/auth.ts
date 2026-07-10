@@ -45,6 +45,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
           grade: user.grade ?? undefined,
           mustChangePassword: user.mustChangePassword,
+          paymentStatus: user.paymentStatus,
         };
       },
     }),
@@ -56,6 +57,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.username = user.username;
         token.grade = user.grade;
         token.mustChangePassword = user.mustChangePassword;
+        token.paymentStatus = user.paymentStatus;
       }
       return token;
     },
@@ -66,6 +68,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.username = token.username as string;
         session.user.grade = token.grade as number | undefined;
         session.user.mustChangePassword = token.mustChangePassword as boolean;
+        session.user.paymentStatus = token.paymentStatus as "FREE" | "PENDING" | "PAID";
       }
       return session;
     },

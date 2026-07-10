@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { Suspense } from "react";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { LoginForm } from "./login-form";
+import { RegisterForm } from "./register-form";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="relative flex flex-1 items-center justify-center px-6 py-16">
       <div className="hero-gradient pointer-events-none absolute inset-x-0 top-0 h-[420px]" />
@@ -15,19 +14,15 @@ export default function LoginPage() {
           Hóa Học Cùng Em
         </Link>
         <Card>
-          <CardTitle>Đăng nhập</CardTitle>
+          <CardTitle>Đăng ký tài khoản</CardTitle>
           <CardDescription className="mt-1 mb-6">
-            Sử dụng tài khoản do giáo viên cấp cho bạn.
+            Học phí 99.000đ/lớp. Tài khoản do giáo viên tạo sẵn thì miễn phí — nếu bạn đã có tài khoản, hãy{" "}
+            <Link href="/login" className="underline">
+              đăng nhập
+            </Link>{" "}
+            thay vì đăng ký ở đây.
           </CardDescription>
-          <Suspense>
-            <LoginForm />
-          </Suspense>
-          <p className="mt-4 text-center text-sm text-foreground-muted">
-            Chưa có tài khoản?{" "}
-            <Link href="/register" className="font-medium text-foreground underline">
-              Đăng ký (99.000đ/lớp)
-            </Link>
-          </p>
+          <RegisterForm />
         </Card>
       </div>
     </div>

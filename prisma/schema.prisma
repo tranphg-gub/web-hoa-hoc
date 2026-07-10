@@ -19,19 +19,47 @@ enum Difficulty {
   VAN_DUNG_CAO
 }
 
+enum RegistrationSource {
+  ADMIN_CREATED
+  SELF_REGISTERED
+}
+
+enum PaymentStatus {
+  FREE
+  PENDING
+  PAID
+}
+
 model User {
-  id                 String   @id @default(cuid())
-  username           String   @unique
+  id                 String             @id @default(cuid())
+  username           String             @unique
   password           String
   name               String
-  role               Role     @default(STUDENT)
+  role               Role               @default(STUDENT)
   grade              Int?
-  mustChangePassword Boolean  @default(false)
-  createdAt          DateTime @default(now())
+  mustChangePassword Boolean            @default(false)
+  registrationSource RegistrationSource @default(ADMIN_CREATED)
+  paymentStatus      PaymentStatus      @default(FREE)
+  points             Int                @default(0)
+  createdAt          DateTime           @default(now())
 
   quizAttempts  QuizAttempt[]
   chatMessages  ChatMessage[]
   readDocuments ReadDocument[]
+  payments      Payment[]
+}
+
+model Payment {
+  id          String    @id @default(cuid())
+  userId      String
+  grade       Int
+  amountVnd   Int
+  note        String?
+  status      String    @default("PENDING")
+  createdAt   DateTime  @default(now())
+  confirmedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Chapter {

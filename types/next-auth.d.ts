@@ -6,6 +6,7 @@ declare module "next-auth" {
     username: string;
     grade?: number;
     mustChangePassword: boolean;
+    paymentStatus: "FREE" | "PENDING" | "PAID";
   }
 
   interface Session {
@@ -15,6 +16,7 @@ declare module "next-auth" {
       username: string;
       grade?: number;
       mustChangePassword: boolean;
+      paymentStatus: "FREE" | "PENDING" | "PAID";
     } & DefaultSession["user"];
   }
 }
@@ -25,5 +27,6 @@ declare module "next-auth/jwt" {
     username: string;
     grade?: number;
     mustChangePassword: boolean;
+    paymentStatus: "FREE" | "PENDING" | "PAID";
   }
 }

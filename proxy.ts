@@ -8,6 +8,7 @@ export default auth((req) => {
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isChangePasswordRoute = nextUrl.pathname.startsWith("/change-password");
+  const isPaymentPendingRoute = nextUrl.pathname.startsWith("/payment-pending");
   const isAppRoute =
     nextUrl.pathname.startsWith("/dashboard") ||
     nextUrl.pathname.startsWith("/documents") ||
@@ -15,6 +16,7 @@ export default auth((req) => {
     nextUrl.pathname.startsWith("/games") ||
     nextUrl.pathname.startsWith("/ask-ai") ||
     isChangePasswordRoute ||
+    isPaymentPendingRoute ||
     isAdminRoute;
 
   if (isAppRoute && !isLoggedIn) {
@@ -25,6 +27,16 @@ export default auth((req) => {
 
   if (isAdminRoute && role !== "ADMIN") {
     return NextResponse.redirect(new URL("/dashboard", nextUrl.origin));
+  }
+
+  if (
+    isAppRoute &&
+    isLoggedIn &&
+    req.auth?.user?.paymentStatus === "PENDING" &&
+    !isPaymentPendingRoute &&
+    role !== "ADMIN"
+  ) {
+    return NextResponse.redirect(new URL("/payment-pending", nextUrl.origin));
   }
 
   if (isAppRoute && isLoggedIn && req.auth?.user?.mustChangePassword && !isChangePasswordRoute) {
@@ -43,5 +55,6 @@ export const config = {
     "/ask-ai/:path*",
     "/admin/:path*",
     "/change-password/:path*",
+    "/payment-pending/:path*",
   ],
 };
