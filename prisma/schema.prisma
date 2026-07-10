@@ -37,6 +37,14 @@ enum QuizKind {
   MONTHLY_CHECK
 }
 
+/// 3 dạng câu hỏi theo cấu trúc đề thi mới (Chương trình GDPT 2018):
+/// Phần I trắc nghiệm 4 đáp án, Phần II Đúng/Sai 4 ý, Phần III trả lời ngắn.
+enum QuestionType {
+  SINGLE_CHOICE
+  TRUE_FALSE_GROUP
+  SHORT_ANSWER
+}
+
 model User {
   id                 String             @id @default(cuid())
   username           String             @unique
@@ -126,14 +134,17 @@ model Quiz {
 }
 
 model Question {
-  id           String     @id @default(cuid())
+  id           String       @id @default(cuid())
   quizId       String
+  type         QuestionType @default(SINGLE_CHOICE)
   content      String
-  choices      String
-  correctIndex Int
+  choices      String? // JSON string[4] — chỉ dùng khi type = SINGLE_CHOICE
+  correctIndex Int? // chỉ dùng khi type = SINGLE_CHOICE
+  statements   String? // JSON {text, correct}[4] — chỉ dùng khi type = TRUE_FALSE_GROUP
+  shortAnswer  String? // đáp án đúng dạng text/số — chỉ dùng khi type = SHORT_ANSWER
   explanation  String?
-  order        Int        @default(0)
-  difficulty   Difficulty @default(NHAN_BIET)
+  order        Int          @default(0)
+  difficulty   Difficulty   @default(NHAN_BIET)
 
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }

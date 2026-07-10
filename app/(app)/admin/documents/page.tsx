@@ -65,7 +65,7 @@ export default async function AdminDocumentsPage({
       <Card>
         <CardTitle>Thêm tài liệu mới</CardTitle>
         <CardDescription className="mt-1 mb-4">
-          Gõ công thức hóa học dạng thường (H2O, CaCO3 -&gt; CaO + CO2, Fe^3+) — hệ thống sẽ tự hiển thị đúng ký hiệu khoa học.
+          Gõ công thức hóa học dạng thường (H2O, CaCO3 -&gt; CaO + CO2, Fe^3+) — hệ thống sẽ tự hiển thị đúng ký hiệu khoa học. Chèn ảnh minh họa bằng cú pháp <code>![Mô tả ảnh](URL ảnh)</code> trên 1 dòng riêng.
         </CardDescription>
         <form action={createDocument} className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-3">

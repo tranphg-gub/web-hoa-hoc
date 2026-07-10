@@ -4,17 +4,22 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
 import { cn } from "@/lib/utils";
 import { saveQuizAnswer, submitQuizAttempt } from "@/app/(app)/quizzes/actions";
-import type { QuizKind } from "@prisma/client";
+import type { QuizKind, QuestionType } from "@prisma/client";
 import { AlertTriangle } from "lucide-react";
 
 type Question = {
   id: string;
+  type: QuestionType;
   content: string;
-  choices: string[];
+  choices: string[] | null;
+  statements: { text: string }[] | null;
 };
+
+type Answer = number | boolean[] | string;
 
 function computeRemainingSec(startedAt: string, durationSec: number) {
   const elapsedMs = Date.now() - new Date(startedAt).getTime();
@@ -27,6 +32,12 @@ function formatTime(totalSec: number) {
   const s = totalSec % 60;
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
+
+const TYPE_TAG: Record<QuestionType, string> = {
+  SINGLE_CHOICE: "Trắc nghiệm",
+  TRUE_FALSE_GROUP: "Đúng / Sai",
+  SHORT_ANSWER: "Trả lời ngắn",
+};
 
 export function QuizRunner({
   attemptId,
@@ -43,10 +54,14 @@ export function QuizRunner({
   durationSec: number;
   startedAt: string;
   questions: Question[];
-  initialAnswers: Record<string, number>;
+  initialAnswers: Record<string, Answer>;
   kind: QuizKind;
 }) {
-  const [answers, setAnswers] = useState<Record<string, number>>(initialAnswers);
+  const [answers, setAnswers] = useState<Record<string, Answer>>(initialAnswers);
+  // Bản sao đồng bộ của `answers`, dùng để đọc giá trị mới nhất ngay lập tức
+  // (state của React chỉ cập nhật ở lần render sau) khi ghép câu trả lời mới
+  // cho từng ý Đúng/Sai — tránh bug mất thao tác khi bấm nhiều ý liên tiếp thật nhanh.
+  const answersRef = useRef(initialAnswers);
   const [remaining, setRemaining] = useState(() =>
     computeRemainingSec(startedAt, durationSec)
   );
@@ -72,9 +87,25 @@ export function QuizRunner({
     return () => clearInterval(interval);
   }, [startedAt, durationSec, handleSubmit]);
 
-  function handleSelect(questionId: string, choiceIndex: number) {
-    setAnswers((prev) => ({ ...prev, [questionId]: choiceIndex }));
-    saveQuizAnswer(attemptId, questionId, choiceIndex);
+  // Cập nhật answersRef (đồng bộ) trước, rồi mới setAnswers (bất đồng bộ, chỉ để
+  // re-render UI) và gọi server action — không được gọi server action bên trong
+  // callback của setState vì sẽ vi phạm quy tắc render của React.
+  function commitAnswer(questionId: string, answer: Answer) {
+    answersRef.current = { ...answersRef.current, [questionId]: answer };
+    setAnswers(answersRef.current);
+    saveQuizAnswer(attemptId, questionId, answer);
+  }
+
+  function handleAnswer(questionId: string, answer: Answer) {
+    commitAnswer(questionId, answer);
+  }
+
+  function handleStatementToggle(questionId: string, statementIdx: number, value: boolean) {
+    const current = Array.isArray(answersRef.current[questionId])
+      ? [...(answersRef.current[questionId] as boolean[])]
+      : [];
+    current[statementIdx] = value;
+    commitAnswer(questionId, current);
   }
 
   const answeredCount = Object.keys(answers).length;
@@ -115,30 +146,96 @@ export function QuizRunner({
       <div className="flex flex-col gap-4">
         {questions.map((q, idx) => (
           <Card key={q.id}>
-            <p className="mb-4 text-sm font-medium">
-              <span className="text-foreground-muted">Câu {idx + 1}. </span>
-              <ChemProseText text={q.content} />
-            </p>
-            <div className="flex flex-col gap-2">
-              {q.choices.map((choice, choiceIdx) => {
-                const selected = answers[q.id] === choiceIdx;
-                return (
-                  <button
-                    key={choiceIdx}
-                    type="button"
-                    onClick={() => handleSelect(q.id, choiceIdx)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-xl border px-4 py-2.5 text-left text-sm transition-colors",
-                      selected
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-border-subtle hover:bg-background-subtle"
-                    )}
-                  >
-                    <ChemProseText text={choice} />
-                  </button>
-                );
-              })}
+            <div className="mb-4 flex items-start justify-between gap-3">
+              <p className="text-sm font-medium">
+                <span className="text-foreground-muted">Câu {idx + 1}. </span>
+                <ChemProseText text={q.content} />
+              </p>
+              <Badge tone="neutral" className="shrink-0">
+                {TYPE_TAG[q.type]}
+              </Badge>
             </div>
+
+            {q.type === "SINGLE_CHOICE" && q.choices && (
+              <div className="flex flex-col gap-2">
+                {q.choices.map((choice, choiceIdx) => {
+                  const selected = answers[q.id] === choiceIdx;
+                  return (
+                    <button
+                      key={choiceIdx}
+                      type="button"
+                      onClick={() => handleAnswer(q.id, choiceIdx)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl border px-4 py-2.5 text-left text-sm transition-colors",
+                        selected
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-border-subtle hover:bg-background-subtle"
+                      )}
+                    >
+                      <ChemProseText text={choice} />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {q.type === "TRUE_FALSE_GROUP" && q.statements && (
+              <div className="flex flex-col gap-2.5">
+                {q.statements.map((s, sIdx) => {
+                  const current = Array.isArray(answers[q.id])
+                    ? (answers[q.id] as boolean[])[sIdx]
+                    : undefined;
+                  return (
+                    <div
+                      key={sIdx}
+                      className="flex items-center justify-between gap-3 rounded-xl border border-border-subtle px-4 py-2.5"
+                    >
+                      <p className="text-sm">
+                        <span className="text-foreground-muted">
+                          {String.fromCharCode(97 + sIdx)}){" "}
+                        </span>
+                        <ChemProseText text={s.text} />
+                      </p>
+                      <div className="flex shrink-0 gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handleStatementToggle(q.id, sIdx, true)}
+                          className={cn(
+                            "rounded-lg border px-3 py-1 text-xs font-semibold transition-colors",
+                            current === true
+                              ? "border-foreground bg-foreground text-background"
+                              : "border-border-subtle hover:bg-background-subtle"
+                          )}
+                        >
+                          Đúng
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleStatementToggle(q.id, sIdx, false)}
+                          className={cn(
+                            "rounded-lg border px-3 py-1 text-xs font-semibold transition-colors",
+                            current === false
+                              ? "border-foreground bg-foreground text-background"
+                              : "border-border-subtle hover:bg-background-subtle"
+                          )}
+                        >
+                          Sai
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {q.type === "SHORT_ANSWER" && (
+              <Input
+                value={typeof answers[q.id] === "string" ? (answers[q.id] as string) : ""}
+                onChange={(e) => handleAnswer(q.id, e.target.value)}
+                placeholder="Nhập đáp án..."
+                className="max-w-xs"
+              />
+            )}
           </Card>
         ))}
       </div>

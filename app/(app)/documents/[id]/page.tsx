@@ -3,7 +3,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { DocumentContent } from "@/components/chemistry/document-content";
+import { DocumentViewSwitcher } from "@/components/chemistry/document-view-switcher";
 import { DocumentDownloadActions } from "@/components/chemistry/document-download-actions";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -48,7 +48,7 @@ export default async function DocumentDetailPage({
       <div id="printable-document">
         <h1 className="mb-4 hidden text-xl font-semibold print:block">{doc.title}</h1>
         <Card>
-          <DocumentContent content={doc.content} />
+          <DocumentViewSwitcher title={doc.title} content={doc.content} />
         </Card>
       </div>
 

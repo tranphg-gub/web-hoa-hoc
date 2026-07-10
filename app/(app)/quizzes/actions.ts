@@ -4,7 +4,13 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { isPastDeadline, scoreQuizAttempt } from "@/lib/quiz-scoring";
+import {
+  isPastDeadline,
+  scoreQuestion,
+  scoreQuizAttempt,
+  type QuestionAnswer,
+  type Statement,
+} from "@/lib/quiz-scoring";
 import { generateLearningPathRecommendation } from "@/lib/ai/placement-analysis";
 
 export async function startQuizAttempt(quizId: string) {
@@ -28,7 +34,7 @@ export async function startQuizAttempt(quizId: string) {
 export async function saveQuizAnswer(
   attemptId: string,
   questionId: string,
-  choiceIndex: number
+  answer: QuestionAnswer
 ) {
   const session = await auth();
   if (!session) throw new Error("Chưa đăng nhập.");
@@ -47,8 +53,8 @@ export async function saveQuizAnswer(
     return;
   }
 
-  const answers = JSON.parse(attempt.answers) as Record<string, number>;
-  answers[questionId] = choiceIndex;
+  const answers = JSON.parse(attempt.answers) as Record<string, QuestionAnswer>;
+  answers[questionId] = answer;
 
   await prisma.quizAttempt.update({
     where: { id: attemptId },
@@ -72,8 +78,15 @@ export async function submitQuizAttempt(attemptId: string) {
     // Chấm dựa trên đáp án đã lưu tại thời điểm này. saveQuizAnswer đã từ chối
     // lưu thêm đáp án sau deadline nên answers ở đây luôn phản ánh đúng trạng
     // thái tại thời điểm hết giờ, bất kể submitQuizAttempt được gọi trễ bao lâu.
-    const answers = JSON.parse(attempt.answers) as Record<string, number>;
-    const score = scoreQuizAttempt(attempt.quiz.questions, answers);
+    const answers = JSON.parse(attempt.answers) as Record<string, QuestionAnswer>;
+    const scorableQuestions = attempt.quiz.questions.map((q) => ({
+      id: q.id,
+      type: q.type,
+      correctIndex: q.correctIndex,
+      statements: q.statements ? (JSON.parse(q.statements) as Statement[]) : null,
+      shortAnswer: q.shortAnswer,
+    }));
+    const score = scoreQuizAttempt(scorableQuestions, answers);
     const late = isPastDeadline(attempt.startedAt, attempt.quiz.durationSec);
 
     await prisma.quizAttempt.update({
@@ -89,10 +102,10 @@ export async function submitQuizAttempt(attemptId: string) {
 
     if (attempt.quiz.kind !== "REGULAR") {
       try {
-        const analysisQuestions = attempt.quiz.questions.map((q) => ({
+        const analysisQuestions = attempt.quiz.questions.map((q, i) => ({
           content: q.content,
           difficulty: q.difficulty,
-          isCorrect: answers[q.id] === q.correctIndex,
+          isCorrect: scoreQuestion(scorableQuestions[i], answers[q.id]) === 1,
         }));
         const { weakAreas, recommendation } = await generateLearningPathRecommendation(
           analysisQuestions,

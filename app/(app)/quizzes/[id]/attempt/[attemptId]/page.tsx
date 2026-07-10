@@ -28,11 +28,17 @@ export default async function QuizAttemptPage({
 
   const questions = attempt.quiz.questions.map((q) => ({
     id: q.id,
+    type: q.type,
     content: q.content,
-    choices: JSON.parse(q.choices) as string[],
+    choices: q.choices ? (JSON.parse(q.choices) as string[]) : null,
+    // Không gửi trường "correct" của statements xuống client khi đang làm bài —
+    // tránh lộ đáp án đúng qua devtools/network tab trước khi nộp bài.
+    statements: q.statements
+      ? (JSON.parse(q.statements) as { text: string; correct: boolean }[]).map((s) => ({ text: s.text }))
+      : null,
   }));
 
-  const savedAnswers = JSON.parse(attempt.answers) as Record<string, number>;
+  const savedAnswers = JSON.parse(attempt.answers) as Record<string, number | boolean[] | string>;
 
   return (
     <QuizRunner
