@@ -14,7 +14,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:seed:thcs": "tsx prisma/seed-thcs.ts && npm run db:assign-difficulty",
     "db:seed:thpt": "tsx prisma/seed-thpt-11-12.ts && npm run db:assign-difficulty",
-    "db:seed:lop10": "tsx prisma/seed-lop10.ts && npm run db:assign-difficulty"
+    "db:seed:lop10": "tsx prisma/seed-lop10.ts && npm run db:assign-difficulty",
+    "db:seed:lop6-7": "tsx prisma/seed-thcs-6-7.ts && npm run db:assign-difficulty"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

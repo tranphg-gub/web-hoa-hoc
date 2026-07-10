@@ -1,10 +1,10 @@
 # Trạng thái dự án — Hóa Học Cùng Em
 
-_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3, MR-A→MR-M, trừ MR-K, và MR-N mining nội dung thật cho Lớp 11). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
+_Cập nhật: 2026-07-10 (sau khi hoàn thành GD1-GD3, MR-A→MR-M, trừ MR-K, MR-N mining nội dung thật cho Lớp 11, và MR-O mở rộng xuống Lớp 6-7). File này là "bức tranh toàn cảnh" — đọc file này trước để nắm thực trạng, thay vì đọc lại toàn bộ code._
 
 ## 1. Dự án là gì
 
-Website học Hóa học lớp 8–12. Ban đầu là công cụ nhỏ cho <10 học sinh do giáo viên quản lý thủ công; từ 2026-07-10 đã mở rộng thêm đăng ký tự do có thu phí, bảo mật nâng cao, và đang tiếp tục mở rộng cộng đồng/phân luồng học tập theo `KE_HOACH_MO_RONG.md`. Xem file đó để biết kế hoạch đầy đủ và lý do các non-goal cũ trong `CLAUDE.md` được ghi đè.
+Website học Hóa học lớp 6–12 (mở rộng từ phạm vi ban đầu 8–12 kể từ MR-O). Ban đầu là công cụ nhỏ cho <10 học sinh do giáo viên quản lý thủ công; từ 2026-07-10 đã mở rộng thêm đăng ký tự do có thu phí, bảo mật nâng cao, và đang tiếp tục mở rộng cộng đồng/phân luồng học tập theo `KE_HOACH_MO_RONG.md`. Xem file đó để biết kế hoạch đầy đủ và lý do các non-goal cũ trong `CLAUDE.md` được ghi đè.
 
 ## 2. Công nghệ đang dùng
 
@@ -57,6 +57,8 @@ Xem `KE_HOACH_MO_RONG.md` mục 2 để biết đầy đủ. Chỉ còn:
 
 | Lớp | Số bài | Đề kiểm tra | Câu hỏi (đề KT) | Bộ flashcard | Số thẻ | Câu luyện tập (`/practice`) |
 |---|---|---|---|---|---|---|
+| 6 | 7 | 3 | 36 | 3 | 30 | 0 |
+| 7 | 6 | 4 | 47 | 4 | 40 | 0 |
 | 8 | 11 | 2 | 18 | 2 | 15 | 10 |
 | 9 | 15 | 4 | 29 | 4 | 17 | 13 |
 | 10 | 16 | 7 | 41 | 7 | 18 | 19 |
@@ -67,14 +69,18 @@ Mỗi lớp có model `Chapter` riêng (grade, title, order) — Document/Quiz/F
 
 Riêng Lớp 11: 26 trong 32 đề (648 câu) là đề thi thật/thi thử sưu tầm từ giáo viên, gộp vào 1 chương dùng chung "Ôn tập tổng hợp Học kì 1" (không map được vào 1 chương cụ thể vì mỗi đề thường trải nhiều chương). Đáp án các đề không có sẵn đáp án án gốc (trừ bộ TYHH có khoanh tay) nên được giải bằng kiến thức hóa học — nên rà soát lại nếu phát hiện đáp án sai.
 
+**Lớp 6-7 (mới, MR-O 2026-07-10)**: nội dung soạn từ tài liệu giáo viên cộng tác biên soạn (dự án KHTN 6789, phần Hóa học, người dùng upload) — mỗi bài có 1 Document (lý thuyết gốc do Claude viết lại dựa trên tài liệu tham khảo, không copy nguyên văn), gộp theo chương thành 1 Quiz + 1 FlashcardSet mỗi chương (đúng quy ước seed-thcs.ts cho lớp 8-9). Lớp 6: Chương 1 Chất quanh ta (bài 1-3), Chương 2 Vật liệu-nhiên liệu-nguyên liệu-lương thực thực phẩm (bài 4-5), Chương 3 Hỗn hợp (bài 6-7). Lớp 7: Chương 1 Nguyên tử-nguyên tố hóa học (bài 8-9), Chương 2 Bảng tuần hoàn (bài 10), Chương 3 Phân tử-liên kết hóa học (bài 11-12), Chương 4 Hóa trị-CTHH (bài 13). Chưa có `/practice`. Script: `npm run db:seed:lop6-7` (`prisma/seed-thcs-6-7.ts`).
+
 ## 7. Nguồn dữ liệu / seed script
 
 ```
 npm run db:seed         # chỉ seed tài khoản (giaovien + 3 học sinh mẫu)
+npm run db:seed:lop6-7  # Lớp 6-7 — tự chạy kèm gán độ khó
 npm run db:seed:thcs    # Lớp 8-9  — tự chạy kèm gán độ khó
 npm run db:seed:lop10   # Lớp 10
 npm run db:seed:thpt    # Lớp 11-12
 npm run db:assign-difficulty  # gán lại độ khó thủ công nếu cần (đã tự chạy sau mỗi seed ở trên)
+node scripts/import-real-exams.mjs  # thêm đề thi thật lớp 11 (idempotent, không xóa dữ liệu cũ)
 ```
 
 Chạy lại các lệnh seed theo khối lớp sẽ xóa và ghi đè Document/Quiz/Flashcard/Chapter của đúng khối đó.
@@ -87,7 +93,7 @@ Chạy lại các lệnh seed theo khối lớp sẽ xóa và ghi đè Document/
 
 ## 9. Thư mục tài liệu gốc
 
-`Tài liệu/` (~4GB, gitignore, không push lên git) — kho tham khảo thô theo Lớp → Chủ đề, dùng để đối chiếu khi soạn nội dung, chưa số hóa hết vào web.
+`Tài liệu/` (~4GB+, gitignore, không push lên git) — kho tham khảo thô theo Lớp → Chủ đề, dùng để đối chiếu khi soạn nội dung, chưa số hóa hết vào web. Thư mục `Tài liệu/Lớp 6-9 (THCS)/Mới upload (Lớp 6,7,8,9)/` chứa tài liệu giáo viên cộng tác biên soạn (dự án KHTN 6789) người dùng upload 2026-07-10 — đã khai thác phần "Đại trà" cho Lớp 6-7 (MR-O); phần "HSG" (chuyên đề nâng cao, 70 chuyên đề) và phần Lớp 8-9 bổ sung trong bộ này còn chưa khai thác, có thể làm tiếp nếu cần.
 
 ## 10. Cách chạy thử
 
