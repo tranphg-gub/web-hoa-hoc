@@ -512,6 +512,24 @@ const exams = [
       { content: "Propane (C3H8) là một hydrocarbon phổ biến thường được dùng làm nhiên liệu do quá trình cháy giải phóng lượng nhiệt lớn. Khi đốt cháy 1 mol propane thì giải phóng −2219,2 kJ nhiệt lượng. Nhiệt tạo thành chuẩn của propane là (biết nhiệt tạo thành chuẩn của H2O(l) = −285,8 kJ/mol; CO2(g) = −393,5 kJ/mol).", choices: ["+1539,9 kJ.", "–1539,9 kJ.", "-104,5 kJ.", "+212,2 kJ."], correctIndex: 2 },
     ],
   },
+  {
+    title: "Đề ôn thi học kỳ 1 Hóa 11 - Đề số 10 (Phạm Văn Trọng)",
+    grade: 11,
+    chapterTitle: "Ôn tập tổng hợp Học kì 1",
+    durationSec: 2700,
+    questions: [
+      { content: "Dung dịch A có chứa các ion NH4+, Al3+, Na+, SO42-. Để loại ion NH4+ và Al3+ người ta có thể dùng các dung dịch nào sau đây?", choices: ["K2CO3", "BaCl2", "NaOH", "Na3PO4"], correctIndex: 2, explanation: "NaOH dư vừa đẩy NH4+ thành khí NH3 bay ra, vừa hòa tan kết tủa Al(OH)3 thành ion aluminate tan, loại bỏ cả hai ion khỏi dạng ban đầu." },
+      { content: "Xác định chất (A) và (B) trong chuỗi sau: N2 -(+H2, xt, t°, p)-> NH3 -(+O2, Pt, t°)-> (A) -(+O2)-> (B) -> HNO3", choices: ["(A) là NO, (B) là N2O5", "(A) là N2, (B) là N2O5", "(A) là NO, (B) là NO2", "(A) là N2, (B) là NO2"], correctIndex: 2 },
+      { content: "Cho các phát biểu sau: (a) Sục khí SO2 vào dung dịch NaOH dư tạo ra muối trung hòa Na2SO3. (b) SO2 vừa có tính khử, vừa có tính oxi hóa. (c) Khí SO2 là một trong những nguyên nhân chính gây ra mưa acid. (d) Khí SO2 có màu vàng lục và rất độc. (e) Có thể dùng dung dịch bromine để phân biệt khí SO2 và khí CO2. Số phát biểu đúng là", choices: ["4.", "1.", "3.", "2."], correctIndex: 0, explanation: "(a),(b),(c),(e) đúng; (d) sai vì SO2 không màu, màu vàng lục là đặc trưng của khí Cl2." },
+      { content: "Cho chuỗi phản ứng: FeS2 + O2 -(t°)-> X(r) + Y(k); Y + Br2 + H2O -> HBr + Z. X, Y, Z lần lượt là:", choices: ["FeO, SO2, H2SO4", "Fe2O3, SO2, H2SO4", "Fe2O3, H2S, H2SO4", "B, C đều đúng"], correctIndex: 1, explanation: "FeS2+O2->Fe2O3+SO2 (X=Fe2O3, Y=SO2); SO2+Br2+2H2O->2HBr+H2SO4 (Z=H2SO4)." },
+      { content: "Phương trình hóa học nào sau đây là sai?", choices: ["2Fe + 3H2SO4 -> Fe2(SO4)3 + 3H2", "2Na + 2HCl -> 2NaCl + H2", "FeS + H2SO4(loãng) -> FeSO4 + H2S", "2Cr + 3Cl2 -> 2CrCl3"], correctIndex: 0, explanation: "H2SO4 loãng chỉ phản ứng với Fe như acid thông thường, tạo muối Fe(II) là FeSO4, không phải Fe2(SO4)3." },
+      { content: "Trong những dãy chất sau đây, dãy nào có các chất là đồng phân của nhau?", choices: ["CH3OCH3, CH3CHO", "C2H5OH, CH3OCH3", "CH3CH2CH2CH2OH, C2H5OH", "C4H10, C6H6"], correctIndex: 1 },
+      { content: "Cho phổ hồng ngoại (IR) của chất hữu cơ như hình dưới tương ứng chất nào sau đây, biết các hấp thụ đặc trưng ở 3350, 2943, 2878, 1457, 1204 cm-1:", choices: ["HOCH2CH2OH.", "CH3CH2COOH.", "CH3NHCH3.", "CH3CH2CHO."], correctIndex: 0 },
+      { content: "Cho các hợp chất: CH4; CHCl3; NaHCO3; NH4HCO3; C2H7N; HCN; CH3COONa; C12H22O11; (C2H3Cl)n; Al4C3; NaSCN. Số chất không phải hợp chất hữu cơ là", choices: ["5", "6", "7", "8"], correctIndex: 0, explanation: "NaHCO3, NH4HCO3, HCN, Al4C3, NaSCN là các hợp chất vô cơ theo quy ước loại trừ (muối carbonate/bicarbonate, cyanide, carbide, thiocyanate)." },
+      { content: "Tách chất màu thực phẩm thành những chất màu riêng thì dùng:", choices: ["Phương pháp chưng cất.", "Phương pháp chiết.", "Phương pháp sắc kí.", "Phương pháp kết tinh."], correctIndex: 2 },
+      { content: "Số liên kết đơn trong phân tử C4H10 là", choices: ["13", "14", "15", "16"], correctIndex: 0, explanation: "Butane có 3 liên kết C-C và 10 liên kết C-H, tổng cộng 13 liên kết đơn." },
+    ],
+  },
 ];
 
 async function main() {
