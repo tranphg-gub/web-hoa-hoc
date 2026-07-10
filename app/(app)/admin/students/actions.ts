@@ -27,7 +27,7 @@ export async function createStudent(formData: FormData) {
   const hashed = await bcrypt.hash(password, 10);
 
   await prisma.user.create({
-    data: { username, name, grade, password: hashed, role: "STUDENT" },
+    data: { username, name, grade, password: hashed, role: "STUDENT", mustChangePassword: true },
   });
 
   revalidatePath("/admin/students");
@@ -36,7 +36,10 @@ export async function createStudent(formData: FormData) {
 export async function resetStudentPassword(userId: string, newPassword: string) {
   await requireAdmin();
   const hashed = await bcrypt.hash(newPassword, 10);
-  await prisma.user.update({ where: { id: userId }, data: { password: hashed } });
+  await prisma.user.update({
+    where: { id: userId },
+    data: { password: hashed, mustChangePassword: true },
+  });
   revalidatePath("/admin/students");
 }
 

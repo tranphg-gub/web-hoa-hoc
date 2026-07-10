@@ -7,12 +7,14 @@ export default auth((req) => {
   const role = req.auth?.user?.role;
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
+  const isChangePasswordRoute = nextUrl.pathname.startsWith("/change-password");
   const isAppRoute =
     nextUrl.pathname.startsWith("/dashboard") ||
     nextUrl.pathname.startsWith("/documents") ||
     nextUrl.pathname.startsWith("/quizzes") ||
     nextUrl.pathname.startsWith("/games") ||
     nextUrl.pathname.startsWith("/ask-ai") ||
+    isChangePasswordRoute ||
     isAdminRoute;
 
   if (isAppRoute && !isLoggedIn) {
@@ -25,9 +27,21 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/dashboard", nextUrl.origin));
   }
 
+  if (isAppRoute && isLoggedIn && req.auth?.user?.mustChangePassword && !isChangePasswordRoute) {
+    return NextResponse.redirect(new URL("/change-password", nextUrl.origin));
+  }
+
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/documents/:path*", "/quizzes/:path*", "/games/:path*", "/ask-ai/:path*", "/admin/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/documents/:path*",
+    "/quizzes/:path*",
+    "/games/:path*",
+    "/ask-ai/:path*",
+    "/admin/:path*",
+    "/change-password/:path*",
+  ],
 };

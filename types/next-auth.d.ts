@@ -5,6 +5,7 @@ declare module "next-auth" {
     role: "ADMIN" | "STUDENT";
     username: string;
     grade?: number;
+    mustChangePassword: boolean;
   }
 
   interface Session {
@@ -13,6 +14,7 @@ declare module "next-auth" {
       role: "ADMIN" | "STUDENT";
       username: string;
       grade?: number;
+      mustChangePassword: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -22,5 +24,6 @@ declare module "next-auth/jwt" {
     role: "ADMIN" | "STUDENT";
     username: string;
     grade?: number;
+    mustChangePassword: boolean;
   }
 }

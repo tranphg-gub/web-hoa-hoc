@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { SidebarNav } from "@/components/app-shell/sidebar-nav";
 import { LogoutButton } from "@/components/app-shell/logout-button";
@@ -27,6 +28,12 @@ export default async function AppLayout({
               {isAdmin ? "Giáo viên" : `Lớp ${session?.user.grade ?? "-"}`}
             </Badge>
           </div>
+          <Link
+            href="/change-password"
+            className="rounded-full px-4 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-background-subtle"
+          >
+            Đổi mật khẩu
+          </Link>
           <LogoutButton />
         </div>
       </aside>

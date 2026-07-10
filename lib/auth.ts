@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { isLoginLocked, recordFailedLogin, clearFailedLogins } from "@/lib/login-rate-limit";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -19,11 +20,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const password = credentials?.password as string | undefined;
         if (!username || !password) return null;
 
+        if (isLoginLocked(username)) {
+          throw new Error("Tài khoản tạm khóa do đăng nhập sai nhiều lần. Vui lòng thử lại sau 15 phút.");
+        }
+
         const user = await prisma.user.findUnique({ where: { username } });
-        if (!user) return null;
+        if (!user) {
+          recordFailedLogin(username);
+          return null;
+        }
 
         const valid = await bcrypt.compare(password, user.password);
-        if (!valid) return null;
+        if (!valid) {
+          recordFailedLogin(username);
+          return null;
+        }
+
+        clearFailedLogins(username);
 
         return {
           id: user.id,
@@ -31,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           username: user.username,
           role: user.role,
           grade: user.grade ?? undefined,
+          mustChangePassword: user.mustChangePassword,
         };
       },
     }),
@@ -41,6 +55,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.role = user.role;
         token.username = user.username;
         token.grade = user.grade;
+        token.mustChangePassword = user.mustChangePassword;
       }
       return token;
     },
@@ -50,6 +65,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.role = token.role as "ADMIN" | "STUDENT";
         session.user.username = token.username as string;
         session.user.grade = token.grade as number | undefined;
+        session.user.mustChangePassword = token.mustChangePassword as boolean;
       }
       return session;
     },

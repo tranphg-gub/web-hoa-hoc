@@ -20,13 +20,14 @@ enum Difficulty {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  username  String   @unique
-  password  String
-  name      String
-  role      Role     @default(STUDENT)
-  grade     Int?
-  createdAt DateTime @default(now())
+  id                 String   @id @default(cuid())
+  username           String   @unique
+  password           String
+  name               String
+  role               Role     @default(STUDENT)
+  grade              Int?
+  mustChangePassword Boolean  @default(false)
+  createdAt          DateTime @default(now())
 
   quizAttempts  QuizAttempt[]
   chatMessages  ChatMessage[]

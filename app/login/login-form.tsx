@@ -11,6 +11,8 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
+  const passwordChanged = searchParams.get("passwordChanged") === "1";
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +40,11 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {passwordChanged && (
+        <p className="text-sm text-success-fg">
+          Đổi mật khẩu thành công, hãy đăng nhập lại.
+        </p>
+      )}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="username">Tên đăng nhập</Label>
         <Input

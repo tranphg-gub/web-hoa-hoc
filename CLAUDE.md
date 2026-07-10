@@ -2,6 +2,8 @@
 
 Hướng dẫn cho Claude Code khi làm việc trong dự án này.
 
+> **Cập nhật 2026-07-10**: Người dùng đã yêu cầu mở rộng phạm vi vượt ngoài các non-goal ở mục 13 (học phí, cộng đồng/bảng xếp hạng, diễn đàn, phân luồng học tập bằng AI, public deploy, đóng gói app). Xem `KE_HOACH_MO_RONG.md` để biết kế hoạch chi tiết và các ràng buộc an toàn tự đặt ra (không tích hợp cổng thanh toán thật, không tự public deploy một mình, bảng xếp hạng chỉ nội bộ). Các mục ở phần 13 liên quan đến thanh toán/cộng đồng coi như đã được ghi đè có chủ đích — phần còn lại của tài liệu này (kiến trúc, design system, quy ước code) vẫn giữ nguyên giá trị.
+
 ## 1. Tổng quan dự án
 
 Website học tập môn **Hóa học lớp 8–12**, phục vụ nhóm nhỏ học sinh (**< 10 người**, tài khoản do giáo viên/admin tạo sẵn thủ công, không có đăng ký công khai). Mục tiêu: một công cụ gọn nhẹ, cá nhân hóa, giúp học sinh học lý thuyết, luyện đề có tính giờ, ghi nhớ qua trò chơi, và hỏi đáp tức thời với AI.
