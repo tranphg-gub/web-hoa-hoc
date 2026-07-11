@@ -1,21 +1,20 @@
+import { prisma } from "@/lib/prisma";
+
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS_PER_WINDOW = 15;
 
-const requestLog = new Map<string, number[]>();
+function aiKey(userId: string): string {
+  return `ai:${userId}`;
+}
 
-/** Giới hạn đơn giản trong bộ nhớ - đủ dùng cho nhóm học sinh nhỏ (<10 người), một instance server duy nhất. */
-export function isRateLimited(userId: string): boolean {
-  const now = Date.now();
-  const timestamps = (requestLog.get(userId) ?? []).filter(
-    (t) => now - t < WINDOW_MS
-  );
+/** Lưu trong Postgres (không phải bộ nhớ trong process) để đúng cả khi chạy serverless nhiều instance. */
+export async function isRateLimited(userId: string): Promise<boolean> {
+  const key = aiKey(userId);
+  const since = new Date(Date.now() - WINDOW_MS);
+  await prisma.rateLimitHit.deleteMany({ where: { key, createdAt: { lt: since } } });
+  const count = await prisma.rateLimitHit.count({ where: { key } });
+  if (count >= MAX_REQUESTS_PER_WINDOW) return true;
 
-  if (timestamps.length >= MAX_REQUESTS_PER_WINDOW) {
-    requestLog.set(userId, timestamps);
-    return true;
-  }
-
-  timestamps.push(now);
-  requestLog.set(userId, timestamps);
+  await prisma.rateLimitHit.create({ data: { key } });
   return false;
 }

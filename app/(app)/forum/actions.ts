@@ -44,7 +44,7 @@ export async function askAiInForum(postId: string) {
   const session = await auth();
   if (!session) throw new Error("Chưa đăng nhập.");
 
-  if (isRateLimited(session.user.id)) {
+  if (await isRateLimited(session.user.id)) {
     throw new Error("Bạn hỏi AI hơi nhanh, hãy đợi một chút rồi thử lại.");
   }
 

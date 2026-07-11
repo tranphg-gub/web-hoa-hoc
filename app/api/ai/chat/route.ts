@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Thiếu nội dung câu hỏi." }, { status: 400 });
   }
 
-  if (isRateLimited(session.user.id)) {
+  if (await isRateLimited(session.user.id)) {
     return NextResponse.json(
       { error: "Bạn hỏi hơi nhanh, hãy đợi một chút rồi thử lại." },
       { status: 429 }

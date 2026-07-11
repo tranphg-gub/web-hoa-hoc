@@ -3,6 +3,12 @@ import { isReactionLine } from "@/lib/chem";
 import { ChemProseText, ReactionEquation } from "@/components/chemistry/chemical-formula";
 
 const IMAGE_LINE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+const TABLE_SEPARATOR_ROW = /^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?$/;
+
+function parseTableRow(line: string): string[] {
+  const trimmed = line.trim().replace(/^\|/, "").replace(/\|$/, "");
+  return trimmed.split("|").map((cell) => cell.trim());
+}
 
 /**
  * Cú pháp soạn nội dung (markdown tối giản):
@@ -10,6 +16,7 @@ const IMAGE_LINE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
  * - Dòng bắt đầu bằng "- " -> gộp các dòng liên tiếp thành danh sách gạch đầu dòng.
  * - Dòng chứa "->"/"=>"/"⇌" -> hiển thị dạng khối phương trình phản ứng (monospace).
  * - Dòng dạng "![Mô tả ảnh](url)" -> hình ảnh minh họa, có chú thích bên dưới.
+ * - Khối gồm toàn dòng bắt đầu bằng "|" (bảng markdown) -> hiển thị dạng bảng.
  * - Các dòng khác -> đoạn văn thường, công thức hóa học trong câu vẫn tự nhận diện.
  */
 export function DocumentContent({ content }: { content: string }) {
@@ -36,8 +43,33 @@ export function DocumentContent({ content }: { content: string }) {
           bulletBuffer = [];
         };
 
-        rawLines.forEach((line, lineIdx) => {
+        let lineIdx = 0;
+        while (lineIdx < rawLines.length) {
+          const line = rawLines[lineIdx];
           const imageMatch = line.match(IMAGE_LINE);
+          const nextLine = rawLines[lineIdx + 1];
+
+          if (
+            line.trim().startsWith("|") &&
+            nextLine !== undefined &&
+            TABLE_SEPARATOR_ROW.test(nextLine.trim())
+          ) {
+            flushBullets(`bul-${blockIdx}-${lineIdx}`);
+            const header = parseTableRow(line);
+            let end = lineIdx + 2;
+            while (end < rawLines.length && rawLines[end].trim().startsWith("|")) end++;
+            const bodyLines = rawLines.slice(lineIdx + 2, end);
+            elements.push(
+              <MarkdownTable
+                key={`table-${blockIdx}-${lineIdx}`}
+                header={header}
+                rows={bodyLines.map(parseTableRow)}
+              />
+            );
+            lineIdx = end;
+            continue;
+          }
+
           if (line.startsWith("## ")) {
             flushBullets(`bul-${blockIdx}-${lineIdx}`);
             elements.push(
@@ -66,11 +98,41 @@ export function DocumentContent({ content }: { content: string }) {
               </p>
             );
           }
-        });
+          lineIdx++;
+        }
         flushBullets(`bul-${blockIdx}-end`);
 
         return <Fragment key={blockIdx}>{elements}</Fragment>;
       })}
+    </div>
+  );
+}
+
+function MarkdownTable({ header, rows }: { header: string[]; rows: string[][] }) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-border-subtle">
+      <table className="w-full text-left text-sm">
+        <thead>
+          <tr className="bg-background-subtle">
+            {header.map((cell, i) => (
+              <th key={i} className="border-b border-border-subtle px-4 py-2.5 font-semibold text-foreground">
+                <ChemProseText text={cell} />
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, rIdx) => (
+            <tr key={rIdx} className="border-b border-border-subtle last:border-0">
+              {row.map((cell, cIdx) => (
+                <td key={cIdx} className="px-4 py-2.5 text-foreground">
+                  <ChemProseText text={cell} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

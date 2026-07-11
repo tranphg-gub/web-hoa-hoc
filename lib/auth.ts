@@ -20,23 +20,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const password = credentials?.password as string | undefined;
         if (!username || !password) return null;
 
-        if (isLoginLocked(username)) {
+        if (await isLoginLocked(username)) {
           throw new Error("Tài khoản tạm khóa do đăng nhập sai nhiều lần. Vui lòng thử lại sau 15 phút.");
         }
 
         const user = await prisma.user.findUnique({ where: { username } });
         if (!user) {
-          recordFailedLogin(username);
+          await recordFailedLogin(username);
           return null;
         }
 
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) {
-          recordFailedLogin(username);
+          await recordFailedLogin(username);
           return null;
         }
 
-        clearFailedLogins(username);
+        await clearFailedLogins(username);
 
         return {
           id: user.id,

@@ -244,3 +244,14 @@ model ForumComment {
   post ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
   user User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+/// Lưu rate-limit (đăng nhập sai + gọi AI) trong DB thay vì bộ nhớ trong process —
+/// cần thiết khi deploy serverless (Vercel) vì mỗi lần gọi hàm có thể là instance khác nhau,
+/// bộ nhớ trong process không được chia sẻ giữa các lần gọi.
+model RateLimitHit {
+  id        String   @id @default(cuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}

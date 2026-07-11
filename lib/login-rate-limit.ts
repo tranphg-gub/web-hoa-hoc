@@ -1,27 +1,25 @@
+import { prisma } from "@/lib/prisma";
+
 const WINDOW_MS = 15 * 60_000;
 const MAX_FAILED_ATTEMPTS = 5;
 
-const failedAttempts = new Map<string, number[]>();
-
-/** Giới hạn đơn giản trong bộ nhớ - đủ dùng khi chỉ có một instance server duy nhất. */
-export function isLoginLocked(username: string): boolean {
-  const now = Date.now();
-  const timestamps = (failedAttempts.get(username) ?? []).filter(
-    (t) => now - t < WINDOW_MS
-  );
-  failedAttempts.set(username, timestamps);
-  return timestamps.length >= MAX_FAILED_ATTEMPTS;
+function loginKey(username: string): string {
+  return `login:${username}`;
 }
 
-export function recordFailedLogin(username: string): void {
-  const now = Date.now();
-  const timestamps = (failedAttempts.get(username) ?? []).filter(
-    (t) => now - t < WINDOW_MS
-  );
-  timestamps.push(now);
-  failedAttempts.set(username, timestamps);
+/** Lưu trong Postgres (không phải bộ nhớ trong process) để đúng cả khi chạy serverless nhiều instance. */
+export async function isLoginLocked(username: string): Promise<boolean> {
+  const key = loginKey(username);
+  const since = new Date(Date.now() - WINDOW_MS);
+  await prisma.rateLimitHit.deleteMany({ where: { key, createdAt: { lt: since } } });
+  const count = await prisma.rateLimitHit.count({ where: { key } });
+  return count >= MAX_FAILED_ATTEMPTS;
 }
 
-export function clearFailedLogins(username: string): void {
-  failedAttempts.delete(username);
+export async function recordFailedLogin(username: string): Promise<void> {
+  await prisma.rateLimitHit.create({ data: { key: loginKey(username) } });
+}
+
+export async function clearFailedLogins(username: string): Promise<void> {
+  await prisma.rateLimitHit.deleteMany({ where: { key: loginKey(username) } });
 }
