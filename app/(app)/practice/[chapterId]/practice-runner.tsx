@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Difficulty } from "@prisma/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,11 +29,19 @@ function shuffleOrder(length: number): number[] {
 }
 
 export function PracticeRunner({ questions }: { questions: PracticeQuestionData[] }) {
-  const [order, setOrder] = useState(() => shuffleOrder(questions.length));
+  // Khởi tạo theo thứ tự gốc (giống nhau ở server và client) rồi mới xáo ở client sau khi
+  // mount — gọi Math.random() ngay trong useState() sẽ cho kết quả khác nhau giữa lần render
+  // trên server và lần hydrate trên client, gây lỗi "hydration mismatch".
+  const [order, setOrder] = useState(() => Array.from({ length: questions.length }, (_, i) => i));
   const [idx, setIdx] = useState(0);
   const [chosen, setChosen] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    setOrder(shuffleOrder(questions.length));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions.length]);
 
   const question = questions[order[idx]];
 

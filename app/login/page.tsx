@@ -17,7 +17,7 @@ export default function LoginPage() {
         <Card>
           <CardTitle>Đăng nhập</CardTitle>
           <CardDescription className="mt-1 mb-6">
-            Sử dụng tài khoản do giáo viên cấp cho bạn.
+            Chọn vai trò rồi đăng nhập.
           </CardDescription>
           <Suspense>
             <LoginForm />
