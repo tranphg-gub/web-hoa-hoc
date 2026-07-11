@@ -17,7 +17,7 @@ const COPY: Record<LoginAs, { description: string; usernameLabel: string; defaul
   ADMIN: {
     description: "Đăng nhập bằng tài khoản quản trị/giáo viên.",
     usernameLabel: "Tên đăng nhập giáo viên",
-    defaultCallback: "/admin",
+    defaultCallback: "/admin/students",
   },
 };
 
