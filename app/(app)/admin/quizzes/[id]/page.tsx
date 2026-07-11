@@ -9,6 +9,7 @@ import { DifficultyBadge } from "@/components/ui/difficulty-badge";
 import { Badge } from "@/components/ui/badge";
 import { addQuestion, deleteQuestion } from "../actions";
 import { AddQuestionForm } from "./add-question-form";
+import { AiDraftForm } from "./ai-draft-form";
 
 const TYPE_LABELS: Record<string, string> = {
   SINGLE_CHOICE: "Trắc nghiệm",
@@ -45,6 +46,14 @@ export default async function AdminQuizDetailPage({
           Lớp {quiz.grade} · {quiz.questions.length} câu hỏi
         </p>
       </div>
+
+      <Card>
+        <CardTitle>AI soạn nháp câu hỏi (cấu trúc đề CT GDPT 2018)</CardTitle>
+        <CardDescription className="mt-1 mb-4">
+          Chọn số câu từng phần — AI soạn dựa trên nội dung bài học, bạn duyệt rồi mới lưu.
+        </CardDescription>
+        <AiDraftForm quizId={quiz.id} />
+      </Card>
 
       <Card>
         <CardTitle>Thêm câu hỏi</CardTitle>

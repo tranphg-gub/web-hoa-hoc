@@ -3,18 +3,21 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ArrowLeft } from "lucide-react";
 import { FlashcardDeck } from "./flashcard-deck";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 
 export default async function FlashcardsPage({
   params,
 }: {
   params: Promise<{ setId: string }>;
 }) {
+  const session = await requireUser();
   const { setId } = await params;
   const set = await prisma.flashcardSet.findUnique({
     where: { id: setId },
     include: { cards: { orderBy: { order: "asc" } } },
   });
   if (!set) notFound();
+  if (!canAccessGrade(session.user, set.grade)) notFound();
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">

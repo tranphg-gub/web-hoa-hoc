@@ -34,11 +34,15 @@ export async function POST(request: Request) {
     data: { userId: session.user.id, role: "user", content: message },
   });
 
-  const history = await prisma.chatMessage.findMany({
+  // Lấy 20 tin nhắn GẦN NHẤT (desc + take), rồi đảo lại cho đúng thứ tự thời gian —
+  // lấy "asc + take" sẽ luôn trả về 20 tin nhắn ĐẦU TIÊN trong lịch sử, khiến AI
+  // "quên" mọi hội thoại sau khi vượt quá 20 tin.
+  const recentHistory = await prisma.chatMessage.findMany({
     where: { userId: session.user.id },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: "desc" },
     take: 20,
   });
+  const history = recentHistory.reverse();
 
   const priorTurns = history.slice(0, -1).map((m) => ({
     role: m.role === "assistant" ? ("model" as const) : ("user" as const),

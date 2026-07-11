@@ -3,18 +3,21 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ArrowLeft } from "lucide-react";
 import { MatchingGame } from "./matching-game";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 
 export default async function MatchingPage({
   params,
 }: {
   params: Promise<{ setId: string }>;
 }) {
+  const session = await requireUser();
   const { setId } = await params;
   const set = await prisma.flashcardSet.findUnique({
     where: { id: setId },
     include: { cards: { orderBy: { order: "asc" } } },
   });
   if (!set) notFound();
+  if (!canAccessGrade(session.user, set.grade)) notFound();
 
   const cards = set.cards.slice(0, 6).map((c) => ({
     id: c.id,

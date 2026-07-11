@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-border-subtle px-6 py-8 text-center text-xs text-foreground-muted md:px-12">
-        Hóa Học Cùng Em — công cụ học tập nội bộ, không công khai đăng ký.
+        Hóa Học Cùng Em — công cụ học tập dành cho nhóm nhỏ học sinh, do giáo viên quản lý.
       </footer>
     </div>
   );

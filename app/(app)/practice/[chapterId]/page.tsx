@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { requireUser } from "@/lib/require-auth";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 import { ArrowLeft } from "lucide-react";
 import { PracticeRunner } from "./practice-runner";
 
@@ -10,11 +10,12 @@ export default async function PracticeChapterPage({
 }: {
   params: Promise<{ chapterId: string }>;
 }) {
-  await requireUser();
+  const session = await requireUser();
   const { chapterId } = await params;
 
   const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
   if (!chapter) notFound();
+  if (!canAccessGrade(session.user, chapter.grade)) notFound();
 
   const questions = await prisma.practiceQuestion.findMany({
     where: { chapterId, published: true },

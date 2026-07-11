@@ -141,8 +141,15 @@ export function GenerateExercisesForm({ chapters }: { chapters: Chapter[] }) {
           </p>
           {drafts.map((draft, idx) => (
             <Card key={idx} className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-foreground-muted">Câu nháp {idx + 1}</span>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-sm font-medium text-foreground-muted">Câu nháp {idx + 1}</span>
+                  {draft.verified ? (
+                    <span className="text-xs font-medium text-success-fg">✓ AI kiểm chứng khớp đáp án</span>
+                  ) : (
+                    <span className="text-xs font-medium text-danger-fg">⚠ {draft.verifierNote}</span>
+                  )}
+                </div>
                 <Button type="button" size="sm" variant="ghost" onClick={() => removeDraft(idx)}>
                   Bỏ câu này
                 </Button>

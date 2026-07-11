@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { requireUser } from "@/lib/require-auth";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { DocumentViewSwitcher } from "@/components/chemistry/document-view-switcher";
 import { DocumentDownloadActions } from "@/components/chemistry/document-download-actions";
@@ -19,6 +19,7 @@ export default async function DocumentDetailPage({
   const session = await requireUser();
   const doc = await prisma.document.findUnique({ where: { id }, include: { chapter: true } });
   if (!doc) notFound();
+  if (!canAccessGrade(session.user, doc.grade)) notFound();
 
   const readRecord = await prisma.readDocument.findUnique({
     where: {

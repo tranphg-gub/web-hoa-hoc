@@ -5,18 +5,21 @@ import { extractHeadings } from "@/lib/content-outline";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { MindMapView } from "@/components/chemistry/mind-map-view";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 
 export default async function MindmapPage({
   searchParams,
 }: {
   searchParams: Promise<{ chapterId?: string }>;
 }) {
+  const session = await requireUser();
   const { chapterId } = await searchParams;
 
   if (!chapterId) notFound();
 
   const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
   if (!chapter) notFound();
+  if (!canAccessGrade(session.user, chapter.grade)) notFound();
 
   const documents = await prisma.document.findMany({
     where: { chapterId },

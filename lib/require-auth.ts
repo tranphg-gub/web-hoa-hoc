@@ -16,3 +16,16 @@ export async function requireAdmin() {
   if (session.user.role !== "ADMIN") redirect("/dashboard");
   return session;
 }
+
+/**
+ * Học sinh chỉ được xem tài liệu/đề/bài tập đúng lớp của mình — ADMIN xem được mọi lớp.
+ * Gọi sau khi đã tải resource theo id, dùng notFound() (không phải redirect) ở nơi gọi
+ * khi trả về false, để không lộ việc tài nguyên có tồn tại hay không cho lớp khác.
+ */
+export function canAccessGrade(
+  user: { role: string; grade?: number | null },
+  resourceGrade: number
+): boolean {
+  if (user.role === "ADMIN") return true;
+  return user.grade === resourceGrade;
+}

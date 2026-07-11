@@ -1,0 +1,328 @@
+[
+ {
+  "title": "Đề minh họa TN THPT 2026 - Đề 01 (MAPSTUDY, sưu tầm)",
+  "durationSec": 3000,
+  "questions": [
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Khi cho các kim loại lithium, sodium và potassium phản ứng với nước, chlorine và oxygen thì mức độ phản ứng biến đổi như thế nào?",
+    "choices": [
+     "Tăng dần",
+     "Giảm dần",
+     "Không đổi",
+     "Không có quy luật"
+    ],
+    "correctIndex": 0,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Tính chất vật lí nào sau đây của kim loại không do các electron tự do quyết định?",
+    "choices": [
+     "Tính dẫn điện",
+     "Tính dẻo",
+     "Khối lượng riêng",
+     "Tính dẫn nhiệt"
+    ],
+    "correctIndex": 2,
+    "difficulty": "NHAN_BIET"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Các hợp kim của aluminium (nhôm) trải qua một quá trình gọi là anodizing (anode hóa) để tăng khả năng chống ăn mòn và độ cứng bề mặt. Phát biểu nào sau đây về quá trình anode hóa nhôm là đúng?",
+    "choices": [
+     "Quá trình anode hóa là phản ứng tự diễn biến.",
+     "Khí thoát ra là hydrogen và oxygen.",
+     "Vật làm bằng nhôm sẽ bị giảm khối lượng.",
+     "Phản ứng sẽ dừng lại khi điện cực graphite được thay bằng vàng."
+    ],
+    "correctIndex": 1,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Cho các chất: aniline, phenylammonium chloride, alanine, Glu-Ala. Số chất phản ứng được với NaOH trong dung dịch là",
+    "choices": [
+     "4",
+     "3",
+     "1",
+     "2"
+    ],
+    "correctIndex": 1,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Trong một số loại tơ, nhóm -CONH- bị thuỷ phân trong môi trường kiềm. Loại tơ nào sau đây sẽ không bị thuỷ phân khi ngâm và giặt trong xà phòng có độ kiềm cao?",
+    "choices": [
+     "Tơ tằm",
+     "Tơ nylon-6,6",
+     "Tơ capron",
+     "Tơ nitron"
+    ],
+    "correctIndex": 3,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Cho luồng khí H2 dư qua hỗn hợp các oxide CuO, Fe2O3, Al2O3, MgO nung nóng ở nhiệt độ cao. Sau phản ứng, hỗn hợp chất rắn thu được gồm",
+    "choices": [
+     "Cu, Fe, Al, Mg",
+     "Cu, FeO, Al2O3, MgO",
+     "Cu, Fe, Al2O3, MgO",
+     "Cu, Fe, Al, MgO"
+    ],
+    "correctIndex": 2,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Thuỷ phân saccharose, thu được hai monosaccharide X và Y. Chất X có nhiều trong quả nho chín nên còn được gọi là đường nho. Phát biểu nào sau đây đúng?",
+    "choices": [
+     "Y không tan trong nước.",
+     "X không có phản ứng tráng bạc.",
+     "Y có phân tử khối bằng 342.",
+     "X có tính chất của alcohol đa chức."
+    ],
+    "correctIndex": 3,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Khi cho dung dịch ammonia dư vào dung dịch chứa phức chất [Ni(OH2)6]2+ và anion Cl- thì có phản ứng sau: [Ni(OH2)6]2+(aq) + 6NH3(aq) -> [Ni(NH3)6]2+(aq) + 6H2O(l) (*). Phát biểu nào dưới đây là không đúng?",
+    "choices": [
+     "Trong điều kiện của phản ứng (*), phức chất [Ni(NH3)6]2+(aq) kém bền hơn phức chất [Ni(OH2)6]2+(aq).",
+     "Phản ứng (*) là phản ứng thế phối tử.",
+     "Dung dịch sau phản ứng có pH > 7.",
+     "Trong phản ứng không có sự thay đổi số oxi hoá của các nguyên tố."
+    ],
+    "correctIndex": 0,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Số nguyên tử carbon trong hợp chất 2-methylbutan-1-amine là",
+    "choices": [
+     "4",
+     "5",
+     "6",
+     "3"
+    ],
+    "correctIndex": 1,
+    "difficulty": "NHAN_BIET"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Glucose đóng vai trò quan trọng trong các quá trình chuyển hoá năng lượng và duy trì nồng độ đường huyết ở người. Phát biểu nào sau đây không đúng?",
+    "choices": [
+     "Ở người bình thường, nồng độ glucose trong máu khi đói cao hơn sau khi ăn cơm.",
+     "Glucose có thể được chuyển đổi thành glycogen lưu trữ trong gan và cơ.",
+     "Dung dịch glucose 5% được sử dụng làm dịch truyền tĩnh mạch trong y học.",
+     "Glucose đóng vai trò cung cấp năng lượng cho tế bào."
+    ],
+    "correctIndex": 0,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Nhận định nào sau đây sai?",
+    "choices": [
+     "Trong công nghiệp có thể chuyển hoá chất béo lỏng thành chất béo rắn.",
+     "Dầu ăn và mỡ bôi trơn máy có cùng thành phần nguyên tố.",
+     "Phản ứng thủy phân chất béo trong môi trường acid là phản ứng thuận nghịch.",
+     "Tristearin là chất rắn ở điều kiện thường."
+    ],
+    "correctIndex": 1,
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Vôi sống có nhiều ứng dụng như sản xuất vật liệu xây dựng, khử chua đất trồng, sát trùng và xử lí nước thải. Xét một lò nung vôi công nghiệp sử dụng than đá làm nhiên liệu. Giả thiết đá vôi chỉ chứa CaCO3 và để phân hủy 1 kg đá vôi cần cung cấp một lượng nhiệt là 1800 kJ. Đốt cháy 1 kg than đá giải phóng ra một lượng nhiệt là 27000 kJ và có 50% lượng nhiệt này được hấp thụ ở quá trình phân hủy đá vôi. Công suất của lò nung vôi là 420 tấn vôi sống/ngày. Tổng khối lượng đá vôi và than đá (tính theo tấn) mà lò nung vôi trên sử dụng mỗi ngày là bao nhiêu? (Kết quả làm tròn đến hàng đơn vị)",
+    "choices": [
+     "850",
+     "960",
+     "897",
+     "1056"
+    ],
+    "correctIndex": 0,
+    "difficulty": "VAN_DUNG_CAO"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Chất hữu cơ X có công thức phân tử C3H6O2. Trên phổ hồng ngoại của X không xuất hiện peak đặc trưng cho liên kết O-H (3600-3250 cm-1) nhưng xuất hiện peak có cường độ mạnh đặc trưng cho liên kết C=O (1715 cm-1). Chất nào sau đây có thể là X?",
+    "choices": [
+     "2-hydroxypropanal",
+     "Propionic acid",
+     "Methyl acetate",
+     "Methyl formate"
+    ],
+    "correctIndex": 2,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Phản ứng chlorine hóa methane khi chiếu sáng xảy ra theo cơ chế gốc gồm ba giai đoạn: khơi mào, phát triển mạch và tắt mạch. Trong đó, giai đoạn phát triển mạch diễn ra như sau: Cl* + CH4 -> HCl + *CH3 ; *CH3 + Cl2 -> CH3Cl + Cl*. Phát biểu nào sau đây sai về giai đoạn này?",
+    "choices": [
+     "Có sự phân cắt liên kết C-H.",
+     "Có sự hình thành liên kết H-Cl.",
+     "Có sự hình thành liên kết Cl-Cl.",
+     "Có sự hình thành liên kết C-Cl."
+    ],
+    "correctIndex": 2,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Trong khí tái tạo có H2, CO, CO2, CH4 và H2O. Cho các phản ứng sau: (1) CH4 + NiO -> 2H2 + CO + Ni ; (2) CH4 + 2NiO -> 2H2 + CO2 + 2Ni ; (3) CH4 + NiO -> H2 + H2O + C + Ni. Phương trình hóa học của phản ứng giữa CH4 và NiO (phù hợp với thành phần khí tái tạo nêu trên) là",
+    "choices": [
+     "(1) và (3)",
+     "(1) và (2)",
+     "(2) và (3)",
+     "(1), (2) và (3)"
+    ],
+    "correctIndex": 1,
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SINGLE_CHOICE",
+    "content": "Trong thiết bị phản ứng hấp thụ CaO cũng xảy ra phản ứng chuyển hóa hơi nước. Biết 1 mol CH4 và hơi nước phản ứng với nhau tạo thành CO2 và H2 thì hấp thụ 165 kJ nhiệt lượng; 1 mol CH4 và hơi nước phản ứng với nhau tạo thành CO và H2 thì hấp thụ 206 kJ nhiệt lượng. Biến thiên enthalpy của phản ứng CO(g) + H2O(g) -> H2(g) + CO2(g) là",
+    "choices": [
+     "165 kJ",
+     "41 kJ",
+     "-206 kJ",
+     "-41 kJ"
+    ],
+    "correctIndex": 3,
+    "difficulty": "VAN_DUNG_CAO"
+   },
+   {
+    "type": "TRUE_FALSE_GROUP",
+    "content": "Trong công nghiệp, sodium hydrogencarbonate (baking soda) và sodium carbonate (soda) được sản xuất bằng phương pháp Solvay từ nguyên liệu chính là đá vôi và muối ăn. Cho nhiệt tạo thành chuẩn của một số chất: Na2CO3(s) = -1130,70 kJ/mol; NaHCO3(s) = -950,81 kJ/mol; CO2(g) = -393,51 kJ/mol; H2O(g) = -241,80 kJ/mol.",
+    "statements": [
+     {
+      "text": "Phương trình hóa học chuyển hóa NaHCO3 thành Na2CO3 là: 2NaHCO3(s) -> Na2CO3(s) + CO2(g) + H2O(s).",
+      "correct": false
+     },
+     {
+      "text": "Ở giai đoạn làm lạnh, NaHCO3 được tách biệt bằng phương pháp kết tinh.",
+      "correct": true
+     },
+     {
+      "text": "Ammonia và carbon dioxide được sử dụng quay vòng trong quá trình sản xuất.",
+      "correct": true
+     },
+     {
+      "text": "Biến thiên enthalpy chuẩn của phản ứng 2NaHCO3(s) -> Na2CO3(s) + CO2(g) + H2O(g) là 1402,17 kJ (làm tròn đến hàng phần trăm).",
+      "correct": false
+     }
+    ],
+    "difficulty": "VAN_DUNG_CAO"
+   },
+   {
+    "type": "TRUE_FALSE_GROUP",
+    "content": "Một học sinh tiến hành điều chế xà phòng từ dầu dừa: cân m gam NaOH cho vào cốc đã chứa sẵn khoảng 100 mL nước, để nguội đến khoảng 38 độ C; cho 300 gam dầu dừa vào cốc thuỷ tinh chịu nhiệt, đun nhẹ đến khoảng 48 độ C; rót dung dịch NaOH vào cốc dầu dừa và khuấy nhanh liên tục khoảng 30 phút đến khi hỗn hợp sệt, mịn; đổ vào khuôn, sau khoảng 24 giờ lấy ra và để 4-5 ngày là dùng được.",
+    "statements": [
+     {
+      "text": "Biết chỉ số xà phòng hóa là số miligam KOH cần để xà phòng hóa triglyceride và trung hòa acid béo tự do trong 1 g chất béo; chỉ số xà phòng hóa của dầu dừa là 257. Học sinh lấy m gam NaOH ứng với lượng KOH cần dùng. Giá trị của m là 55 (làm tròn đến hàng đơn vị).",
+      "correct": true
+     },
+     {
+      "text": "Trong xà phòng thu được có chứa glycerol.",
+      "correct": true
+     },
+     {
+      "text": "Bước rót và khuấy dung dịch NaOH với dầu dừa xảy ra phản ứng xà phòng hóa.",
+      "correct": true
+     },
+     {
+      "text": "Tinh dầu chanh là chất xúc tác cho phản ứng xà phòng hóa.",
+      "correct": false
+     }
+    ],
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "TRUE_FALSE_GROUP",
+    "content": "Một pin điện hóa Zn-H2 được thiết lập ở điều kiện chuẩn: điện cực kẽm nhúng trong dung dịch ZnCl2 1M, điện cực hydrogen (điện cực platinum) trong dung dịch HCl 1M, hai nửa pin nối với nhau bằng cầu muối; vôn kế (có điện trở rất lớn) chỉ giá trị 0,762 V.",
+    "statements": [
+     {
+      "text": "Chất điện li trong cầu muối là KCl.",
+      "correct": true
+     },
+     {
+      "text": "Phản ứng hóa học xảy ra trong pin là: Zn(s) + 2H+(aq) -> Zn2+(aq) + H2(g).",
+      "correct": true
+     },
+     {
+      "text": "Quá trình khử xảy ra ở cathode là: 2H+ + 2e -> H2.",
+      "correct": true
+     },
+     {
+      "text": "Thế điện cực chuẩn của cặp oxi hóa - khử Zn2+/Zn là 0,762 V.",
+      "correct": false
+     }
+    ],
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "TRUE_FALSE_GROUP",
+    "content": "Cân 3,2005 gam quặng sắt chứa Fe2O3 và các tạp chất trơ khác đem hòa tan trong dung dịch H2SO4 loãng, dư; sau đó khử hoàn toàn Fe3+ trong dung dịch bằng Zn thành Fe2+, thu được 100,0 mL dung dịch X (dùng bình định mức 100,00 mL). Lấy chính xác 10,00 mL X chuẩn độ bằng dung dịch KMnO4 9,147.10^-3 M; thể tích KMnO4 tiêu tốn cho ba lần lần lượt là 8,24; 8,28 và 8,20 mL.",
+    "statements": [
+     {
+      "text": "Phản ứng hòa tan Fe2O3 trong quặng: Fe2O3 + 3H2SO4 -> Fe2(SO4)3 + 3H2O.",
+      "correct": true
+     },
+     {
+      "text": "Phương trình ion rút gọn của phản ứng chuẩn độ là: MnO4- + 5Fe2+ + 8H+ -> Mn2+ + 5Fe3+ + 4H2O.",
+      "correct": true
+     },
+     {
+      "text": "Khi màu hồng nhạt trong bình tam giác bền trong khoảng 20 giây thì có thể coi như phản ứng vừa đủ.",
+      "correct": true
+     },
+     {
+      "text": "Từ kết quả chuẩn độ, xác định được phần trăm khối lượng của Fe2O3 trong quặng là 18,8%.",
+      "correct": false
+     }
+    ],
+    "difficulty": "VAN_DUNG_CAO"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Đun nóng một loại dầu thực vật với dung dịch NaOH, sản phẩm thu được có chứa muối sodium oleate (C17H33COONa). Phân tử khối của sodium oleate là bao nhiêu?",
+    "shortAnswer": "304",
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Poly(ethylene terephthalate) (PET) được ứng dụng rộng rãi làm hộp đựng, chai nhựa, sợi polyester. Quá trình chuyển hóa PET từ cellulose theo sơ đồ: Cellulose --(1)--> Glucose --(2, enzyme)--> Ethanol --(3, xt, t độ)--> Ethylene --(4, +O2, H2O)--> Ethylene glycol --(5, + HOOC-C6H4-COOH)--> PET. Trong sơ đồ trên, phản ứng trùng ngưng là phản ứng số mấy?",
+    "shortAnswer": "5",
+    "difficulty": "THONG_HIEU"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Cho các cặp oxi hóa - khử và thế điện cực chuẩn tương ứng: Sn2+/Sn = -0,14 V; Zn2+/Zn = -0,76 V; Cu2+/Cu = +0,34 V; Ag+/Ag = +0,80 V. Sức điện động chuẩn lớn nhất của một pin điện hóa tạo thành từ hai trong số các cặp oxi hóa - khử trên là bao nhiêu volt?",
+    "shortAnswer": "1,56",
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Cho các phương trình hóa học của acetaldehyde: (1) CH3CHO + 4NaOH + 3I2 -> CHI3 + HCOONa + 3NaI + 3H2O; (2) CH3CHO + 2[Ag(NH3)2]OH -> CH3COONH4 + 2Ag + 3NH3 + H2O; (3) CH3CHO + LiAlH4 -> CH3CH2OH; (4) CH3CHO + HCN -> CH3CH(OH)CN. Gán số thứ tự phương trình theo tên gọi: tráng bạc, cộng, khử, tạo iodoform rồi sắp theo trình tự đó thành dãy bốn số (ví dụ 1234).",
+    "shortAnswer": "2431",
+    "difficulty": "VAN_DUNG"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Cần mạ một lớp Ag lên một mặt của một chiếc đĩa tròn có bán kính 12 cm. Với độ dày lớp mạ là 0,01 mm, nếu được cung cấp nguồn điện một chiều có cường độ dòng điện I = 2 A trong thời gian t giờ thì hoàn thành. Biết khối lượng riêng của Ag là 10,5 g/cm3, hiệu suất điện phân 100%, M(Ag) = 108 g/mol và 1 mol điện lượng = 1F = 96485 C. Giá trị của t là bao nhiêu? (làm tròn đến hàng phần trăm)",
+    "shortAnswer": "0,59",
+    "difficulty": "VAN_DUNG_CAO"
+   },
+   {
+    "type": "SHORT_ANSWER",
+    "content": "Paracetamol (acetaminophen, C8H9NO2) có thể được tổng hợp trực tiếp từ 4-aminophenol (C6H7NO) và acetic anhydride (C4H6O3) theo phản ứng: C6H7NO + C4H6O3 -> C8H9NO2 + CH3COOH. Để sản xuất 10.000 hộp paracetamol (quy cách 10 vỉ x 10 viên, mỗi viên hàm lượng 500 mg) với hiệu suất cả quá trình đạt 70% thì cần sử dụng m kg 4-aminophenol (độ tinh khiết 98%). Giá trị của m là bao nhiêu? (làm tròn đến phần nguyên)",
+    "shortAnswer": "526",
+    "difficulty": "VAN_DUNG_CAO"
+   }
+  ]
+ }
+]

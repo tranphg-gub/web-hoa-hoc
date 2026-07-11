@@ -5,18 +5,21 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { startQuizAttempt } from "../actions";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 
 export default async function QuizOverviewPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await requireUser();
   const { id } = await params;
   const quiz = await prisma.quiz.findUnique({
     where: { id },
     include: { _count: { select: { questions: true } } },
   });
   if (!quiz) notFound();
+  if (!canAccessGrade(session.user, quiz.grade)) notFound();
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">

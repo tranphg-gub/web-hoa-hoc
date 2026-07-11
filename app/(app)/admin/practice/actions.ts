@@ -51,10 +51,8 @@ export async function generateExercisesForChapter(
 ): Promise<GeneratedExercise[]> {
   await requireAdmin();
 
-  const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
-  if (!chapter) throw new Error("Không tìm thấy chương.");
-
-  return generateExercises(chapter.title, chapter.grade, difficulty, count);
+  const safeCount = Math.min(Math.max(Math.floor(count), 1), 10);
+  return generateExercises(chapterId, difficulty, safeCount);
 }
 
 export async function saveGeneratedExercises(
@@ -64,10 +62,26 @@ export async function saveGeneratedExercises(
 ) {
   await requireAdmin();
 
+  // Giáo viên có thể đã sửa tay bản nháp phía client — kiểm tra lại trước khi lưu.
+  const valid = exercises.filter(
+    (ex) =>
+      typeof ex.content === "string" &&
+      ex.content.trim() !== "" &&
+      Array.isArray(ex.choices) &&
+      ex.choices.length === 4 &&
+      ex.choices.every((c) => typeof c === "string" && c.trim() !== "") &&
+      typeof ex.correctIndex === "number" &&
+      ex.correctIndex >= 0 &&
+      ex.correctIndex <= 3
+  );
+  if (valid.length === 0) {
+    throw new Error("Không có câu hợp lệ để lưu (thiếu nội dung, phương án hoặc đáp án).");
+  }
+
   await prisma.practiceQuestion.createMany({
-    data: exercises.map((ex) => ({
+    data: valid.map((ex) => ({
       chapterId,
-      content: ex.content,
+      content: ex.content.trim(),
       choices: JSON.stringify(ex.choices),
       correctIndex: ex.correctIndex,
       explanation: ex.explanation || null,

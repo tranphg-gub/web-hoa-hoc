@@ -3,18 +3,21 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ArrowLeft } from "lucide-react";
 import { QuickQuizGame } from "./quick-quiz-game";
+import { requireUser, canAccessGrade } from "@/lib/require-auth";
 
 export default async function GameQuizPage({
   params,
 }: {
   params: Promise<{ setId: string }>;
 }) {
+  const session = await requireUser();
   const { setId } = await params;
   const set = await prisma.flashcardSet.findUnique({
     where: { id: setId },
     include: { cards: { orderBy: { order: "asc" } } },
   });
   if (!set || set.cards.length < 2) notFound();
+  if (!canAccessGrade(session.user, set.grade)) notFound();
 
   const cards = set.cards.map((c) => ({
     id: c.id,

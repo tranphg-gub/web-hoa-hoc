@@ -14,15 +14,21 @@ async function requireAdmin() {
 export async function confirmPayment(paymentId: string) {
   await requireAdmin();
 
-  const payment = await prisma.payment.update({
-    where: { id: paymentId },
-    data: { status: "CONFIRMED", confirmedAt: new Date() },
-  });
+  const payment = await prisma.payment.findUnique({ where: { id: paymentId } });
+  if (!payment) throw new Error("Không tìm thấy khoản thanh toán.");
 
-  await prisma.user.update({
-    where: { id: payment.userId },
-    data: { paymentStatus: "PAID" },
-  });
+  // Gộp 2 update vào 1 transaction — tránh trường hợp payment đã "CONFIRMED"
+  // nhưng user vẫn "PENDING" nếu tiến trình bị ngắt giữa 2 câu lệnh.
+  await prisma.$transaction([
+    prisma.payment.update({
+      where: { id: paymentId },
+      data: { status: "CONFIRMED", confirmedAt: new Date() },
+    }),
+    prisma.user.update({
+      where: { id: payment.userId },
+      data: { paymentStatus: "PAID" },
+    }),
+  ]);
 
   revalidatePath("/admin/payments");
 }

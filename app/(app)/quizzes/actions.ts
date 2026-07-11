@@ -17,6 +17,12 @@ export async function startQuizAttempt(quizId: string) {
   const session = await auth();
   if (!session) throw new Error("Chưa đăng nhập.");
 
+  const quiz = await prisma.quiz.findUnique({ where: { id: quizId }, select: { grade: true } });
+  if (!quiz) throw new Error("Không tìm thấy đề kiểm tra.");
+  if (session.user.role !== "ADMIN" && session.user.grade !== quiz.grade) {
+    throw new Error("Không có quyền làm đề của lớp khác.");
+  }
+
   const existing = await prisma.quizAttempt.findFirst({
     where: { userId: session.user.id, quizId, submittedAt: null },
     orderBy: { startedAt: "desc" },
@@ -89,18 +95,24 @@ export async function submitQuizAttempt(attemptId: string) {
     const score = scoreQuizAttempt(scorableQuestions, answers);
     const late = isPastDeadline(attempt.startedAt, attempt.quiz.durationSec);
 
-    await prisma.quizAttempt.update({
-      where: { id: attemptId },
+    // Điều kiện `submittedAt: null` ở where khiến update này chỉ khớp đúng 1 lần
+    // dù 2 request nộp bài trùng lúc (double-click, mạng lag rồi bấm lại...) —
+    // Postgres khoá theo dòng nên chỉ 1 trong 2 request thắng, request còn lại
+    // update 0 dòng và bỏ qua toàn bộ phần cộng điểm/phân tích AI bên dưới.
+    const claim = await prisma.quizAttempt.updateMany({
+      where: { id: attemptId, submittedAt: null },
       data: { submittedAt: new Date(), score, late },
     });
 
-    const pointsEarned = Math.round(score * (late ? 5 : 10));
-    await prisma.user.update({
-      where: { id: session.user.id },
-      data: { points: { increment: pointsEarned } },
-    });
+    if (claim.count === 1) {
+      const pointsEarned = Math.round(score * (late ? 5 : 10));
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: { points: { increment: pointsEarned } },
+      });
+    }
 
-    if (attempt.quiz.kind !== "REGULAR") {
+    if (claim.count === 1 && attempt.quiz.kind !== "REGULAR") {
       try {
         const analysisQuestions = attempt.quiz.questions.map((q, i) => ({
           content: q.content,

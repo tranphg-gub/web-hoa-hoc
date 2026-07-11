@@ -3,8 +3,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const prisma = new PrismaClient();
 
-const BATCH_SIZE = 15;
-const DELAY_MS = 4000; // giãn cách giữa các lượt gọi để tránh vượt rate limit free tier
+// QUAN TRỌNG: free tier Gemini giới hạn 20 REQUEST/NGÀY cho mỗi model (không phải /phút như
+// tưởng ban đầu — xem lỗi "GenerateRequestsPerDayPerProjectPerModel-FreeTier" nếu vượt quota).
+// Vì giới hạn tính theo SỐ LƯỢT gọi chứ không theo số token, batch càng lớn càng đỡ tốn lượt.
+const BATCH_SIZE = 80;
+const DELAY_MS = 4000;
 const VALID = new Set(["NHAN_BIET", "THONG_HIEU", "VAN_DUNG", "VAN_DUNG_CAO"]);
 
 const SYSTEM_INSTRUCTION = `Bạn là giáo viên Hóa học THCS/THPT có kinh nghiệm chấm và phân loại câu hỏi trắc nghiệm theo 4 mức độ nhận thức (thang Bloom rút gọn dùng trong đề kiểm tra Việt Nam):
@@ -66,12 +69,16 @@ async function main() {
     process.exit(1);
   }
   const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  // Cố ý KHÔNG dùng GEMINI_MODEL chung: phân loại ~1000 câu cần model quota cao (flash),
+  // 2.5-pro free tier chỉ vài chục request/ngày sẽ chết giữa chừng.
   const model = client.getGenerativeModel({
-    model: process.env.GEMINI_MODEL || "gemini-2.5-pro",
+    model: process.env.GEMINI_CLASSIFY_MODEL || "gemini-flash-latest",
     systemInstruction: SYSTEM_INSTRUCTION,
   });
 
+  // Chỉ phân loại câu trắc nghiệm — câu Đúng/Sai và trả lời ngắn (choices=null) do giáo viên/AI mới gán sẵn.
   const questions = await prisma.question.findMany({
+    where: { type: "SINGLE_CHOICE" },
     select: { id: true, content: true, choices: true, correctIndex: true },
     orderBy: [{ quizId: "asc" }, { order: "asc" }],
   });
