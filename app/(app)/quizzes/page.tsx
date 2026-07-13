@@ -3,11 +3,23 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/input";
 
-export default async function QuizzesPage() {
+const ALL_GRADES = [6, 7, 8, 9, 10, 11, 12];
+
+export default async function QuizzesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ grade?: string }>;
+}) {
   const session = await requireUser();
   const user = session.user;
-  const grade = user.grade ?? 8;
+  const { grade: gradeParam } = await searchParams;
+  // Tài khoản giáo viên/admin không gắn với 1 lớp cố định (user.grade = null),
+  // nên cần chọn lớp muốn xem thay vì mặc định cứng vào 1 lớp.
+  const isGradePicker = user.grade == null;
+  const grade = user.grade ?? (gradeParam ? Number(gradeParam) : ALL_GRADES[0]);
 
   const quizzes = await prisma.quiz.findMany({
     where: { grade },
@@ -31,6 +43,31 @@ export default async function QuizzesPage() {
           Lớp {grade} — hết giờ sẽ tự động nộp bài.
         </p>
       </div>
+
+      {isGradePicker && (
+        <Card>
+          <form method="GET" className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="grade">Xem đề kiểm tra lớp</Label>
+              <select
+                id="grade"
+                name="grade"
+                defaultValue={grade}
+                className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40 sm:w-40"
+              >
+                {ALL_GRADES.map((g) => (
+                  <option key={g} value={g}>
+                    Lớp {g}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Button type="submit" variant="secondary">
+              Xem
+            </Button>
+          </form>
+        </Card>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2">
         {quizzes.map((quiz) => {

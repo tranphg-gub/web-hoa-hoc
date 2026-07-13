@@ -35,9 +35,9 @@ const adminLinks = [
   { href: "/admin/students", label: "Học sinh", icon: Users },
   { href: "/admin/payments", label: "Thanh toán", icon: Wallet },
   { href: "/admin/chapters", label: "Chương", icon: BookMarked },
-  { href: "/admin/documents", label: "Tài liệu", icon: FileText },
-  { href: "/admin/practice", label: "Bài tập", icon: PenLine },
-  { href: "/admin/quizzes", label: "Đề kiểm tra", icon: ListChecks },
+  { href: "/admin/documents", label: "Quản lý tài liệu", icon: FileText },
+  { href: "/admin/practice", label: "Quản lý bài tập", icon: PenLine },
+  { href: "/admin/quizzes", label: "Quản lý đề kiểm tra", icon: ListChecks },
   { href: "/admin/flashcards", label: "Bộ flashcard", icon: Layers },
 ];
 
@@ -49,29 +49,51 @@ export function SidebarNav({
   direction?: "col" | "row";
 }) {
   const pathname = usePathname();
-  const links = isAdmin ? [...studentLinks, ...adminLinks] : studentLinks;
 
+  function renderLink(link: (typeof studentLinks)[number]) {
+    const active = pathname === link.href || pathname.startsWith(link.href + "/");
+    return (
+      <Link
+        key={link.href}
+        href={link.href}
+        className={cn(
+          "flex items-center gap-2.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors",
+          active
+            ? "bg-foreground text-background"
+            : "text-foreground-muted hover:bg-background-subtle"
+        )}
+      >
+        <link.icon className="h-4 w-4" strokeWidth={1.75} />
+        {link.label}
+      </Link>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <nav className={cn("flex gap-1", direction === "col" ? "flex-col" : "flex-row")}>
+        {studentLinks.map(renderLink)}
+      </nav>
+    );
+  }
+
+  // Tài khoản giáo viên/admin thấy cả 2 nhóm — phân tách rõ bằng heading (chỉ ở sidebar dọc,
+  // hàng ngang trên mobile chỉ nối tiếp cho gọn) và đổi tên nhóm quản trị để không trùng chữ
+  // với nhóm xem nội dung (VD "Tài liệu" xem vs "Quản lý tài liệu" CRUD).
   return (
     <nav className={cn("flex gap-1", direction === "col" ? "flex-col" : "flex-row")}>
-      {links.map((link) => {
-        const active =
-          pathname === link.href || pathname.startsWith(link.href + "/");
-        return (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={cn(
-              "flex items-center gap-2.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors",
-              active
-                ? "bg-foreground text-background"
-                : "text-foreground-muted hover:bg-background-subtle"
-            )}
-          >
-            <link.icon className="h-4 w-4" strokeWidth={1.75} />
-            {link.label}
-          </Link>
-        );
-      })}
+      {direction === "col" && (
+        <span className="mb-1 mt-2 px-4 text-xs font-semibold uppercase tracking-wide text-foreground-muted first:mt-0">
+          Học tập
+        </span>
+      )}
+      {studentLinks.map(renderLink)}
+      {direction === "col" && (
+        <span className="mb-1 mt-4 px-4 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+          Quản trị
+        </span>
+      )}
+      {adminLinks.map(renderLink)}
     </nav>
   );
 }
