@@ -22,7 +22,7 @@ export default async function QuizzesPage({
   const grade = user.grade ?? (gradeParam ? Number(gradeParam) : ALL_GRADES[0]);
 
   const quizzes = await prisma.quiz.findMany({
-    where: { grade },
+    where: { grade, published: true },
     include: {
       _count: { select: { questions: true } },
       attempts: {

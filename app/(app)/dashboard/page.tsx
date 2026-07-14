@@ -23,7 +23,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     prisma.document.count({ where: { grade: user.grade ?? undefined } }),
     prisma.readDocument.count({ where: { userId: user.id } }),
-    prisma.quiz.count({ where: { grade: user.grade ?? undefined } }),
+    prisma.quiz.count({ where: { grade: user.grade ?? undefined, published: true } }),
     prisma.quizAttempt.findMany({
       where: { userId: user.id, submittedAt: { not: null } },
       include: { quiz: true },
@@ -43,7 +43,7 @@ export default async function DashboardPage() {
       select: { readAt: true },
     }),
     prisma.quiz.findMany({
-      where: { grade: user.grade ?? undefined, kind: "REGULAR" },
+      where: { grade: user.grade ?? undefined, kind: "REGULAR", published: true },
       select: { id: true, title: true },
     }),
     prisma.quizAttempt.findMany({
@@ -55,7 +55,7 @@ export default async function DashboardPage() {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const monthlyCheckQuiz = await prisma.quiz.findFirst({
-    where: { grade: user.grade ?? undefined, kind: "MONTHLY_CHECK" },
+    where: { grade: user.grade ?? undefined, kind: "MONTHLY_CHECK", published: true },
     orderBy: { createdAt: "desc" },
   });
   const monthlyCheckDoneThisMonth = monthlyCheckQuiz

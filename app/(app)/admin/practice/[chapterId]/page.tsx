@@ -5,11 +5,10 @@ import { requireAdmin } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { DifficultyBadge } from "@/components/ui/difficulty-badge";
 import { DIFFICULTY_LABELS, DIFFICULTY_ORDER } from "@/lib/difficulty";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
-import { createPracticeQuestion, deletePracticeQuestion } from "../actions";
+import { createPracticeQuestion, deletePracticeQuestion, updatePracticeQuestion, togglePracticeQuestionPublished } from "../actions";
+import { PracticeQuestionCard } from "./practice-question-card";
 
 export default async function AdminPracticeChapterPage({
   params,
@@ -89,13 +88,10 @@ export default async function AdminPracticeChapterPage({
               <select
                 id="correctIndex"
                 name="correctIndex"
-                required
                 defaultValue=""
                 className="w-full rounded-xl border border-border-subtle bg-background px-4 py-2.5 text-sm outline-none focus:border-foreground/40"
               >
-                <option value="" disabled>
-                  Chọn
-                </option>
+                <option value="">Chưa xác định (lưu nháp, sửa sau)</option>
                 <option value={0}>A</option>
                 <option value={1}>B</option>
                 <option value={2}>C</option>
@@ -132,6 +128,10 @@ export default async function AdminPracticeChapterPage({
             <Label htmlFor="source">Nguồn (tùy chọn)</Label>
             <Input id="source" name="source" placeholder="Vd: SBT Kết nối tri thức" />
           </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="published" value="true" defaultChecked />
+            Công khai ngay cho học sinh (bỏ chọn nếu muốn để nháp, sửa sau)
+          </label>
           <div>
             <Button type="submit">Thêm câu bài tập</Button>
           </div>
@@ -142,36 +142,29 @@ export default async function AdminPracticeChapterPage({
         {questions.map((q, idx) => {
           const choices = JSON.parse(q.choices) as string[];
           return (
-            <Card key={q.id}>
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-sm font-medium">
-                    Câu {idx + 1}. {q.content}
-                  </p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <DifficultyBadge difficulty={q.difficulty} />
-                    {q.source && <Badge tone="neutral">{q.source}</Badge>}
-                  </div>
-                </div>
-                <form
-                  action={async () => {
-                    "use server";
-                    await deletePracticeQuestion(chapterId, q.id);
-                  }}
-                >
-                  <Button type="submit" size="sm" variant="ghost">
-                    Xóa
-                  </Button>
-                </form>
-              </div>
-              <ul className="mt-3 flex flex-col gap-1 text-sm text-foreground-muted">
-                {choices.map((c, cIdx) => (
-                  <li key={cIdx} className={cIdx === q.correctIndex ? "font-medium text-success-fg" : ""}>
-                    {String.fromCharCode(65 + cIdx)}. {c}
-                  </li>
-                ))}
-              </ul>
-            </Card>
+            <PracticeQuestionCard
+              key={q.id}
+              index={idx}
+              content={q.content}
+              choices={choices}
+              correctIndex={q.correctIndex}
+              explanation={q.explanation}
+              difficulty={q.difficulty}
+              source={q.source}
+              published={q.published}
+              onUpdate={async (formData) => {
+                "use server";
+                await updatePracticeQuestion(chapterId, q.id, formData);
+              }}
+              onDelete={async () => {
+                "use server";
+                await deletePracticeQuestion(chapterId, q.id);
+              }}
+              onTogglePublished={async () => {
+                "use server";
+                await togglePracticeQuestionPublished(chapterId, q.id);
+              }}
+            />
           );
         })}
         {questions.length === 0 && (

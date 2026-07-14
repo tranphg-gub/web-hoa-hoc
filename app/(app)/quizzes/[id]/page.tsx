@@ -20,6 +20,7 @@ export default async function QuizOverviewPage({
   });
   if (!quiz) notFound();
   if (!canAccessGrade(session.user, quiz.grade)) notFound();
+  if (!quiz.published && session.user.role !== "ADMIN") notFound();
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">

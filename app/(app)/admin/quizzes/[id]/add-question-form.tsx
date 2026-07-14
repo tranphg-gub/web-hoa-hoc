@@ -70,10 +70,8 @@ export function AddQuestionForm({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="correctIndex">Đáp án đúng</Label>
-            <select id="correctIndex" name="correctIndex" required defaultValue="" className={`${selectClass} max-w-[160px]`}>
-              <option value="" disabled>
-                Chọn
-              </option>
+            <select id="correctIndex" name="correctIndex" defaultValue="" className={`${selectClass} max-w-[220px]`}>
+              <option value="">Chưa xác định (nháp, sửa sau)</option>
               <option value={0}>A</option>
               <option value={1}>B</option>
               <option value={2}>C</option>

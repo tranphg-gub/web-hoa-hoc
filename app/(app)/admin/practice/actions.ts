@@ -23,15 +23,21 @@ export async function createPracticeQuestion(chapterId: string, formData: FormDa
     String(formData.get("choiceD") ?? ""),
   ].filter((c) => c.trim() !== "");
 
+  const rawCorrectIndex = String(formData.get("correctIndex") ?? "");
+  const published = formData.get("published") === "true";
+
   await prisma.practiceQuestion.create({
     data: {
       chapterId,
       content: String(formData.get("content") ?? ""),
       choices: JSON.stringify(choices),
-      correctIndex: Number(formData.get("correctIndex")),
+      // Chưa xác định đáp án -> lưu tạm 0 nhưng để "published=false" (nháp, học
+      // sinh không thấy) cho tới khi admin sửa đáp án thật rồi tự công khai.
+      correctIndex: rawCorrectIndex === "" ? 0 : Number(rawCorrectIndex),
       explanation: String(formData.get("explanation") ?? "") || null,
       difficulty: formData.get("difficulty") as Difficulty,
       source: String(formData.get("source") ?? "").trim() || null,
+      published: rawCorrectIndex === "" ? false : published,
     },
   });
 
@@ -41,6 +47,42 @@ export async function createPracticeQuestion(chapterId: string, formData: FormDa
 export async function deletePracticeQuestion(chapterId: string, questionId: string) {
   await requireAdmin();
   await prisma.practiceQuestion.delete({ where: { id: questionId } });
+  revalidatePath(`/admin/practice/${chapterId}`);
+}
+
+export async function updatePracticeQuestion(chapterId: string, questionId: string, formData: FormData) {
+  await requireAdmin();
+
+  const choices = [
+    String(formData.get("choiceA") ?? ""),
+    String(formData.get("choiceB") ?? ""),
+    String(formData.get("choiceC") ?? ""),
+    String(formData.get("choiceD") ?? ""),
+  ].filter((c) => c.trim() !== "");
+
+  await prisma.practiceQuestion.update({
+    where: { id: questionId },
+    data: {
+      content: String(formData.get("content") ?? "").trim(),
+      choices: JSON.stringify(choices),
+      correctIndex: Number(formData.get("correctIndex")),
+      explanation: String(formData.get("explanation") ?? "").trim() || null,
+      difficulty: formData.get("difficulty") as Difficulty,
+      source: String(formData.get("source") ?? "").trim() || null,
+    },
+  });
+
+  revalidatePath(`/admin/practice/${chapterId}`);
+}
+
+export async function togglePracticeQuestionPublished(chapterId: string, questionId: string) {
+  await requireAdmin();
+  const q = await prisma.practiceQuestion.findUnique({ where: { id: questionId }, select: { published: true } });
+  if (!q) throw new Error("Không tìm thấy câu hỏi.");
+  await prisma.practiceQuestion.update({
+    where: { id: questionId },
+    data: { published: !q.published },
+  });
   revalidatePath(`/admin/practice/${chapterId}`);
 }
 

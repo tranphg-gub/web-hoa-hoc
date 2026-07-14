@@ -73,11 +73,12 @@ export async function addQuestion(quizId: string, formData: FormData) {
       String(formData.get("choiceC") ?? ""),
       String(formData.get("choiceD") ?? ""),
     ].filter((c) => c.trim() !== "");
+    const rawCorrectIndex = String(formData.get("correctIndex") ?? "");
     await prisma.question.create({
       data: {
         ...base,
         choices: JSON.stringify(choices),
-        correctIndex: Number(formData.get("correctIndex")),
+        correctIndex: rawCorrectIndex === "" ? null : Number(rawCorrectIndex),
       },
     });
   }
@@ -89,6 +90,63 @@ export async function deleteQuestion(quizId: string, questionId: string) {
   await requireAdmin();
   await prisma.question.delete({ where: { id: questionId } });
   revalidatePath(`/admin/quizzes/${quizId}`);
+}
+
+export async function updateQuestion(quizId: string, questionId: string, formData: FormData) {
+  await requireAdmin();
+
+  const existing = await prisma.question.findUnique({ where: { id: questionId } });
+  if (!existing) throw new Error("Không tìm thấy câu hỏi.");
+
+  const base = {
+    content: String(formData.get("content") ?? "").trim(),
+    explanation: String(formData.get("explanation") ?? "").trim() || null,
+    difficulty: formData.get("difficulty") as Difficulty,
+  };
+
+  if (existing.type === "TRUE_FALSE_GROUP") {
+    const statements = ["a", "b", "c", "d"].map((letter) => ({
+      text: String(formData.get(`statement${letter}`) ?? "").trim(),
+      correct: formData.get(`correct${letter}`) === "true",
+    }));
+    await prisma.question.update({
+      where: { id: questionId },
+      data: { ...base, statements: JSON.stringify(statements) },
+    });
+  } else if (existing.type === "SHORT_ANSWER") {
+    const shortAnswer = String(formData.get("shortAnswer") ?? "").trim();
+    await prisma.question.update({
+      where: { id: questionId },
+      data: { ...base, shortAnswer: shortAnswer || null },
+    });
+  } else {
+    const choices = [
+      String(formData.get("choiceA") ?? ""),
+      String(formData.get("choiceB") ?? ""),
+      String(formData.get("choiceC") ?? ""),
+      String(formData.get("choiceD") ?? ""),
+    ].filter((c) => c.trim() !== "");
+    const rawCorrectIndex = String(formData.get("correctIndex") ?? "");
+    await prisma.question.update({
+      where: { id: questionId },
+      data: {
+        ...base,
+        choices: JSON.stringify(choices),
+        correctIndex: rawCorrectIndex === "" ? null : Number(rawCorrectIndex),
+      },
+    });
+  }
+
+  revalidatePath(`/admin/quizzes/${quizId}`);
+}
+
+export async function toggleQuizPublished(quizId: string) {
+  await requireAdmin();
+  const quiz = await prisma.quiz.findUnique({ where: { id: quizId }, select: { published: true } });
+  if (!quiz) throw new Error("Không tìm thấy đề.");
+  await prisma.quiz.update({ where: { id: quizId }, data: { published: !quiz.published } });
+  revalidatePath(`/admin/quizzes/${quizId}`);
+  revalidatePath("/admin/quizzes");
 }
 
 export async function generateQuizDrafts(

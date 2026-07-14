@@ -17,10 +17,16 @@ export async function startQuizAttempt(quizId: string) {
   const session = await auth();
   if (!session) throw new Error("Chưa đăng nhập.");
 
-  const quiz = await prisma.quiz.findUnique({ where: { id: quizId }, select: { grade: true } });
+  const quiz = await prisma.quiz.findUnique({
+    where: { id: quizId },
+    select: { grade: true, published: true },
+  });
   if (!quiz) throw new Error("Không tìm thấy đề kiểm tra.");
   if (session.user.role !== "ADMIN" && session.user.grade !== quiz.grade) {
     throw new Error("Không có quyền làm đề của lớp khác.");
+  }
+  if (session.user.role !== "ADMIN" && !quiz.published) {
+    throw new Error("Đề kiểm tra này chưa được công khai.");
   }
 
   const existing = await prisma.quizAttempt.findFirst({

@@ -167,11 +167,12 @@ export default async function AdminQuizzesPage({
         {quizzes.map((quiz) => (
           <Card key={quiz.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge tone="neutral">Lớp {quiz.grade}</Badge>
                 {quiz.kind !== "REGULAR" && (
                   <Badge tone="warning">{QUIZ_KIND_LABELS[quiz.kind]}</Badge>
                 )}
+                {!quiz.published && <Badge tone="warning">Nháp</Badge>}
                 <span className="font-medium">{quiz.title}</span>
               </div>
               <p className="mt-1 text-sm text-foreground-muted">

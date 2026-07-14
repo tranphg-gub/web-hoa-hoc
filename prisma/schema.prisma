@@ -126,6 +126,7 @@ model Quiz {
   chapterId   String
   durationSec Int
   kind        QuizKind @default(REGULAR)
+  published   Boolean  @default(true)
   createdAt   DateTime @default(now())
 
   chapter   Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
