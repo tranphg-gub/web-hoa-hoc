@@ -43,6 +43,9 @@ yarn-error.log*
 /Tài liệu/
 /interfere.com_.png
 
+# log chạy script tự động (daily AI top-up)
+/logs/
+
 # vercel
 .vercel
 
