@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DifficultyBadge } from "@/components/ui/difficulty-badge";
 import { ChemProseText } from "@/components/chemistry/chemical-formula";
+import { ReportQuestionButton } from "@/components/report-question-button";
 import { cn } from "@/lib/utils";
 import { PartyPopper } from "lucide-react";
 
@@ -130,10 +131,11 @@ export function PracticeRunner({ questions }: { questions: PracticeQuestionData[
               <ChemProseText text={question.explanation} />
             </p>
           )}
-          <div className="mt-3">
+          <div className="mt-3 flex items-center justify-between gap-3">
             <Button size="sm" onClick={handleNext}>
               {idx + 1 >= questions.length ? "Xem kết quả" : "Câu tiếp theo"}
             </Button>
+            <ReportQuestionButton practiceQuestionId={question.id} />
           </div>
         </Card>
       )}

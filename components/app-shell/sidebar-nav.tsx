@@ -18,6 +18,7 @@ import {
   Trophy,
   MessageSquare,
   PenLine,
+  Flag,
 } from "lucide-react";
 
 const studentLinks = [
@@ -39,6 +40,7 @@ const adminLinks = [
   { href: "/admin/practice", label: "Quản lý bài tập", icon: PenLine },
   { href: "/admin/quizzes", label: "Quản lý đề kiểm tra", icon: ListChecks },
   { href: "/admin/flashcards", label: "Bộ flashcard", icon: Layers },
+  { href: "/admin/reports", label: "Báo lỗi từ học sinh", icon: Flag },
 ];
 
 export function SidebarNav({

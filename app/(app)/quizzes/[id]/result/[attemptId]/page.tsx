@@ -10,6 +10,7 @@ import { ChemProseText } from "@/components/chemistry/chemical-formula";
 import { cn } from "@/lib/utils";
 import { scoreQuestion, type QuestionAnswer, type Statement } from "@/lib/quiz-scoring";
 import { ArrowLeft, Check, X, Sparkles } from "lucide-react";
+import { ReportQuestionButton } from "@/components/report-question-button";
 
 const TYPE_TAG: Record<string, string> = {
   SINGLE_CHOICE: "Trắc nghiệm",
@@ -220,6 +221,10 @@ export default async function QuizResultPage({
                   <ChemProseText text={q.explanation} />
                 </p>
               )}
+
+              <div className="mt-3">
+                <ReportQuestionButton questionId={q.id} />
+              </div>
             </Card>
           );
         })}

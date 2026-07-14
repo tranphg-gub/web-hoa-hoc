@@ -65,6 +65,7 @@ model User {
   forumPosts                  ForumPost[]
   forumComments               ForumComment[]
   learningPathRecommendations LearningPathRecommendation[]
+  questionReports             QuestionReport[]
 }
 
 model Payment {
@@ -147,7 +148,8 @@ model Question {
   order        Int          @default(0)
   difficulty   Difficulty   @default(NHAN_BIET)
 
-  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quiz    Quiz             @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  reports QuestionReport[]
 }
 
 model QuizAttempt {
@@ -189,7 +191,30 @@ model PracticeQuestion {
   published    Boolean    @default(true)
   createdAt    DateTime   @default(now())
 
-  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapter Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  reports QuestionReport[]
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  DISMISSED
+}
+
+// Học sinh báo lỗi câu hỏi/đáp án nghi sai — đúng 1 trong 2 trường questionId/
+// practiceQuestionId được điền tuỳ báo lỗi từ Quiz hay từ /practice.
+model QuestionReport {
+  id                 String       @id @default(cuid())
+  userId             String
+  questionId         String?
+  practiceQuestionId String?
+  reason             String
+  status             ReportStatus @default(PENDING)
+  createdAt          DateTime     @default(now())
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question         Question?         @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  practiceQuestion PracticeQuestion? @relation(fields: [practiceQuestionId], references: [id], onDelete: Cascade)
 }
 
 model FlashcardSet {
