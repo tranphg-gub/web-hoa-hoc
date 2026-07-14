@@ -6,24 +6,41 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { requireAdmin } from "@/lib/require-auth";
 import { Badge } from "@/components/ui/badge";
+import { Pagination } from "@/components/ui/pagination";
 import { addQuestion, deleteQuestion, updateQuestion, toggleQuizPublished } from "../actions";
 import { AddQuestionForm } from "./add-question-form";
 import { AiDraftForm } from "./ai-draft-form";
 import { QuestionCard } from "./question-card";
 
+const PAGE_SIZE = 20;
+
 export default async function AdminQuizDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   await requireAdmin();
 
   const { id } = await params;
+  const { page: pageParam } = await searchParams;
+
   const quiz = await prisma.quiz.findUnique({
     where: { id },
-    include: { questions: { orderBy: { order: "asc" } } },
+    include: { _count: { select: { questions: true } } },
   });
   if (!quiz) notFound();
+
+  const totalPages = Math.max(1, Math.ceil(quiz._count.questions / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, Number(pageParam) || 1), totalPages);
+
+  const questions = await prisma.question.findMany({
+    where: { quizId: id },
+    orderBy: { order: "asc" },
+    skip: (currentPage - 1) * PAGE_SIZE,
+    take: PAGE_SIZE,
+  });
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
@@ -39,7 +56,7 @@ export default async function AdminQuizDetailPage({
           <h1 className="text-xl font-semibold tracking-tight">{quiz.title}</h1>
           <div className="mt-1 flex items-center gap-2 text-sm text-foreground-muted">
             <span>
-              Lớp {quiz.grade} · {quiz.questions.length} câu hỏi
+              Lớp {quiz.grade} · {quiz._count.questions} câu hỏi
             </span>
             <Badge tone={quiz.published ? "success" : "warning"}>
               {quiz.published ? "Đã công khai" : "Nháp — học sinh chưa thấy"}
@@ -79,8 +96,14 @@ export default async function AdminQuizDetailPage({
         />
       </Card>
 
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        buildHref={(page) => `/admin/quizzes/${id}?page=${page}`}
+      />
+
       <div className="flex flex-col gap-3">
-        {quiz.questions.map((q, idx) => {
+        {questions.map((q, idx) => {
           const statements = q.statements
             ? (JSON.parse(q.statements) as { text: string; correct: boolean }[])
             : null;
@@ -89,7 +112,7 @@ export default async function AdminQuizDetailPage({
           return (
             <QuestionCard
               key={q.id}
-              index={idx}
+              index={(currentPage - 1) * PAGE_SIZE + idx}
               type={q.type}
               content={q.content}
               choices={choices}
@@ -110,6 +133,12 @@ export default async function AdminQuizDetailPage({
           );
         })}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        buildHref={(page) => `/admin/quizzes/${id}?page=${page}`}
+      />
     </div>
   );
 }

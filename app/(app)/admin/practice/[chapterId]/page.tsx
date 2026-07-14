@@ -5,25 +5,37 @@ import { requireAdmin } from "@/lib/require-auth";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { Pagination } from "@/components/ui/pagination";
 import { DIFFICULTY_LABELS, DIFFICULTY_ORDER } from "@/lib/difficulty";
 import { ArrowLeft } from "lucide-react";
 import { createPracticeQuestion, deletePracticeQuestion, updatePracticeQuestion, togglePracticeQuestionPublished } from "../actions";
 import { PracticeQuestionCard } from "./practice-question-card";
 
+const PAGE_SIZE = 20;
+
 export default async function AdminPracticeChapterPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ chapterId: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   await requireAdmin();
   const { chapterId } = await params;
+  const { page: pageParam } = await searchParams;
 
   const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
   if (!chapter) notFound();
 
+  const totalCount = await prisma.practiceQuestion.count({ where: { chapterId } });
+  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, Number(pageParam) || 1), totalPages);
+
   const questions = await prisma.practiceQuestion.findMany({
     where: { chapterId },
     orderBy: { createdAt: "asc" },
+    skip: (currentPage - 1) * PAGE_SIZE,
+    take: PAGE_SIZE,
   });
 
   return (
@@ -138,13 +150,19 @@ export default async function AdminPracticeChapterPage({
         </form>
       </Card>
 
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        buildHref={(page) => `/admin/practice/${chapterId}?page=${page}`}
+      />
+
       <div className="flex flex-col gap-3">
         {questions.map((q, idx) => {
           const choices = JSON.parse(q.choices) as string[];
           return (
             <PracticeQuestionCard
               key={q.id}
-              index={idx}
+              index={(currentPage - 1) * PAGE_SIZE + idx}
               content={q.content}
               choices={choices}
               correctIndex={q.correctIndex}
@@ -173,6 +191,12 @@ export default async function AdminPracticeChapterPage({
           </Card>
         )}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        buildHref={(page) => `/admin/practice/${chapterId}?page=${page}`}
+      />
     </div>
   );
 }
