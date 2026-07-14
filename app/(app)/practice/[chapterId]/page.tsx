@@ -13,14 +13,15 @@ export default async function PracticeChapterPage({
   const session = await requireUser();
   const { chapterId } = await params;
 
-  const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
+  const [chapter, questions] = await Promise.all([
+    prisma.chapter.findUnique({ where: { id: chapterId } }),
+    prisma.practiceQuestion.findMany({
+      where: { chapterId, published: true },
+      orderBy: { createdAt: "asc" },
+    }),
+  ]);
   if (!chapter) notFound();
   if (!canAccessGrade(session.user, chapter.grade)) notFound();
-
-  const questions = await prisma.practiceQuestion.findMany({
-    where: { chapterId, published: true },
-    orderBy: { createdAt: "asc" },
-  });
   if (questions.length === 0) notFound();
 
   const items = questions.map((q) => ({

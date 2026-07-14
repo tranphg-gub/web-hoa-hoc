@@ -17,15 +17,17 @@ export default async function DocumentDetailPage({
 }) {
   const { id } = await params;
   const session = await requireUser();
-  const doc = await prisma.document.findUnique({ where: { id }, include: { chapter: true } });
+
+  const [doc, readRecord] = await Promise.all([
+    prisma.document.findUnique({ where: { id }, include: { chapter: true } }),
+    prisma.readDocument.findUnique({
+      where: {
+        userId_documentId: { userId: session.user.id, documentId: id },
+      },
+    }),
+  ]);
   if (!doc) notFound();
   if (!canAccessGrade(session.user, doc.grade)) notFound();
-
-  const readRecord = await prisma.readDocument.findUnique({
-    where: {
-      userId_documentId: { userId: session.user.id, documentId: id },
-    },
-  });
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">

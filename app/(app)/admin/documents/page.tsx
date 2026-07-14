@@ -32,7 +32,16 @@ export default async function AdminDocumentsPage({
             }
           : {}),
       },
-      include: { chapter: true },
+      // Danh sách chỉ hiển thị tiêu đề — không lấy trường content (lý thuyết dài,
+      // có thể vài KB/bài) để giảm dữ liệu truyền qua lại với DB ở xa.
+      select: {
+        id: true,
+        title: true,
+        grade: true,
+        order: true,
+        chapterId: true,
+        chapter: { select: { title: true, order: true } },
+      },
       orderBy: [{ grade: "asc" }, { chapter: { order: "asc" } }, { order: "asc" }],
     }),
     prisma.document.count(),

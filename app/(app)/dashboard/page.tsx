@@ -10,6 +10,9 @@ export default async function DashboardPage() {
   const session = await requireUser();
   const user = session.user;
 
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
   const [
     documentsCount,
     readCount,
@@ -20,6 +23,7 @@ export default async function DashboardPage() {
     lastRead,
     allGradeQuizzes,
     attemptedQuizIds,
+    monthlyCheckQuiz,
   ] = await Promise.all([
     prisma.document.count({ where: { grade: user.grade ?? undefined } }),
     prisma.readDocument.count({ where: { userId: user.id } }),
@@ -50,14 +54,14 @@ export default async function DashboardPage() {
       where: { userId: user.id },
       select: { quizId: true },
     }),
+    prisma.quiz.findFirst({
+      where: { grade: user.grade ?? undefined, kind: "MONTHLY_CHECK", published: true },
+      orderBy: { createdAt: "desc" },
+    }),
   ]);
 
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const monthlyCheckQuiz = await prisma.quiz.findFirst({
-    where: { grade: user.grade ?? undefined, kind: "MONTHLY_CHECK", published: true },
-    orderBy: { createdAt: "desc" },
-  });
+  // monthlyCheckQuiz.id chỉ có sau khi Promise.all ở trên hoàn tất nên buộc phải
+  // chờ round-trip riêng — không gộp được vào cùng 1 Promise.all như các query khác.
   const monthlyCheckDoneThisMonth = monthlyCheckQuiz
     ? await prisma.quizAttempt.findFirst({
         where: {

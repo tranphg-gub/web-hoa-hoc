@@ -24,10 +24,12 @@ export default async function AdminPracticeChapterPage({
   const { chapterId } = await params;
   const { page: pageParam } = await searchParams;
 
-  const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
+  const [chapter, totalCount] = await Promise.all([
+    prisma.chapter.findUnique({ where: { id: chapterId } }),
+    prisma.practiceQuestion.count({ where: { chapterId } }),
+  ]);
   if (!chapter) notFound();
 
-  const totalCount = await prisma.practiceQuestion.count({ where: { chapterId } });
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
   const currentPage = Math.min(Math.max(1, Number(pageParam) || 1), totalPages);
 

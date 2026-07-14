@@ -112,35 +112,44 @@ export async function submitQuizAttempt(attemptId: string) {
 
     if (claim.count === 1) {
       const pointsEarned = Math.round(score * (late ? 5 : 10));
-      await prisma.user.update({
-        where: { id: session.user.id },
-        data: { points: { increment: pointsEarned } },
-      });
-    }
 
-    if (claim.count === 1 && attempt.quiz.kind !== "REGULAR") {
-      try {
-        const analysisQuestions = attempt.quiz.questions.map((q, i) => ({
-          content: q.content,
-          difficulty: q.difficulty,
-          isCorrect: scoreQuestion(scorableQuestions[i], answers[q.id]) === 1,
-        }));
-        const { weakAreas, recommendation } = await generateLearningPathRecommendation(
-          analysisQuestions,
-          String(attempt.quiz.grade)
-        );
-        await prisma.learningPathRecommendation.create({
-          data: {
-            userId: session.user.id,
-            quizAttemptId: attemptId,
-            weakAreas: JSON.stringify(weakAreas),
-            recommendation,
-          },
-        });
-      } catch {
-        // AI phân tích không bắt buộc để xem kết quả bài làm - bỏ qua nếu lỗi
-        // (vd. chưa cấu hình GEMINI_API_KEY), học sinh vẫn thấy điểm số bình thường.
-      }
+      // Cộng điểm và phân tích AI không phụ thuộc lẫn nhau — chạy song song để
+      // không cộng dồn thời gian round-trip DB + gọi AI (AI thường chậm hơn nhiều).
+      const analysisPromise =
+        attempt.quiz.kind !== "REGULAR"
+          ? (async () => {
+              try {
+                const analysisQuestions = attempt.quiz.questions.map((q, i) => ({
+                  content: q.content,
+                  difficulty: q.difficulty,
+                  isCorrect: scoreQuestion(scorableQuestions[i], answers[q.id]) === 1,
+                }));
+                const { weakAreas, recommendation } = await generateLearningPathRecommendation(
+                  analysisQuestions,
+                  String(attempt.quiz.grade)
+                );
+                await prisma.learningPathRecommendation.create({
+                  data: {
+                    userId: session.user.id,
+                    quizAttemptId: attemptId,
+                    weakAreas: JSON.stringify(weakAreas),
+                    recommendation,
+                  },
+                });
+              } catch {
+                // AI phân tích không bắt buộc để xem kết quả bài làm - bỏ qua nếu lỗi
+                // (vd. chưa cấu hình GEMINI_API_KEY), học sinh vẫn thấy điểm số bình thường.
+              }
+            })()
+          : Promise.resolve();
+
+      await Promise.all([
+        prisma.user.update({
+          where: { id: session.user.id },
+          data: { points: { increment: pointsEarned } },
+        }),
+        analysisPromise,
+      ]);
     }
   }
 

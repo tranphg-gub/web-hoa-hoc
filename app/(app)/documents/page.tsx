@@ -25,7 +25,15 @@ export default async function DocumentsPage({
   const [documents, readIds] = await Promise.all([
     prisma.document.findMany({
       where: { grade },
-      include: { chapter: true },
+      // Danh sách chỉ hiển thị tiêu đề — không lấy content (lý thuyết dài) để
+      // giảm dữ liệu truyền qua lại với DB ở xa.
+      select: {
+        id: true,
+        title: true,
+        chapterId: true,
+        order: true,
+        chapter: { select: { id: true, title: true, order: true } },
+      },
       orderBy: [{ chapter: { order: "asc" } }, { order: "asc" }],
     }),
     prisma.readDocument

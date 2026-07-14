@@ -17,15 +17,15 @@ export default async function MindmapPage({
 
   if (!chapterId) notFound();
 
-  const chapter = await prisma.chapter.findUnique({ where: { id: chapterId } });
+  const [chapter, documents] = await Promise.all([
+    prisma.chapter.findUnique({ where: { id: chapterId } }),
+    prisma.document.findMany({
+      where: { chapterId },
+      orderBy: { order: "asc" },
+    }),
+  ]);
   if (!chapter) notFound();
   if (!canAccessGrade(session.user, chapter.grade)) notFound();
-
-  const documents = await prisma.document.findMany({
-    where: { chapterId },
-    orderBy: { order: "asc" },
-  });
-
   if (documents.length === 0) notFound();
 
   const gradeNum = chapter.grade;
