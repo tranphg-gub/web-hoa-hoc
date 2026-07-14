@@ -20,13 +20,12 @@ function shuffle<T>(arr: T[]): T[] {
   return copy;
 }
 
-function buildRounds(cards: CardData[]): Round[] {
-  const shuffledCards = shuffle(cards);
-  return shuffledCards.map((card) => {
-    const distractors = shuffle(
-      cards.filter((c) => c.id !== card.id).map((c) => c.meaning)
-    ).slice(0, 3);
-    const choices = shuffle([card.meaning, ...distractors]);
+function buildRounds(cards: CardData[], doShuffle: boolean): Round[] {
+  const orderedCards = doShuffle ? shuffle(cards) : cards;
+  return orderedCards.map((card) => {
+    const otherMeanings = cards.filter((c) => c.id !== card.id).map((c) => c.meaning);
+    const distractors = (doShuffle ? shuffle(otherMeanings) : otherMeanings).slice(0, 3);
+    const choices = doShuffle ? shuffle([card.meaning, ...distractors]) : [card.meaning, ...distractors];
     return {
       cardId: card.id,
       term: card.term,
@@ -39,13 +38,22 @@ function buildRounds(cards: CardData[]): Round[] {
 const SECONDS_PER_CARD = 8;
 
 export function QuickQuizGame({ cards }: { cards: CardData[] }) {
-  const [rounds, setRounds] = useState(() => buildRounds(cards));
+  // Giữ thứ tự gốc lúc SSR, chỉ xáo câu hỏi/phương án trong useEffect (chạy
+  // sau khi hydrate xong) — xáo ngay trong useState() bằng Math.random() sẽ
+  // cho kết quả khác nhau giữa server và client, gây lỗi "hydration mismatch".
+  const [rounds, setRounds] = useState(() => buildRounds(cards, false));
   const [roundIdx, setRoundIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [answeredIdx, setAnsweredIdx] = useState<number | null>(null);
   const totalTime = rounds.length * SECONDS_PER_CARD;
   const [remaining, setRemaining] = useState(totalTime);
   const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    setRounds(buildRounds(cards, true));
+    setRemaining(cards.length * SECONDS_PER_CARD);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards.length]);
 
   const currentRound = rounds[roundIdx];
 
@@ -85,7 +93,7 @@ export function QuickQuizGame({ cards }: { cards: CardData[] }) {
   );
 
   function restart() {
-    setRounds(buildRounds(cards));
+    setRounds(buildRounds(cards, true));
     setRoundIdx(0);
     setScore(0);
     setAnsweredIdx(null);

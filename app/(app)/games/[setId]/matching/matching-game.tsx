@@ -20,13 +20,13 @@ function shuffle<T>(arr: T[]): T[] {
   return copy;
 }
 
-function buildTiles(cards: CardData[]): Tile[] {
+function buildTiles(cards: CardData[], doShuffle: boolean): Tile[] {
   const tiles: Tile[] = [];
   cards.forEach((c) => {
     tiles.push({ key: `${c.id}-term`, cardId: c.id, label: c.term });
     tiles.push({ key: `${c.id}-meaning`, cardId: c.id, label: c.meaning });
   });
-  return shuffle(tiles);
+  return doShuffle ? shuffle(tiles) : tiles;
 }
 
 function formatTime(totalSec: number) {
@@ -36,11 +36,19 @@ function formatTime(totalSec: number) {
 }
 
 export function MatchingGame({ cards }: { cards: CardData[] }) {
-  const [tiles, setTiles] = useState(() => buildTiles(cards));
+  // Giữ thứ tự gốc lúc SSR, chỉ xáo ô trong useEffect (chạy sau khi hydrate
+  // xong) — xáo ngay trong useState() bằng Math.random() sẽ cho kết quả khác
+  // nhau giữa server và client, gây lỗi "hydration mismatch".
+  const [tiles, setTiles] = useState(() => buildTiles(cards, false));
   const [selected, setSelected] = useState<Tile[]>([]);
   const [matchedCardIds, setMatchedCardIds] = useState<Set<string>>(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [elapsed, setElapsed] = useState(0);
+
+  useEffect(() => {
+    setTiles(buildTiles(cards, true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards.length]);
 
   const finished = matchedCardIds.size === cards.length && cards.length > 0;
 
@@ -89,7 +97,7 @@ export function MatchingGame({ cards }: { cards: CardData[] }) {
           variant="secondary"
           size="sm"
           onClick={() => {
-            setTiles(buildTiles(cards));
+            setTiles(buildTiles(cards, true));
             setMatchedCardIds(new Set());
             setMistakes(0);
             setElapsed(0);

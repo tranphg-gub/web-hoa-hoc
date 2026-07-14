@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,10 +20,19 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function FlashcardDeck({ cards }: { cards: Card1[] }) {
-  const [queue, setQueue] = useState(() => shuffle(cards));
+  // Giữ thứ tự gốc lúc SSR (giống nhau ở server và client), chỉ xáo bài trong
+  // useEffect (chạy sau khi hydrate xong) — xáo ngay trong useState() bằng
+  // Math.random() sẽ cho kết quả khác nhau giữa server và client, gây lỗi
+  // "hydration mismatch" (đã gặp lỗi tương tự ở PracticeRunner).
+  const [queue, setQueue] = useState(cards);
   const [flipped, setFlipped] = useState(false);
   const [known, setKnown] = useState(0);
   const [reviewed, setReviewed] = useState(0);
+
+  useEffect(() => {
+    setQueue(shuffle(cards));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards.length]);
 
   const current = queue[0];
 
