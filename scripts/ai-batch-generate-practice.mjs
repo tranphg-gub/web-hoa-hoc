@@ -211,7 +211,11 @@ ${existingList ? `\nCÁC CÂU HỎI ĐÃ CÓ (tuyệt đối không soạn câu 
   });
 }
 
-async function fillChapter(chapter, targetCount, difficulty, log) {
+function normalizeContent(text) {
+  return text.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+async function fillChapter(chapter, targetCount, difficulty, log, seenContents) {
   let current = await prisma.practiceQuestion.count({ where: { chapterId: chapter.id, difficulty } });
   const perDifficultyTarget = Math.ceil(targetCount / 4);
   while (current < perDifficultyTarget) {
@@ -231,7 +235,16 @@ async function fillChapter(chapter, targetCount, difficulty, log) {
     }
     const verified = results.filter((r) => r.verified);
     const rejected = results.filter((r) => !r.verified);
+    // AI được nhắc tránh trùng qua buildExistingQuestionList, nhưng đó chỉ là gợi ý
+    // trong prompt — vẫn cần chặn cứng ở đây phòng khi AI lỡ sinh lại câu gần giống.
+    let duplicates = 0;
     for (const q of verified) {
+      const key = normalizeContent(q.content);
+      if (seenContents.has(key)) {
+        duplicates++;
+        continue;
+      }
+      seenContents.add(key);
       await prisma.practiceQuestion.create({
         data: {
           chapterId: chapter.id,
@@ -244,12 +257,14 @@ async function fillChapter(chapter, targetCount, difficulty, log) {
           published: true,
         },
       });
+      current++;
     }
     for (const q of rejected) {
       log.push({ chapter: chapter.title, difficulty, content: q.content, verifierNote: q.verifierNote });
     }
-    current += verified.length;
-    console.log(`    -> lưu ${verified.length} câu (verified), bỏ ${rejected.length} câu (không khớp/lỗi verify).`);
+    console.log(
+      `    -> lưu ${verified.length - duplicates} câu (verified), bỏ ${rejected.length} câu (không khớp/lỗi verify), bỏ ${duplicates} câu trùng.`
+    );
     await sleep(DELAY_MS);
   }
 }
@@ -286,9 +301,16 @@ async function main() {
       continue;
     }
     console.log(`\n=== ${chapter.title} (L${chapter.grade}) — hiện có ${currentCount}, mục tiêu ${targetCount} ===`);
+    const [existingPractice, existingQuiz] = await Promise.all([
+      prisma.practiceQuestion.findMany({ where: { chapterId: chapter.id }, select: { content: true } }),
+      prisma.question.findMany({ where: { quiz: { chapterId: chapter.id } }, select: { content: true } }),
+    ]);
+    const seenContents = new Set(
+      [...existingPractice, ...existingQuiz].map((q) => normalizeContent(q.content))
+    );
     try {
       for (const difficulty of ["NHAN_BIET", "THONG_HIEU", "VAN_DUNG", "VAN_DUNG_CAO"]) {
-        await fillChapter(chapter, targetCount, difficulty, rejectedLog);
+        await fillChapter(chapter, targetCount, difficulty, rejectedLog, seenContents);
       }
     } catch (e) {
       if (e.message === "QUOTA_EXCEEDED") {

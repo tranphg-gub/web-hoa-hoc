@@ -20,12 +20,25 @@ async function requireAdmin() {
 export async function createQuiz(formData: FormData) {
   await requireAdmin();
 
+  const grade = Number(formData.get("grade"));
+  if (!Number.isInteger(grade) || grade < 6 || grade > 12) {
+    throw new Error("Lớp không hợp lệ — vui lòng chọn lớp từ 6 đến 12.");
+  }
+  const durationMin = Number(formData.get("durationMin"));
+  if (!Number.isFinite(durationMin) || durationMin <= 0) {
+    throw new Error("Thời gian làm bài không hợp lệ — vui lòng nhập số phút lớn hơn 0.");
+  }
+  const chapterId = String(formData.get("chapterId") ?? "").trim();
+  if (!chapterId) {
+    throw new Error("Vui lòng chọn chương.");
+  }
+
   await prisma.quiz.create({
     data: {
       title: String(formData.get("title") ?? "").trim(),
-      grade: Number(formData.get("grade")),
-      chapterId: String(formData.get("chapterId") ?? ""),
-      durationSec: Number(formData.get("durationMin")) * 60,
+      grade,
+      chapterId,
+      durationSec: durationMin * 60,
       kind: (formData.get("kind") as QuizKind) || "REGULAR",
     },
   });
@@ -74,11 +87,15 @@ export async function addQuestion(quizId: string, formData: FormData) {
       String(formData.get("choiceD") ?? ""),
     ].filter((c) => c.trim() !== "");
     const rawCorrectIndex = String(formData.get("correctIndex") ?? "");
+    const correctIndex = rawCorrectIndex === "" ? null : Number(rawCorrectIndex);
+    if (correctIndex !== null && (!Number.isInteger(correctIndex) || correctIndex < 0 || correctIndex >= choices.length)) {
+      throw new Error("Đáp án đúng không hợp lệ.");
+    }
     await prisma.question.create({
       data: {
         ...base,
         choices: JSON.stringify(choices),
-        correctIndex: rawCorrectIndex === "" ? null : Number(rawCorrectIndex),
+        correctIndex,
       },
     });
   }
@@ -127,12 +144,16 @@ export async function updateQuestion(quizId: string, questionId: string, formDat
       String(formData.get("choiceD") ?? ""),
     ].filter((c) => c.trim() !== "");
     const rawCorrectIndex = String(formData.get("correctIndex") ?? "");
+    const correctIndex = rawCorrectIndex === "" ? null : Number(rawCorrectIndex);
+    if (correctIndex !== null && (!Number.isInteger(correctIndex) || correctIndex < 0 || correctIndex >= choices.length)) {
+      throw new Error("Đáp án đúng không hợp lệ.");
+    }
     await prisma.question.update({
       where: { id: questionId },
       data: {
         ...base,
         choices: JSON.stringify(choices),
-        correctIndex: rawCorrectIndex === "" ? null : Number(rawCorrectIndex),
+        correctIndex,
       },
     });
   }

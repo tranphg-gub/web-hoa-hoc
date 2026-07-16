@@ -367,12 +367,26 @@ function targetCountsFor(title) {
   return { SINGLE_CHOICE: 45, TRUE_FALSE_GROUP: 0, SHORT_ANSWER: 0 };
 }
 
+function normalizeContent(text) {
+  return text.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
 async function fillQuiz(quiz, log) {
   const targets = targetCountsFor(quiz.title);
   const existing = await prisma.question.findMany({ where: { quizId: quiz.id }, select: { type: true, order: true } });
   let nextOrder = existing.reduce((max, q) => Math.max(max, q.order), 0) + 1;
   const currentByType = { SINGLE_CHOICE: 0, TRUE_FALSE_GROUP: 0, SHORT_ANSWER: 0 };
   for (const q of existing) currentByType[q.type] = (currentByType[q.type] ?? 0) + 1;
+
+  // AI được nhắc tránh trùng qua buildExistingQuestionList, nhưng đó chỉ là gợi ý
+  // trong prompt — vẫn cần chặn cứng ở đây phòng khi AI lỡ sinh lại câu gần giống.
+  const [existingPractice, existingQuiz] = await Promise.all([
+    prisma.practiceQuestion.findMany({ where: { chapterId: quiz.chapterId }, select: { content: true } }),
+    prisma.question.findMany({ where: { quiz: { chapterId: quiz.chapterId } }, select: { content: true } }),
+  ]);
+  const seenContents = new Set(
+    [...existingPractice, ...existingQuiz].map((q) => normalizeContent(q.content))
+  );
 
   for (const type of ["SINGLE_CHOICE", "TRUE_FALSE_GROUP", "SHORT_ANSWER"]) {
     const target = targets[type];
@@ -393,7 +407,14 @@ async function fillQuiz(quiz, log) {
       }
       const verified = results.filter((r) => r.verified);
       const rejected = results.filter((r) => !r.verified);
+      let duplicates = 0;
       for (const q of verified) {
+        const key = normalizeContent(q.content);
+        if (seenContents.has(key)) {
+          duplicates++;
+          continue;
+        }
+        seenContents.add(key);
         await prisma.question.create({
           data: {
             quizId: quiz.id,
@@ -408,12 +429,14 @@ async function fillQuiz(quiz, log) {
             difficulty: q.difficulty,
           },
         });
+        currentByType[type]++;
       }
       for (const q of rejected) {
         log.push({ quiz: quiz.title, type, content: q.content, verifierNote: q.verifierNote });
       }
-      currentByType[type] += verified.length;
-      console.log(`    -> lưu ${verified.length} câu (verified), bỏ ${rejected.length} câu (không khớp/lỗi verify).`);
+      console.log(
+        `    -> lưu ${verified.length - duplicates} câu (verified), bỏ ${rejected.length} câu (không khớp/lỗi verify), bỏ ${duplicates} câu trùng.`
+      );
       await sleep(DELAY_MS);
     }
   }
